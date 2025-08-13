@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Picsum Images Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-image { margin: 10px 0; max-width: 300px; border: 1px solid #ccc; }
+        .status { margin: 10px 0; padding: 10px; background: #f0f0f0; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Picsum Photos API Test</h1>
+    
+    <div id="status" class="status">Testing...</div>
+    
+    <h2>Test Images</h2>
+    <div>
+        <h3>Direct URL (should work):</h3>
+        <img id="test1" class="test-image" src="https://picsum.photos/id/1/300/200" alt="Test 1">
+        
+        <h3>Random Image:</h3>
+        <img id="test2" class="test-image" src="https://picsum.photos/300/200?random=1" alt="Test 2">
+        
+        <h3>Programmatically loaded:</h3>
+        <img id="test3" class="test-image" alt="Test 3">
+    </div>
+
+    <h2>Test Results</h2>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        const status = document.getElementById('status');
+        let testCount = 0;
+        let passedCount = 0;
+
+        function addResult(test, success, message) {
+            testCount++;
+            if (success) passedCount++;
+            
+            const div = document.createElement('div');
+            div.className = success ? 'status success' : 'status error';
+            div.innerHTML = `<strong>${test}:</strong> ${success ? 'PASS' : 'FAIL'} - ${message}`;
+            results.appendChild(div);
+            
+            updateStatus();
+        }
+
+        function updateStatus() {
+            status.textContent = `Tests completed: ${passedCount}/${testCount} passed`;
+            status.className = passedCount === testCount ? 'status success' : 'status error';
+        }
+
+        // Test 1: Direct image loading
+        document.getElementById('test1').onload = function() {
+            addResult('Direct URL', true, 'Image loaded successfully');
+        };
+        document.getElementById('test1').onerror = function() {
+            addResult('Direct URL', false, 'Failed to load image');
+        };
+
+        // Test 2: Random image loading  
+        document.getElementById('test2').onload = function() {
+            addResult('Random Image', true, 'Random image loaded successfully');
+        };
+        document.getElementById('test2').onerror = function() {
+            addResult('Random Image', false, 'Failed to load random image');
+        };
+
+        // Test 3: Programmatic loading with Image constructor
+        const img3 = document.getElementById('test3');
+        const testImg = new Image();
+        testImg.crossOrigin = 'anonymous';
+        testImg.onload = function() {
+            img3.src = testImg.src;
+            addResult('Programmatic Loading', true, 'Image loaded via JavaScript');
+        };
+        testImg.onerror = function() {
+            addResult('Programmatic Loading', false, 'Failed to load via JavaScript');
+        };
+        testImg.src = 'https://picsum.photos/id/2/300/200';
+
+        // Test 4: Fetch API test
+        fetch('https://picsum.photos/id/3/300/200')
+            .then(response => {
+                if (response.ok) {
+                    addResult('Fetch API', true, `HTTP ${response.status} - ${response.statusText}`);
+                } else {
+                    addResult('Fetch API', false, `HTTP ${response.status} - ${response.statusText}`);
+                }
+            })
+            .catch(error => {
+                addResult('Fetch API', false, `Network error: ${error.message}`);
+            });
+
+        // Test 5: CORS test
+        const corsTest = new Image();
+        corsTest.crossOrigin = 'anonymous';
+        corsTest.onload = function() {
+            try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = corsTest.width;
+                canvas.height = corsTest.height;
+                ctx.drawImage(corsTest, 0, 0);
+                const data = canvas.toDataURL();
+                addResult('CORS Test', true, 'Image can be used in canvas (CORS enabled)');
+            } catch (e) {
+                addResult('CORS Test', false, 'CORS blocked canvas access');
+            }
+        };
+        corsTest.onerror = function() {
+            addResult('CORS Test', false, 'CORS test image failed to load');
+        };
+        corsTest.src = 'https://picsum.photos/id/4/100/100';
+    </script>
+</body>
+</html>

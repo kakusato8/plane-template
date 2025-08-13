@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "/home/node/.local/bin/uvx",
+      "args": ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "ide-assistant"],
+      "env": {
+        "SERENA_WORKSPACE": "/workspaces/curio-city",
+        "PATH": "/home/node/.local/bin:$PATH"
+      }
+    }
+  },
+  "tools": {
+    "enableAll": true
+  },
+  "customInstructions": "CurioCityプロジェクト用設定 - Serena MCPによるセマンティックコード分析を使用",
+  "projectContext": {
+    "framework": "React with Vite + TypeScript",
+    "buildCommand": "npm run build",
+    "devCommand": "npm run dev",
+    "lintCommand": "npm run lint",
+    "testCommand": null,
+    "deployCommand": "npm run deploy"
+  }
+}

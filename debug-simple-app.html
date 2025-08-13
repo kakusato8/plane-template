@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleBackgroundImage Debug Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gradient-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .gradient-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .gradient-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .test-button {
+            margin: 10px;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .test-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container gradient-1" id="testContainer">
+        <div class="overlay" id="overlay"></div>
+        <div class="content">
+            <h1>🎨 SerenaMCP Background Test</h1>
+            <p>SimpleBackgroundImageと同じCSS gradientをテスト中</p>
+            <div>
+                <button class="test-button" onclick="testGradient1()">ミステリアス</button>
+                <button class="test-button" onclick="testGradient2()">ロマンチック</button>
+                <button class="test-button" onclick="testGradient3()">エピック</button>
+            </div>
+            <p id="status">現在: ミステリアス グラデーション</p>
+        </div>
+    </div>
+
+    <script>
+        console.log('🎨 SerenaMCP: SimpleBackgroundImage診断テスト開始');
+        
+        function testGradient1() {
+            const container = document.getElementById('testContainer');
+            container.className = 'test-container gradient-1';
+            document.getElementById('status').textContent = '現在: ミステリアス グラデーション';
+            console.log('✅ ミステリアス グラデーション適用完了');
+        }
+        
+        function testGradient2() {
+            const container = document.getElementById('testContainer');
+            container.className = 'test-container gradient-2';
+            document.getElementById('status').textContent = '現在: ロマンチック グラデーション';
+            console.log('✅ ロマンチック グラデーション適用完了');
+        }
+        
+        function testGradient3() {
+            const container = document.getElementById('testContainer');
+            container.className = 'test-container gradient-3';
+            document.getElementById('status').textContent = '現在: エピック グラデーション';
+            console.log('✅ エピック グラデーション適用完了');
+        }
+        
+        // 初期化テスト
+        console.log('🔍 CSS gradient対応状況:', {
+            gradientSupport: CSS.supports('background', 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'),
+            backdropFilter: CSS.supports('backdrop-filter', 'blur(10px)'),
+            viewport: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+        });
+        
+        // オーバーレイ表示テスト
+        setTimeout(() => {
+            console.log('🎯 オーバーレイ表示テスト - 3秒後に透明度変更');
+        }, 1000);
+        
+        setTimeout(() => {
+            document.getElementById('overlay').style.background = 'rgba(0, 0, 0, 0.1)';
+            console.log('✅ オーバーレイ透明度変更完了');
+        }, 3000);
+    </script>
+</body>
+</html>

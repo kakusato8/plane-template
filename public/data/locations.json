@@ -1,0 +1,524 @@
+[
+  {
+    "id": "nasca",
+    "name": "ナスカ高原",
+    "nameEn": "Nazca Plateau",
+    "coords": {
+      "lat": -14.739,
+      "lng": -75.130
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ミステリアス", "古代遺跡", "砂漠", "エピック"],
+    "description": "巨大な地上絵で有名な神秘的な高原地帯",
+    "country": "ペルー",
+    "region": "南米",
+    "timeZone": "America/Lima",
+    "bestVisitTime": ["4月-6月", "9月-11月"],
+    "culturalSignificance": "ナスカ文明の謎に満ちた遺産"
+  },
+  {
+    "id": "paris-eiffel",
+    "name": "エッフェル塔",
+    "nameEn": "Eiffel Tower",
+    "coords": {
+      "lat": 48.8584,
+      "lng": 2.2945
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["ロマンチック", "都市夜景", "ノスタルジック", "ゴールド"],
+    "description": "パリのシンボル、愛と芸術の街の象徴",
+    "country": "フランス",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Paris",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "フランス革命から現代までの歴史の証人"
+  },
+  {
+    "id": "sannai-maruyama",
+    "name": "三内丸山遺跡",
+    "nameEn": "Sannai-Maruyama Site",
+    "coords": {
+      "lat": 40.8178,
+      "lng": 140.7136
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ミステリアス", "古代遺跡", "森林", "エピック", "グリーントーン"],
+    "description": "縄文時代最大級の集落遺跡、古代日本の叡智",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["5月-6月", "9月-10月"],
+    "culturalSignificance": "縄文文化の高度さを物語る貴重な遺産"
+  },
+  {
+    "id": "reykjavik",
+    "name": "レイキャビク",
+    "nameEn": "Reykjavik",
+    "coords": {
+      "lat": 64.1466,
+      "lng": -21.9426
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["セレーン", "氷原", "都市夜景", "空", "ブルートーン"],
+    "description": "世界最北の首都、オーロラと地熱の街",
+    "country": "アイスランド",
+    "region": "北欧",
+    "timeZone": "Atlantic/Reykjavik",
+    "bestVisitTime": ["6月-8月", "11月-3月"],
+    "culturalSignificance": "バイキング文化の現代的継承地"
+  },
+  {
+    "id": "giza",
+    "name": "ギザのピラミッド",
+    "nameEn": "Great Pyramid of Giza",
+    "coords": {
+      "lat": 29.9792,
+      "lng": 31.1342
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["エピック", "砂漠", "古代遺跡", "ミステリアス", "ゴールド"],
+    "description": "古代世界七不思議唯一の現存建造物",
+    "country": "エジプト",
+    "region": "中東・アフリカ",
+    "timeZone": "Africa/Cairo",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "古代エジプト文明の最高傑作"
+  },
+  {
+    "id": "neotokyo",
+    "name": "ネオ東京",
+    "nameEn": "Neo Tokyo",
+    "coords": {
+      "lat": 35.6762,
+      "lng": 139.6503
+    },
+    "type": "fictional",
+    "weight": 5,
+    "atmosphere": ["近未来都市", "ネオン", "ダーク", "ビビッド"],
+    "description": "2050年の東京、AIと人間が共存する未来都市",
+    "country": "未来日本",
+    "region": "サイバー空間",
+    "timeZone": "Future/Tokyo",
+    "bestVisitTime": ["常時"],
+    "culturalSignificance": "テクノロジーと伝統文化の融合実験地"
+  },
+  {
+    "id": "floating-gardens",
+    "name": "浮遊庭園都市エアリア",
+    "nameEn": "Floating Gardens of Aeria",
+    "coords": {
+      "lat": 0.0,
+      "lng": 0.0
+    },
+    "type": "fictional",
+    "weight": 4,
+    "atmosphere": ["セレーン", "空", "架空都市", "パステル", "ジョイフル"],
+    "description": "雲海に浮かぶ幻想的な空中庭園都市",
+    "country": "エアリア王国",
+    "region": "天空界",
+    "timeZone": "Sky/Eternal",
+    "bestVisitTime": ["永遠の春"],
+    "culturalSignificance": "自然と調和した理想郷"
+  },
+  {
+    "id": "crystal-caves",
+    "name": "クリスタル洞窟都市ルミナ",
+    "nameEn": "Crystal Cave City of Lumina",
+    "coords": {
+      "lat": -45.0,
+      "lng": 170.0
+    },
+    "type": "fictional",
+    "weight": 3,
+    "atmosphere": ["ミステリアス", "洞窟", "ビビッド", "メランコリック"],
+    "description": "地底深くに眠る水晶で築かれた光の都市",
+    "country": "地底王国",
+    "region": "アンダーワールド",
+    "timeZone": "Underground/Lumina",
+    "bestVisitTime": ["光の祭りの時"],
+    "culturalSignificance": "古代の叡智を守る賢者たちの住処"
+  },
+  {
+    "id": "steam-harbor",
+    "name": "スチームパンク港町コギトエルゴ",
+    "nameEn": "Steampunk Harbor of Cogito Ergo",
+    "coords": {
+      "lat": 51.5074,
+      "lng": -0.1278
+    },
+    "type": "fictional",
+    "weight": 6,
+    "atmosphere": ["ノスタルジック", "路地裏", "セピア", "メランコリック"],
+    "description": "蒸気機関が支配するビクトリア朝風の工業港町",
+    "country": "スチーム帝国",
+    "region": "オルタナティブ・ヨーロッパ",
+    "timeZone": "Steam/London",
+    "bestVisitTime": ["霧の季節"],
+    "culturalSignificance": "産業革命の別世界的進化"
+  },
+  {
+    "id": "aurora-village",
+    "name": "オーロラの村トゥンドラ",
+    "nameEn": "Aurora Village of Tundra",
+    "coords": {
+      "lat": 69.2391,
+      "lng": -106.0471
+    },
+    "type": "fictional",
+    "weight": 5,
+    "atmosphere": ["セレーン", "氷原", "空", "オーロラ", "ブルートーン"],
+    "description": "永遠のオーロラが踊る極北の幻想村落",
+    "country": "極北連邦",
+    "region": "永久凍土圏",
+    "timeZone": "Arctic/Aurora",
+    "bestVisitTime": ["極夜の季節"],
+    "culturalSignificance": "自然現象と共生する神秘の民族"
+  },
+  {
+    "id": "venice",
+    "name": "ヴェネツィア",
+    "nameEn": "Venice",
+    "coords": {
+      "lat": 45.4408,
+      "lng": 12.3155
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["ロマンチック", "ノスタルジック", "都市夜景", "海辺", "セピア"],
+    "description": "水の都として知られる美しい運河都市",
+    "country": "イタリア",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Rome",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "ルネサンス期の海洋共和国の遺産"
+  },
+  {
+    "id": "mount-fuji",
+    "name": "富士山",
+    "nameEn": "Mount Fuji",
+    "coords": {
+      "lat": 35.3606,
+      "lng": 138.7274
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["セレーン", "エピック", "山岳", "ブルートーン"],
+    "description": "日本最高峰の霊峰、信仰と芸術の象徴",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["7月-9月"],
+    "culturalSignificance": "日本文化と精神性の象徴"
+  },
+  {
+    "id": "chernobyl",
+    "name": "チェルノブイリ立入禁止区域",
+    "nameEn": "Chernobyl Exclusion Zone",
+    "coords": {
+      "lat": 51.2763,
+      "lng": 30.2218
+    },
+    "type": "real",
+    "weight": 3,
+    "atmosphere": ["ダーク", "ミステリアス", "森林", "グリーントーン", "モノクロ"],
+    "description": "原発事故後に野生動物の楽園となった立入禁止区域",
+    "country": "ウクライナ",
+    "region": "東ヨーロッパ",
+    "timeZone": "Europe/Kiev",
+    "bestVisitTime": ["立入禁止"],
+    "culturalSignificance": "人間と自然の関係を問い直す場所"
+  },
+  {
+    "id": "maldives",
+    "name": "モルディブ",
+    "nameEn": "Maldives",
+    "coords": {
+      "lat": 3.2028,
+      "lng": 73.2207
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["セレーン", "メランコリック", "海辺", "ブルートーン", "パステル"],
+    "description": "インド洋に浮かぶ美しいサンゴ礁の島国",
+    "country": "モルディブ",
+    "region": "南アジア",
+    "timeZone": "Indian/Maldives",
+    "bestVisitTime": ["11月-4月"],
+    "culturalSignificance": "地球温暖化の最前線に立つ楽園"
+  },
+  {
+    "id": "colosseum",
+    "name": "コロッセオ",
+    "nameEn": "Colosseum",
+    "coords": {
+      "lat": 41.8902,
+      "lng": 12.4922
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["エピック", "ダーク", "古代遺跡", "アースカラー", "レッドトーン"],
+    "description": "古代ローマ帝国の威光を示す巨大円形闘技場",
+    "country": "イタリア",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Rome",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "古代ローマの栄光と残酷さの象徴"
+  },
+  {
+    "id": "bermuda-triangle",
+    "name": "バミューダトライアングル",
+    "nameEn": "Bermuda Triangle",
+    "coords": {
+      "lat": 25.0000,
+      "lng": -71.0000
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ミステリアス", "セレーン", "海辺", "空", "ブルートーン"],
+    "description": "謎の失踪事件で有名な大西洋の海域",
+    "country": "公海",
+    "region": "北大西洋",
+    "timeZone": "Atlantic/Bermuda",
+    "bestVisitTime": ["4月-11月"],
+    "culturalSignificance": "現代の都市伝説と科学の接点"
+  },
+  {
+    "id": "great-wall",
+    "name": "万里の長城",
+    "nameEn": "Great Wall of China",
+    "coords": {
+      "lat": 40.4319,
+      "lng": 116.5704
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["エピック", "古代遺跡", "山岳", "ミステリアス"],
+    "description": "中国古代の巨大な城壁遺跡",
+    "country": "中国",
+    "region": "東アジア",
+    "timeZone": "Asia/Shanghai",
+    "bestVisitTime": ["4月-5月", "9月-10月"],
+    "culturalSignificance": "中華文明の壮大な防衛建築"
+  },
+  {
+    "id": "uluru",
+    "name": "ウルル（エアーズロック）",
+    "nameEn": "Uluru (Ayers Rock)",
+    "coords": {
+      "lat": -25.3448,
+      "lng": 131.0369
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "セレーン", "砂漠", "ミステリアス"],
+    "description": "オーストラリア中央部の聖なる一枚岩",
+    "country": "オーストラリア",
+    "region": "オセアニア",
+    "timeZone": "Australia/Darwin",
+    "bestVisitTime": ["4月-9月"],
+    "culturalSignificance": "アボリジニの聖地と自然の神秘"
+  },
+  {
+    "id": "taj-mahal",
+    "name": "タージマハル",
+    "nameEn": "Taj Mahal",
+    "coords": {
+      "lat": 27.1751,
+      "lng": 78.0421
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["ロマンチック", "メランコリック", "古代遺跡", "エピック"],
+    "description": "愛の象徴として建てられた白亜の霊廟",
+    "country": "インド",
+    "region": "南アジア",
+    "timeZone": "Asia/Kolkata",
+    "bestVisitTime": ["10月-3月"],
+    "culturalSignificance": "ムガル建築の最高傑作"
+  },
+  {
+    "id": "tromso",
+    "name": "トロムソ",
+    "nameEn": "Tromsø",
+    "coords": {
+      "lat": 69.6492,
+      "lng": 18.9553
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["セレーン", "氷原", "空", "ミステリアス"],
+    "description": "白夜とオーロラの北極圏都市",
+    "country": "ノルウェー",
+    "region": "北欧",
+    "timeZone": "Europe/Oslo",
+    "bestVisitTime": ["5月-7月", "11月-3月"],
+    "culturalSignificance": "極地研究と北極文化の中心地"
+  },
+  {
+    "id": "easter-island",
+    "name": "イースター島",
+    "nameEn": "Easter Island (Rapa Nui)",
+    "coords": {
+      "lat": -27.1127,
+      "lng": -109.3497
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ミステリアス", "エピック", "海辺", "古代遺跡"],
+    "description": "モアイ像で有名な太平洋の孤島",
+    "country": "チリ",
+    "region": "南米",
+    "timeZone": "Pacific/Easter",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "ポリネシア文明の謎を秘めた島"
+  },
+  {
+    "id": "sagrada-familia",
+    "name": "サグラダファミリア",
+    "nameEn": "Sagrada Familia",
+    "coords": {
+      "lat": 41.4036,
+      "lng": 2.1744
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "ロマンチック", "都市夜景", "ミステリアス"],
+    "description": "ガウディの未完成大聖堂",
+    "country": "スペイン",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Madrid",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "モダニズム建築の傑作"
+  },
+  {
+    "id": "costa-rica",
+    "name": "コスタリカ熱帯雨林",
+    "nameEn": "Costa Rica Rainforest",
+    "coords": {
+      "lat": 9.7489,
+      "lng": -83.7534
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ジョイフル", "セレーン", "森林", "空"],
+    "description": "ハチドリが舞う中米の生物多様性の宝庫",
+    "country": "コスタリカ",
+    "region": "中米",
+    "timeZone": "America/Costa_Rica",
+    "bestVisitTime": ["12月-4月"],
+    "culturalSignificance": "エコツーリズムの聖地"
+  },
+  {
+    "id": "sundarbans",
+    "name": "シュンドルボン",
+    "nameEn": "Sundarbans",
+    "coords": {
+      "lat": 21.9497,
+      "lng": 89.1833
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ミステリアス", "ダーク", "森林", "海辺", "エピック"],
+    "description": "ベンガルトラが住む世界最大のマングローブ林",
+    "country": "バングラデシュ",
+    "region": "南アジア",
+    "timeZone": "Asia/Dhaka",
+    "bestVisitTime": ["11月-2月"],
+    "culturalSignificance": "人と野生動物の共存の象徴"
+  },
+  {
+    "id": "pompeii",
+    "name": "ポンペイ遺跡",
+    "nameEn": "Pompeii",
+    "coords": {
+      "lat": 40.7489,
+      "lng": 14.4918
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["ミステリアス", "メランコリック", "古代遺跡", "エピック"],
+    "description": "火山灰で保存された古代ローマの都市",
+    "country": "イタリア",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Rome",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "古代ローマ文明の生きた証拠"
+  },
+  {
+    "id": "kiyomizu-temple",
+    "name": "清水寺",
+    "nameEn": "Kiyomizu-dera Temple",
+    "coords": {
+      "lat": 34.9949,
+      "lng": 135.7849
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["セレーン", "ノスタルジック", "古代遺跡", "森林"],
+    "description": "京都を一望する古の舞台",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["3月-5月", "11月"],
+    "culturalSignificance": "日本仏教建築の精華"
+  },
+  {
+    "id": "patagonia-glacier",
+    "name": "ペリト・モレノ氷河",
+    "nameEn": "Perito Moreno Glacier",
+    "coords": {
+      "lat": -50.4696,
+      "lng": -73.0275
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "セレーン", "氷原", "湖"],
+    "description": "成長し続ける生きた氷河",
+    "country": "アルゼンチン",
+    "region": "南米",
+    "timeZone": "America/Argentina/Buenos_Aires",
+    "bestVisitTime": ["10月-3月"],
+    "culturalSignificance": "地球の氷河時代の生き証人"
+  },
+  {
+    "id": "cappadocia",
+    "name": "カッパドキア",
+    "nameEn": "Cappadocia",
+    "coords": {
+      "lat": 38.3733,
+      "lng": 34.7325
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["ミステリアス", "エピック", "古代遺跡"],
+    "description": "地下都市と妖精の煙突の神秘の大地",
+    "country": "トルコ",
+    "region": "中東",
+    "timeZone": "Europe/Istanbul",
+    "bestVisitTime": ["4月-6月", "9月-11月"],
+    "culturalSignificance": "初期キリスト教文化の隠れ家"
+  },
+  {
+    "id": "cenote-yucatan",
+    "name": "ユカタン半島セノーテ",
+    "nameEn": "Yucatan Cenotes",
+    "coords": {
+      "lat": 20.6843,
+      "lng": -88.5678
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ミステリアス", "セレーン", "古代遺跡", "湖", "ロマンチック"],
+    "description": "マヤ文明の聖なる地下湖群",
+    "country": "メキシコ",
+    "region": "中米",
+    "timeZone": "America/Cancun",
+    "bestVisitTime": ["11月-4月"],
+    "culturalSignificance": "古代マヤの宗教的聖地"
+  }
+]

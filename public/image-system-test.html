@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurioCity - 画像システム診断</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .test-container {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .test-item {
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 8px;
+            background: #2a2a2a;
+        }
+        .test-item h3 {
+            margin-top: 0;
+            color: #4facfe;
+        }
+        .image-container {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            background: #333;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .status {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        .loading { color: #ffeb3b; }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+        .url-display {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            word-break: break-all;
+        }
+        button {
+            background: #4facfe;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #3d8bfe;
+        }
+        .log-container {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>CurioCity - 画像システム診断</h1>
+    <p>各画像ソースの可用性と表示テストを行います。</p>
+    
+    <button onclick="runAllTests()">🧪 全テスト実行</button>
+    <button onclick="clearLog()">🗑️ ログクリア</button>
+    <button onclick="testRandomSources()">🎲 ランダム画像テスト</button>
+    
+    <div class="test-container" id="testContainer">
+        <!-- テスト項目がここに動的に生成される -->
+    </div>
+    
+    <div class="log-container" id="logContainer">
+        <div>診断ログがここに表示されます...</div>
+    </div>
+
+    <script>
+        const testSources = [
+            {
+                name: 'Unsplash Source',
+                description: '高品質写真、雰囲気ベース検索',
+                urls: [
+                    'https://source.unsplash.com/400x200/?nature',
+                    'https://source.unsplash.com/400x200/?city',
+                    'https://source.unsplash.com/400x200/?mysterious',
+                ]
+            },
+            {
+                name: 'Via Placeholder',
+                description: 'シンプルなプレースホルダー画像',
+                urls: [
+                    'https://via.placeholder.com/400x200/667eea/ffffff?text=Test+1',
+                    'https://via.placeholder.com/400x200/f093fb/ffffff?text=Test+2',
+                    'https://via.placeholder.com/400x200/4facfe/ffffff?text=Test+3',
+                ]
+            },
+            {
+                name: 'DummyImage.com',
+                description: 'カスタマイズ可能なダミー画像',
+                urls: [
+                    'https://dummyimage.com/400x200/667eea/ffffff.png&text=Mysterious',
+                    'https://dummyimage.com/400x200/f093fb/ffffff.png&text=Romantic',
+                    'https://dummyimage.com/400x200/4facfe/ffffff.png&text=Epic',
+                ]
+            },
+            {
+                name: 'Picsum Photos',
+                description: 'Lorem Ipsum画像（問題のあるサービス）',
+                urls: [
+                    'https://picsum.photos/400/200?random=1',
+                    'https://picsum.photos/400/200?random=2',
+                    'https://picsum.photos/400/200?random=3',
+                ]
+            },
+            {
+                name: 'Gradient Fallback',
+                description: '動的グラデーション背景（常に成功）',
+                urls: [], // 特殊ケース
+                isGradient: true,
+                gradients: [
+                    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                ]
+            }
+        ];
+
+        function log(message) {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            logContainer.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('logContainer').innerHTML = '<div>ログをクリアしました...</div>';
+        }
+
+        function createTestItem(source, index) {
+            const container = document.getElementById('testContainer');
+            const testItem = document.createElement('div');
+            testItem.className = 'test-item';
+            testItem.id = `test-${index}`;
+            
+            testItem.innerHTML = `
+                <h3>${source.name}</h3>
+                <p>${source.description}</p>
+                <div class="image-container" id="container-${index}">
+                    <div class="status loading">待機中</div>
+                </div>
+                <div class="url-display" id="url-${index}">まだテストしていません</div>
+                <button onclick="testSource(${index})">🧪 テスト実行</button>
+            `;
+            
+            container.appendChild(testItem);
+        }
+
+        function testSource(index) {
+            const source = testSources[index];
+            const container = document.getElementById(`container-${index}`);
+            const statusEl = container.querySelector('.status');
+            const urlDisplay = document.getElementById(`url-${index}`);
+            
+            log(`🧪 ${source.name} のテストを開始...`);
+            statusEl.textContent = '読み込み中...';
+            statusEl.className = 'status loading';
+            
+            if (source.isGradient) {
+                // グラデーション背景のテスト
+                const gradient = source.gradients[0];
+                container.innerHTML = `
+                    <div class="gradient-bg" style="background: ${gradient}; width: 100%; height: 100%;">
+                        グラデーション背景
+                    </div>
+                `;
+                urlDisplay.textContent = `Gradient: ${gradient}`;
+                log(`✅ ${source.name} - グラデーション表示成功`);
+                return;
+            }
+            
+            // 一般的な画像URLのテスト
+            const testUrl = source.urls[0];
+            urlDisplay.textContent = `Testing: ${testUrl}`;
+            
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            
+            const timeout = setTimeout(() => {
+                statusEl.textContent = 'タイムアウト';
+                statusEl.className = 'status error';
+                log(`⏰ ${source.name} - タイムアウト (10秒)`);
+            }, 10000);
+            
+            img.onload = () => {
+                clearTimeout(timeout);
+                container.innerHTML = `
+                    <img src="${testUrl}" alt="${source.name}">
+                    <div class="status success">成功</div>
+                `;
+                urlDisplay.textContent = `✅ Success: ${testUrl}`;
+                log(`✅ ${source.name} - 画像読み込み成功`);
+            };
+            
+            img.onerror = (error) => {
+                clearTimeout(timeout);
+                statusEl.textContent = '失敗';
+                statusEl.className = 'status error';
+                urlDisplay.textContent = `❌ Failed: ${testUrl}`;
+                log(`❌ ${source.name} - 画像読み込み失敗: ${error.message || 'Unknown error'}`);
+            };
+            
+            img.src = testUrl;
+        }
+
+        function runAllTests() {
+            log('🚀 全ての画像ソーステストを開始...');
+            testSources.forEach((_, index) => {
+                setTimeout(() => testSource(index), index * 1000); // 1秒ずつ遅延
+            });
+        }
+
+        function testRandomSources() {
+            log('🎲 ランダム画像テストを実行...');
+            testSources.forEach((source, index) => {
+                if (!source.isGradient && source.urls.length > 1) {
+                    const randomUrl = source.urls[Math.floor(Math.random() * source.urls.length)];
+                    const container = document.getElementById(`container-${index}`);
+                    const urlDisplay = document.getElementById(`url-${index}`);
+                    
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    
+                    img.onload = () => {
+                        container.innerHTML = `
+                            <img src="${randomUrl}" alt="${source.name} Random">
+                            <div class="status success">ランダム成功</div>
+                        `;
+                        urlDisplay.textContent = `🎲 Random Success: ${randomUrl}`;
+                        log(`🎲 ${source.name} - ランダム画像成功`);
+                    };
+                    
+                    img.onerror = () => {
+                        urlDisplay.textContent = `🎲 Random Failed: ${randomUrl}`;
+                        log(`🎲 ${source.name} - ランダム画像失敗`);
+                    };
+                    
+                    img.src = randomUrl;
+                }
+            });
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            testSources.forEach((source, index) => {
+                createTestItem(source, index);
+            });
+            log('🎯 画像システム診断ツールを初期化しました');
+            log('💡 「全テスト実行」ボタンで各画像ソースの動作確認ができます');
+        });
+    </script>
+</body>
+</html>

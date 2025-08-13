@@ -1,0 +1,36 @@
+{
+  "name": "CurioCity - 幻想的な都市を旅する雑学の世界",
+  "short_name": "CurioCity",
+  "description": "毎回異なる場所に降り立ち、その地に隠された雑学を発見しましょう。あなたの知的好奇心が新しい世界への扉を開きます。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f23",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["education", "entertainment", "games"],
+  "lang": "ja",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "新しい冒険を始める",
+      "short_name": "新しい冒険",
+      "description": "ランダムな地点から新しい雑学の旅を始める",
+      "url": "/",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

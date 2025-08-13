@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Picsum Photos Test</title>
+</head>
+<body>
+    <h1>Picsum Photos API Test</h1>
+    <div id="status">Loading...</div>
+    <div id="images"></div>
+    
+    <script>
+        console.log('🧪 Picsum Photos API テスト開始');
+        
+        const imageUrls = [
+            'https://picsum.photos/id/1/400/300',
+            'https://picsum.photos/id/10/400/300',
+            'https://picsum.photos/id/100/400/300'
+        ];
+        
+        let loadedCount = 0;
+        const totalCount = imageUrls.length;
+        
+        function updateStatus(message) {
+            document.getElementById('status').innerHTML = message;
+            console.log(message);
+        }
+        
+        imageUrls.forEach((url, index) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            
+            img.onload = function() {
+                loadedCount++;
+                console.log(`✅ 画像 ${index + 1} 読み込み成功:`, url);
+                
+                // 画像を表示
+                img.style.margin = '10px';
+                img.style.border = '2px solid green';
+                document.getElementById('images').appendChild(img);
+                
+                updateStatus(`プリロード: ${loadedCount}/${totalCount} 完了`);
+                
+                if (loadedCount === totalCount) {
+                    updateStatus(`🎉 全ての画像読み込み成功！ (${totalCount}/${totalCount})`);
+                }
+            };
+            
+            img.onerror = function(error) {
+                console.error(`❌ 画像 ${index + 1} 読み込み失敗:`, url, error);
+                
+                img.style.margin = '10px';
+                img.style.border = '2px solid red';
+                img.style.background = '#ffcccc';
+                img.style.width = '400px';
+                img.style.height = '300px';
+                img.alt = `Error loading ${url}`;
+                document.getElementById('images').appendChild(img);
+                
+                updateStatus(`❌ 画像読み込み失敗: ${url}`);
+            };
+            
+            console.log(`🔄 画像 ${index + 1} 読み込み開始:`, url);
+            img.src = url;
+        });
+        
+        // ネットワーク情報を表示
+        if (navigator.connection) {
+            console.log('📶 ネットワーク情報:', {
+                effectiveType: navigator.connection.effectiveType,
+                downlink: navigator.connection.downlink,
+                rtt: navigator.connection.rtt,
+                saveData: navigator.connection.saveData
+            });
+        }
+    </script>
+</body>
+</html>
