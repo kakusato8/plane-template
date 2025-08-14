@@ -243,7 +243,7 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
 
   // 🎨 SerenaMCP: シンプルな画像読み込み（複雑なフォールバック不要）
   const loadImageSimple = async (urls: string[]): Promise<string> => {
-    console.log('🎨 シンプル画像読み込み開始:', urls.length, '個のURL');
+    console.log('🎨 シンプル画像読み込み開始:', urls.length, '個のURL', urls);
     
     if (urls.length === 0) {
       console.log('🎨 URL未提供 - フォールバック背景使用');
@@ -255,53 +255,68 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
 
     // 最初のURLを試行（Unsplash）
     const firstUrl = urls[0];
+    console.log('🎨 Unsplash試行:', firstUrl);
     try {
       const img = new Image();
       img.crossOrigin = 'anonymous';
       
       const loadPromise = new Promise<string>((resolve, reject) => {
-        img.onload = () => resolve(firstUrl);
-        img.onerror = () => reject(new Error('Image load failed'));
+        img.onload = () => {
+          console.log('✅ Unsplash読み込み成功:', firstUrl);
+          resolve(firstUrl);
+        };
+        img.onerror = (error) => {
+          console.log('⚠️ Unsplash読み込み失敗:', firstUrl, error);
+          reject(new Error('Image load failed'));
+        };
       });
 
       img.src = firstUrl;
       
-      // 3秒タイムアウト
+      // 8秒タイムアウト（Unsplashは応答が遅い場合があるため）
       const loadedUrl = await Promise.race([
         loadPromise,
         new Promise<never>((_, reject) => 
-          setTimeout(() => reject(new Error('Timeout')), 3000)
+          setTimeout(() => reject(new Error('Timeout')), 8000)
         )
       ]);
 
       return loadedUrl;
 
     } catch (error) {
-      console.log('⚠️ Unsplash失敗、Picsumを試行');
+      console.log('⚠️ Unsplash失敗（', error instanceof Error ? error.message : 'Unknown', '）、Picsumを試行');
       
       // Picsumを試行
       if (urls.length > 1) {
+        console.log('🎨 Picsum試行:', urls[1]);
         try {
           const img = new Image();
           img.crossOrigin = 'anonymous';
           
           const loadPromise = new Promise<string>((resolve, reject) => {
-            img.onload = () => resolve(urls[1]);
-            img.onerror = () => reject(new Error('Image load failed'));
+            img.onload = () => {
+              console.log('✅ Picsum読み込み成功:', urls[1]);
+              resolve(urls[1]);
+            };
+            img.onerror = (error) => {
+              console.log('⚠️ Picsum読み込み失敗:', urls[1], error);
+              reject(new Error('Image load failed'));
+            };
           });
 
           img.src = urls[1];
           
+          // 5秒タイムアウト（Picsumは通常高速）
           const loadedUrl = await Promise.race([
             loadPromise,
             new Promise<never>((_, reject) => 
-              setTimeout(() => reject(new Error('Timeout')), 3000)
+              setTimeout(() => reject(new Error('Timeout')), 5000)
             )
           ]);
 
           return loadedUrl;
         } catch (error) {
-          console.log('⚠️ Picsum失敗、フォールバック背景使用');
+          console.log('⚠️ Picsum失敗（', error instanceof Error ? error.message : 'Unknown', '）、フォールバック背景使用');
         }
       }
     }
@@ -339,7 +354,8 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
     };
     
     const searchTerm = (searchTerms as any)[emotion] || 'landscape';
-    urls.push(`https://source.unsplash.com/1200x800/?${searchTerm}`);
+    // より信頼性の高いUnsplash URL（シードでランダム性を追加）
+    urls.push(`https://source.unsplash.com/1200x800/?${searchTerm}&sig=${seed}`);
     
     // 2. Picsum - 美しい写真ID（シンプル版）
     const photoIds = [1, 2, 3, 10, 15, 20, 24, 30, 42, 48];
