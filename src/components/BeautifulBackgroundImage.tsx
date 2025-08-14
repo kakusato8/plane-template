@@ -245,9 +245,9 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
     }
   };
 
-  // 🎨 SerenaMCP: シンプルな画像読み込み（複雑なフォールバック不要）
+  // 🎨 SerenaMCP: Picsum専用画像読み込み（Unsplash除外）
   const loadImageSimple = async (urls: string[]): Promise<string> => {
-    console.log('🎨 シンプル画像読み込み開始:', urls.length, '個のURL', urls);
+    console.log('🎨 Picsum専用画像読み込み開始:', urls.length, '個のURL', urls);
     
     if (urls.length === 0) {
       console.log('🎨 URL未提供 - フォールバック背景使用');
@@ -257,9 +257,10 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
       return 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
     }
 
-    // 最初のURLを試行（Unsplash）
-    const firstUrl = urls[0];
-    console.log('🎨 Unsplash試行:', firstUrl);
+    // Picsum URLを順次試行
+    for (let i = 0; i < urls.length; i++) {
+      const url = urls[i];
+      console.log(`🎨 Picsum試行 ${i + 1}/${urls.length}:`, url);
     try {
       const img = new Image();
       // CORS問題を回避するためcrossOriginを無効化
@@ -267,12 +268,12 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
       
       const loadPromise = new Promise<string>((resolve, reject) => {
         img.onload = () => {
-          console.log('✅ Unsplash読み込み成功:', firstUrl);
-          resolve(firstUrl);
+          console.log('✅ Picsum読み込み成功:', url);
+          resolve(url);
         };
         img.onerror = (error) => {
-          console.error('⚠️ Unsplash読み込み失敗:', {
-            url: firstUrl,
+          console.error('⚠️ Picsum読み込み失敗:', {
+            url: url,
             error: error,
             naturalWidth: img.naturalWidth,
             naturalHeight: img.naturalHeight,
@@ -283,62 +284,28 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
         };
       });
 
-      img.src = firstUrl;
+      img.src = url;
       
       // タイムアウトなし - 画像読み込みを待つ
       const loadedUrl = await loadPromise;
 
       return loadedUrl;
 
-    } catch (error) {
-      console.log('⚠️ Unsplash失敗（', error instanceof Error ? error.message : 'Unknown', '）、Picsumを試行');
-      
-      // Picsumを試行
-      if (urls.length > 1) {
-        console.log('🎨 Picsum試行:', urls[1]);
-        try {
-          const img = new Image();
-          // CORS問題を回避するためcrossOriginを無効化
-          // img.crossOrigin = 'anonymous';
-          
-          const loadPromise = new Promise<string>((resolve, reject) => {
-            img.onload = () => {
-              console.log('✅ Picsum読み込み成功:', urls[1]);
-              resolve(urls[1]);
-            };
-            img.onerror = (error) => {
-              console.error('⚠️ Picsum読み込み失敗:', {
-                url: urls[1],
-                error: error,
-                naturalWidth: img.naturalWidth,
-                naturalHeight: img.naturalHeight,
-                complete: img.complete,
-                crossOrigin: img.crossOrigin
-              });
-              reject(new Error('Image load failed'));
-            };
-          });
-
-          img.src = urls[1];
-          
-          // タイムアウトなし - Picsum画像読み込みを待つ
-          const loadedUrl = await loadPromise;
-
-          return loadedUrl;
-        } catch (error) {
-          console.log('⚠️ Picsum失敗（', error instanceof Error ? error.message : 'Unknown', '）、フォールバック背景使用');
-        }
+      } catch (error) {
+        console.log('⚠️ Picsum失敗（', error instanceof Error ? error.message : 'Unknown', '）、次のURLを試行');
+        continue;
       }
     }
 
     // 全て失敗時はフォールバック
-    if (trivia && location) {
-      return getInstantBeautifulBackground(trivia, location);
+    console.log('🎨 全Picsum URL失敗 - フォールバック背景使用');
+    if (trivia) {
+      return getInstantBeautifulBackground(trivia);
     }
     return 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
   };
 
-  // 🎨 SerenaMCP: シンプルな画像URL生成（UnsplashとPicsumのみ）
+  // 🎨 SerenaMCP: Picsum専用画像URL生成（Unsplash除外）
   const generateSimpleImageUrls = (targetTrivia?: TriviaItem, targetLocation?: Location): string[] => {
     const useTrivia = targetTrivia || trivia;
     const useLocation = targetLocation || location;
@@ -374,18 +341,40 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
       locationName: useLocation.name
     });
     
-    // 複数のUnsplash URL形式をテスト
-    urls.push(`https://source.unsplash.com/1200x800/?${searchTerm}`);
-    urls.push(`https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop&crop=center`);
-    urls.push(`https://source.unsplash.com/featured/1200x800/?${searchTerm}`);
+    // 🚫 Unsplash無効（サービス問題のため）- Picsumのみ使用
+    console.log('🚫 Unsplash無効 - Picsumのみ使用（', searchTerm, '感情用）');
     
-    // 2. Picsum - 美しい写真ID（シンプル版）
-    const photoIds = [1, 2, 3, 10, 15, 20, 24, 30, 42, 48];
-    const selectedId = photoIds[seed % photoIds.length];
-    urls.push(`https://picsum.photos/id/${selectedId}/1200/800`);
+    // 1. 感情に基づく美しい写真ID選択
+    const emotionPhotoMap: Record<string, number[]> = {
+      'ミステリアス': [13, 20, 42, 78, 82, 96, 104, 112],
+      'ロマンチック': [2, 24, 48, 60, 88, 100, 116, 122],
+      'エピック': [3, 15, 30, 65, 85, 90, 106, 120],
+      'ノスタルジック': [4, 22, 50, 63, 76, 86, 102, 114],
+      'セレーン': [5, 25, 49, 72, 74, 94, 108, 118],
+      'ダーク': [10, 26, 52, 64, 83, 92, 110, 124],
+      'ジョイフル': [1, 28, 54, 70, 84, 98, 126, 130],
+      'メランコリック': [29, 56, 58, 75, 80, 88, 112, 128]
+    };
     
-    // 3. フォールバック用のシンプルなPicsum
+    const emotionPhotos = emotionPhotoMap[emotion] || emotionPhotoMap['ミステリアス'];
+    
+    // 2. 複数のPicsum URLを生成（バリエーション豊富）
+    // ベース写真ID
+    const baseId = emotionPhotos[seed % emotionPhotos.length];
+    urls.push(`https://picsum.photos/id/${baseId}/1200/800`);
+    
+    // 別の感情写真ID
+    const altId = emotionPhotos[(seed + 1) % emotionPhotos.length];
+    urls.push(`https://picsum.photos/id/${altId}/1200/800`);
+    
+    // ランダム写真（シード固定）
     urls.push(`https://picsum.photos/1200/800?random=${seed}`);
+    
+    // ブラー効果版（美しい効果）
+    urls.push(`https://picsum.photos/id/${baseId}/1200/800?blur=1`);
+    
+    // グレースケール版
+    urls.push(`https://picsum.photos/id/${altId}/1200/800?grayscale`);
     
     console.log('🎨 SerenaMCP: 生成されたURLリスト:', urls);
     return urls;
