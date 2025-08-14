@@ -203,9 +203,9 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
     setIsTransitioning(true);
 
     try {
-      // 外部画像URLを生成して読み込み試行
-      const photoUrls = generateReliablePhotoUrls(trivia, location);
-      const imageUrl = await loadPhotoWithFallback(photoUrls);
+      // シンプルな画像URLを生成して読み込み
+      const photoUrls = generateSimpleImageUrls(trivia, location);
+      const imageUrl = await loadImageSimple(photoUrls);
       
       // 成功した画像またはフォールバック背景を設定
       setCurrentImageUrl(imageUrl);
@@ -241,77 +241,80 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
     }
   };
 
-  // 🛡️ ERR_CONNECTION_REFUSED耐性強化画像読み込み（美しい外部画像優先）
-  const loadPhotoWithFallback = async (urls: string[]): Promise<string> => {
-    console.log('🛡️ ERR_CONNECTION_REFUSED耐性画像読み込み開始:', urls.length, '個のURL');
+  // 🎨 SerenaMCP: シンプルな画像読み込み（複雑なフォールバック不要）
+  const loadImageSimple = async (urls: string[]): Promise<string> => {
+    console.log('🎨 シンプル画像読み込み開始:', urls.length, '個のURL');
     
     if (urls.length === 0) {
-      console.log('🎨 URL未提供 - 美しいフォールバック背景使用');
+      console.log('🎨 URL未提供 - フォールバック背景使用');
       if (trivia && location) {
         return getInstantBeautifulBackground(trivia, location);
       }
       return 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
     }
 
-    // 外部画像を順次試行（ERR_CONNECTION_REFUSED対応）
-    for (let i = 0; i < urls.length; i++) {
-      const url = urls[i];
-      try {
-        console.log(`🎨 美しい画像読み込み試行 ${i + 1}/${urls.length}:`, url);
-        
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        
-        const loadPromise = new Promise<string>((resolve, reject) => {
-          img.onload = () => {
-            if (img.complete && img.naturalWidth > 0) {
-              console.log('✅ 美しい外部画像読み込み成功:', url);
-              resolve(url);
-            } else {
-              reject(new Error('Image not complete'));
-            }
-          };
+    // 最初のURLを試行（Unsplash）
+    const firstUrl = urls[0];
+    try {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      
+      const loadPromise = new Promise<string>((resolve, reject) => {
+        img.onload = () => resolve(firstUrl);
+        img.onerror = () => reject(new Error('Image load failed'));
+      });
+
+      img.src = firstUrl;
+      
+      // 3秒タイムアウト
+      const loadedUrl = await Promise.race([
+        loadPromise,
+        new Promise<never>((_, reject) => 
+          setTimeout(() => reject(new Error('Timeout')), 3000)
+        )
+      ]);
+
+      return loadedUrl;
+
+    } catch (error) {
+      console.log('⚠️ Unsplash失敗、Picsumを試行');
+      
+      // Picsumを試行
+      if (urls.length > 1) {
+        try {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
           
-          img.onerror = (error) => {
-            console.warn('⚠️ 外部画像接続失敗（ERR_CONNECTION_REFUSED等）:', {
-              url: url,
-              error: error,
-              timestamp: new Date().toISOString(),
-              imageElement: img
-            });
-            reject(new Error('Connection failed'));
-          };
-        });
+          const loadPromise = new Promise<string>((resolve, reject) => {
+            img.onload = () => resolve(urls[1]);
+            img.onerror = () => reject(new Error('Image load failed'));
+          });
 
-        img.src = url;
+          img.src = urls[1];
+          
+          const loadedUrl = await Promise.race([
+            loadPromise,
+            new Promise<never>((_, reject) => 
+              setTimeout(() => reject(new Error('Timeout')), 3000)
+            )
+          ]);
 
-        // 🛡️ ERR_CONNECTION_REFUSED用強化タイムアウト（5秒→8秒に延長）
-        const loadedUrl = await Promise.race([
-          loadPromise,
-          new Promise<never>((_, reject) => 
-            setTimeout(() => reject(new Error('Connection timeout')), 8000) // 3000ms → 8000ms さらに余裕を持たせる
-          )
-        ]);
-
-        return loadedUrl; // 成功時は外部画像を返す
-
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        console.warn(`⚠️ 美しい画像 ${i + 1} 読み込み失敗:`, url, errorMessage);
-        continue; // 次のURLを試行
+          return loadedUrl;
+        } catch (error) {
+          console.log('⚠️ Picsum失敗、フォールバック背景使用');
+        }
       }
     }
 
-    // 🎨 全ての外部画像が失敗した場合のみフォールバック
-    console.log('🎨 全外部画像失敗（ERR_CONNECTION_REFUSED等）- 美しいフォールバック背景使用');
+    // 全て失敗時はフォールバック
     if (trivia && location) {
       return getInstantBeautifulBackground(trivia, location);
     }
     return 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
   };
 
-  // 🎨 美しい外部画像URLリストを生成（ERR_CONNECTION_REFUSED耐性強化）
-  const generateReliablePhotoUrls = (targetTrivia?: TriviaItem, targetLocation?: Location): string[] => {
+  // 🎨 SerenaMCP: シンプルな画像URL生成（UnsplashとPicsumのみ）
+  const generateSimpleImageUrls = (targetTrivia?: TriviaItem, targetLocation?: Location): string[] => {
     const useTrivia = targetTrivia || trivia;
     const useLocation = targetLocation || location;
     
@@ -320,34 +323,28 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
     const urls: string[] = [];
     const seed = Math.abs(useTrivia.title.charCodeAt(0) + useLocation.name.charCodeAt(0));
 
-    console.log('🎨 美しい外部画像URL生成（ERR_CONNECTION_REFUSED耐性付き）');
-
-    // 1. Picsum Photos (最も安定) - 厳選された美しい写真ID
-    const beautifulPhotoIds = [1, 2, 3, 4, 5, 10, 13, 15, 20, 22, 24, 25, 26, 28, 29, 30, 42, 48, 49, 50];
-    const selectedId = beautifulPhotoIds[seed % beautifulPhotoIds.length];
-    urls.push(`https://picsum.photos/id/${selectedId}/1200/800`);
-    
-    // 2. より多くの美しい写真IDから選択
-    const morePhotoIds = [52, 54, 56, 58, 60, 62, 63, 64, 65, 70, 72, 74, 75, 76, 78, 82, 83, 84, 85, 88];
-    const selectedId2 = morePhotoIds[seed % morePhotoIds.length];
-    urls.push(`https://picsum.photos/id/${selectedId2}/1200/800`);
-
-    // 3. 感情タグに基づく写真選択
+    // 1. Unsplash - 感情タグに基づく検索
     const emotion = useTrivia.tags.emotion[0] || 'ミステリアス';
-    const emotionPhotoMap: Record<string, number[]> = {
-      'ミステリアス': [13, 20, 42, 78, 82],
-      'ロマンチック': [2, 24, 48, 60, 88],
-      'エピック': [3, 15, 30, 65, 85],
-      'セレーン': [5, 25, 49, 72, 74],
-      'ノスタルジック': [4, 22, 50, 63, 76],
-      'ダーク': [10, 26, 52, 64, 83],
-      'ジョイフル': [1, 28, 54, 70, 84],
-      'メランコリック': [29, 56, 58, 75, 82]
+    const setting = useTrivia.tags.setting[0] || 'landscape';
+    
+    const searchTerms = {
+      'ミステリアス': 'mysterious,dark,moody',
+      'ロマンチック': 'romantic,sunset,pink',
+      'エピック': 'epic,mountain,dramatic',
+      'ノスタルジック': 'vintage,nostalgic,sepia',
+      'セレーン': 'peaceful,calm,serene',
+      'ダーク': 'dark,night,shadow',
+      'ジョイフル': 'bright,colorful,happy',
+      'メランコリック': 'melancholic,grey,rain'
     };
     
-    const emotionPhotos = emotionPhotoMap[emotion] || emotionPhotoMap['ミステリアス'];
-    const emotionId = emotionPhotos[seed % emotionPhotos.length];
-    urls.push(`https://picsum.photos/id/${emotionId}/1200/800`);
+    const searchTerm = (searchTerms as any)[emotion] || 'landscape';
+    urls.push(`https://source.unsplash.com/1200x800/?${searchTerm}`);
+    
+    // 2. Picsum - 美しい写真ID（シンプル版）
+    const photoIds = [1, 2, 3, 10, 15, 20, 24, 30, 42, 48];
+    const selectedId = photoIds[seed % photoIds.length];
+    urls.push(`https://picsum.photos/id/${selectedId}/1200/800`);
 
     return urls;
   };

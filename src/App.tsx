@@ -13,7 +13,7 @@ import {
 } from './components/LazyComponents';
 import { ProgressiveDataLoader } from './utils/progressiveDataLoader';
 import { TriviaDisplaySystem } from './utils/triviaDisplaySystem';
-import { serenaMCPPreloadManager } from './utils/serenaMCPPreloadManager';
+// import { serenaMCPPreloadManager } from './utils/serenaMCPPreloadManager';
 import SerenaMCPDebugPanel from './components/SerenaMCPDebugPanel';
 // UserChoiceSystem削除 - Serena MCP
 import { useResponsive } from './hooks/useResponsive';
@@ -335,8 +335,8 @@ function App() {
           overlayOpacity={currentLocation.type === 'fictional' ? 0.5 : 0.3}
           trivia={currentTrivia}
           location={currentLocation}
-          nextTrivia={nextTrivia}
-          nextLocation={nextLocation}
+          nextTrivia={nextTrivia || undefined}
+          nextLocation={nextLocation || undefined}
           isImageLoading={isImageLoading}
           onImageLoadComplete={handleImageLoadComplete}
         >

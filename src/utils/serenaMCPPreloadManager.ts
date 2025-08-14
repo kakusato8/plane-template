@@ -79,7 +79,7 @@ export class SerenaMCPPreloadManager {
     const imageUrls = this.beautifulImageGenerator.generateBeautifulImageUrls(
       trivia, 
       location, 
-      { width: 1920, height: 1080, quality: 'high', style: 'natural' }
+      { width: 1200, height: 800 }
     );
 
     const task: PreloadTask = {
