@@ -1,4 +1,4 @@
-import type { TriviaItem, Location, UserChoice } from '../../types/trivia';
+import type { TriviaItem, Location } from '../../types/trivia';
 import { ImageSourceManager } from './imageSourceManager';
 
 /**
@@ -141,53 +141,10 @@ export class TriviaDisplaySystem {
     console.log('🚨 デフォルト緊急フォールバック使用');
     return `data:image/svg+xml;base64,${btoa(defaultSvg)}`;
   }
-  async generateMultipleBackgroundImageUrls(trivia: TriviaItem, location: Location): Promise<string[]> {
-    const atmosphereTags = [
-      ...trivia.tags.emotion,
-      ...trivia.tags.setting,
-      ...trivia.tags.palette
-    ];
-
-    const combinedAtmosphere = [...atmosphereTags, ...location.atmosphere];
-    const atmosphereHash = generateHashFromTags(combinedAtmosphere);
-    
-    const imageContext: ImageContext = {
-      trivia,
-      location,
-      width: 1920,
-      height: 1080,
-      quality: 'medium',
-      atmosphereHash
-    };
-
-    try {
-      const urls = await this.imageManager.getImageUrls(imageContext);
-      return urls.length > 0 ? urls : [this.generateFallbackImageUrl(trivia, location)];
-    } catch (error) {
-      console.warn('複数画像URL生成でエラー:', error);
-      return [this.generateFallbackImageUrl(trivia, location)];
-    }
-  }
 
   /**
    * フォールバック画像URL（従来方式）
    */
-  private generateFallbackImageUrl(trivia: TriviaItem, location: Location): string {
-    const atmosphereTags = [
-      ...trivia.tags.emotion,
-      ...trivia.tags.setting,
-      ...trivia.tags.palette
-    ];
-    const combinedAtmosphere = [...atmosphereTags, ...location.atmosphere];
-    const atmosphereHash = generateHashFromTags(combinedAtmosphere);
-    const imageId = (atmosphereHash % 1000) + 1;
-    
-    if (location.type === 'fictional') {
-      return `https://picsum.photos/id/${imageId}/1920/1080?blur=2`;
-    } else {
-      return `https://picsum.photos/id/${imageId}/1920/1080`;
-    }
-  }
 
   // generateHashFromTags は imageSourceManager.ts に移動済み
 
@@ -288,7 +245,7 @@ export class TriviaDisplaySystem {
   /**
    * 表示オプションを生成
    */
-  generateDisplayOptions(trivia: TriviaItem, location: Location) {
+  async generateDisplayOptions(trivia: TriviaItem, location: Location) {
     const relevanceScore = this.calculateRelevanceScore(trivia, location);
     const readingTime = this.estimateReadingTime(trivia);
     const complexity = this.calculateComplexityLevel(trivia);
@@ -297,7 +254,7 @@ export class TriviaDisplaySystem {
       relevanceScore,
       readingTime,
       complexity,
-      backgroundUrl: this.generateBackgroundImageUrl(trivia, location),
+      backgroundUrl: await this.generateBackgroundImageUrl(trivia, location),
       shouldShowAnimation: relevanceScore > 20,
       transitionDuration: complexity === 'complex' ? 800 : 600,
       overlayOpacity: location.type === 'fictional' ? 0.5 : 0.3,
@@ -394,7 +351,6 @@ export class TriviaDisplaySystem {
     currentLocation: Location,
     visitedTriviaIds: number[],
     visitedLocationIds: string[],
-    recentChoices: UserChoice[],
     availableTrivia: TriviaItem[],
     availableLocations: Location[]
   ): Promise<Array<{ trivia: TriviaItem; location: Location; score: number; reason: string; }>> {
@@ -418,7 +374,6 @@ export class TriviaDisplaySystem {
         currentLocation,
         visitedTriviaIds,
         visitedLocationIds,
-        recentChoices,
         userPreferences: (this.predictionEngine as any)?.getAnalytics()?.userProfile
       };
 
@@ -510,12 +465,12 @@ export class TriviaDisplaySystem {
   /**
    * 動的品質調整のための画像URL生成
    */
-  generateBackgroundImageUrlWithQuality(
+  async generateBackgroundImageUrlWithQuality(
     trivia: TriviaItem, 
     location: Location, 
     quality: 'low' | 'medium' | 'high' = 'medium'
-  ): string {
-    const baseUrl = this.generateBackgroundImageUrl(trivia, location);
+  ): Promise<string> {
+    const baseUrl = await this.generateBackgroundImageUrl(trivia, location);
     
     // 品質に応じたパラメータ調整
     const qualityMap = {

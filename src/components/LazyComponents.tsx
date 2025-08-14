@@ -87,21 +87,7 @@ const ShareButtons = lazy(() =>
   })
 );
 
-const UserChoicesContainer = lazy(() => 
-  import('./UserChoicesContainer').catch(error => {
-    console.error('UserChoicesContainer読み込みエラー:', error);
-    return { 
-      default: () => (
-        <ErrorFallback>
-          <div>🎯 選択肢コンポーネントを読み込めませんでした</div>
-          <div style={{ fontSize: '14px', marginTop: '8px', opacity: 0.8 }}>
-            ページをリロードしてください
-          </div>
-        </ErrorFallback>
-      ) 
-    };
-  })
-);
+// UserChoicesContainer削除 - Serena MCP: 選択システム不要
 
 const LocationDisplay = lazy(() => 
   import('./LocationDisplay').catch(error => {
@@ -132,11 +118,7 @@ export const ShareButtonsWrapper: React.FC<any> = (props) => (
   </Suspense>
 );
 
-export const UserChoicesWrapper: React.FC<any> = (props) => (
-  <Suspense fallback={<ComponentLoader message="選択肢を読み込み中..." />}>
-    <UserChoicesContainer {...props} />
-  </Suspense>
-);
+// UserChoicesWrapper削除 - Serena MCP: 選択システム不要
 
 export const LocationDisplayWrapper: React.FC<any> = (props) => (
   <Suspense fallback={<ComponentLoader message="地点情報を読み込み中..." />}>
@@ -154,7 +136,6 @@ export const preloadComponents = {
       await Promise.allSettled([
         import('./MapNavigation'),
         import('./ShareButtons'),
-        import('./UserChoicesContainer'),
         import('./LocationDisplay')
       ]);
       

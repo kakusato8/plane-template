@@ -9,17 +9,18 @@ import {
   LocationDisplayWrapper,
   MapNavigationWrapper,
   ShareButtonsWrapper,
-  UserChoicesWrapper,
   preloadComponents
 } from './components/LazyComponents';
 import { ProgressiveDataLoader } from './utils/progressiveDataLoader';
 import { TriviaDisplaySystem } from './utils/triviaDisplaySystem';
-import { UserChoiceSystem } from './utils/userChoiceSystem';
+import { serenaMCPPreloadManager } from './utils/serenaMCPPreloadManager';
+import SerenaMCPDebugPanel from './components/SerenaMCPDebugPanel';
+// UserChoiceSystem削除 - Serena MCP
 import { useResponsive } from './hooks/useResponsive';
 import { PerformanceMonitor } from './utils/performanceMonitor';
 import { SimplePreloadManager } from './utils/simplePreloadManager';
 // usePreloadedImagesは複雑すぎるため一時的に無効化
-import type { TriviaItem, Location, UserChoice } from '../types/trivia';
+import type { TriviaItem, Location } from '../types/trivia';
 import { theme } from './styles/theme';
 
 const AppContainer = styled.div`
@@ -49,17 +50,18 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentTrivia, setCurrentTrivia] = useState<TriviaItem | null>(null);
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
+  const [nextTrivia, setNextTrivia] = useState<TriviaItem | null>(null); // 🎯 次の雑学（プリロード用）
+  const [nextLocation, setNextLocation] = useState<Location | null>(null); // 🎯 次の地点（プリロード用）
   const [showWelcome, setShowWelcome] = useState(true);
   const [showLocationDetails, setShowLocationDetails] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [showShareButtons, setShowShareButtons] = useState(false);
-  const [showChoices, setShowChoices] = useState(false);
-  const [currentChoices, setCurrentChoices] = useState<UserChoice[]>([]);
+  // showChoices, currentChoices削除 - Serena MCP: シンプルなNextボタンのみ
   const [visitedIds, setVisitedIds] = useState<number[]>([]);
   const [visitedLocations, setVisitedLocations] = useState<Location[]>([]);
   const [dataLoader] = useState(() => ProgressiveDataLoader.getInstance());
   const [displaySystem] = useState(() => TriviaDisplaySystem.getInstance());
-  const [choiceSystem] = useState(() => UserChoiceSystem.getInstance());
+  // choiceSystem削除 - Serena MCP: 選択システム不要
   const [performanceMonitor] = useState(() => PerformanceMonitor.getInstance());
   const [preloadManager] = useState(() => SimplePreloadManager.getInstance());
   const responsive = useResponsive();
@@ -140,6 +142,9 @@ function App() {
             console.log('✅ 初期地点取得成功:', matchingLocation.name);
             setCurrentLocation(matchingLocation);
             setVisitedLocations([matchingLocation]);
+
+            // 🚫 SerenaMCP: ERR_CONNECTION_REFUSED対策 - 外部API呼び出し無効化
+            console.log('🚫 SerenaMCP: 初期画像プリロード無効化（外部接続エラー対策）');
           } else {
             console.warn('⚠️ 地点データが見つかりません - ダミー地点を使用');
             // 緊急フォールバック地点
@@ -224,108 +229,83 @@ function App() {
     setShowWelcome(false);
   };
 
-  const handleShowChoices = () => {
-    if (currentTrivia && currentLocation) {
-      const choices = choiceSystem.generateChoices(currentTrivia, currentLocation);
-      setCurrentChoices(choices);
-      setShowChoices(true);
-      setShowLocationDetails(false);
-      setShowMap(false);
-      setShowShareButtons(false);
-    }
-  };
+  // handleShowChoices削除 - Serena MCP: 選択システム不要
 
-  const handleUserChoice = async (choice: UserChoice) => {
-    // 選択を記録
-    choiceSystem.recordChoice(choice);
-    console.log('🎭 ユーザー選択:', choice.text);
-    
-    // 次の雑学を選択
-    const nextTrivia = dataLoader.getRandomTrivia(visitedIds);
-    if (nextTrivia) {
-      console.log('✅ 選択後の次の雑学取得:', nextTrivia.title);
-      
-      // 雑学に適した地点を選択
-      const nextLocation = dataLoader.selectLocationForTrivia(nextTrivia);
-      if (nextLocation) {
-        console.log('✅ 選択後の次の地点選択:', nextLocation.name);
-        
-        console.log('✅ 選択後の雑学と地点準備完了 - 画面遷移実行');
-        
-        // プリロード完了/失敗に関わらず状態更新
-        setCurrentTrivia(nextTrivia);
-        setVisitedIds(prev => [...prev, nextTrivia.id]);
-        setCurrentLocation(nextLocation);
-        setVisitedLocations(prev => [...prev, nextLocation]);
-      }
-    }
-    
-    // UI状態をリセット
-    setShowChoices(false);
-    setCurrentChoices([]);
-  };
+  // handleUserChoice削除 - Serena MCP: 選択システム不要
+
+  const [isImageLoading, setIsImageLoading] = useState(false); // 🎨 SerenaMCP: 画像読み込み状態管理
 
   const handleTriviaComplete = async () => {
-    console.log('🔄 次の雑学に遷移中...');
+    console.log('🎨 SerenaMCP: 次の雑学に遷移中（フラッシュ制御システム）...');
     
-    // 現在利用可能な最新データから次の雑学を取得
+    // ①「次へ」押下時に必ず明るいフラッシュ状態にする
+    console.log('💫 SerenaMCP: 必ず明るいフラッシュ状態を開始');
+    setIsImageLoading(true); // 画像読み込み開始フラグ
+    
+    // 🛡️ STEP 2: フラッシュオーバーレイの裏で次のデータを準備
     const nextTrivia = dataLoader.getRandomTrivia(visitedIds);
     
     if (nextTrivia) {
-      console.log('✅ 次の雑学取得:', nextTrivia.title);
+      console.log('✅ SerenaMCP: 次の雑学取得:', nextTrivia.title);
 
       // 次の雑学に適した地点を選択
       const matchingLocation = dataLoader.selectLocationForTrivia(nextTrivia);
       if (matchingLocation) {
-        console.log('✅ 次の地点選択:', matchingLocation.name);
+        console.log('✅ SerenaMCP: 次の地点選択:', matchingLocation.name);
         
-        console.log('✅ 次の雑学と地点準備完了 - 画面遷移実行');
+        console.log('🚀 SerenaMCP: 雑学と地点準備完了 - 画面遷移実行');
         
-        // プリロード完了/失敗に関わらず状態更新
+        // 🛡️ STEP 3: データが完全に準備できたら状態を一括更新
+        // ②雑学は表示させてOK（フラッシュ状態のまま）
         setCurrentTrivia(nextTrivia);
         setVisitedIds(prev => [...prev, nextTrivia.id]);
         setCurrentLocation(matchingLocation);
         setVisitedLocations(prev => [...prev, matchingLocation]);
 
-        // バックグラウンドで更に次の雑学の画像をプリロード（ユーザーが読んでいる間に）
+        // 🎯 バックグラウンドで更に次の雑学を準備（プリロード用）
         setTimeout(async () => {
           const futureTrivia = dataLoader.getRandomTrivia([...visitedIds, nextTrivia.id]);
           if (futureTrivia) {
             const futureLocation = dataLoader.selectLocationForTrivia(futureTrivia);
             if (futureLocation) {
-              console.log('🎯 次回用画像をバックグラウンドプリロード開始:', futureTrivia.title);
-              // SimpleBackgroundImageではプリロードは不要
+              console.log('🎯 次の雑学準備:', futureTrivia.title, '/', futureLocation.name);
+              setNextTrivia(futureTrivia);
+              setNextLocation(futureLocation);
             }
           }
-        }, 2000); // ユーザーが新しい雑学を読み始めてから2秒後
+        }, 1000); // ユーザーが現在の雑学を読み始めてから準備
       }
     } else {
       console.warn('⚠️ 次の雑学が見つかりません - データ追加を待機');
+      setIsImageLoading(false); // エラー時はフラッシュを解除
     }
     
     setShowLocationDetails(false);
     setShowMap(false);
   };
 
+  // 🎨 SerenaMCP: 画像読み込み完了時にフラッシュを解除するコールバック
+  const handleImageLoadComplete = () => {
+    console.log('🎉 SerenaMCP: 画像読み込み完了 - フラッシュ解除');
+    setIsImageLoading(false);
+  };
+
   const handleShowLocationDetails = () => {
     setShowLocationDetails(!showLocationDetails);
     if (showMap) setShowMap(false);
     if (showShareButtons) setShowShareButtons(false);
-    if (showChoices) setShowChoices(false);
   };
 
   const handleShowMap = () => {
     setShowMap(!showMap);
     if (showLocationDetails) setShowLocationDetails(false);
     if (showShareButtons) setShowShareButtons(false);
-    if (showChoices) setShowChoices(false);
   };
 
   const handleShowShare = () => {
     setShowShareButtons(!showShareButtons);
     if (showLocationDetails) setShowLocationDetails(false);
     if (showMap) setShowMap(false);
-    if (showChoices) setShowChoices(false);
   };
 
 
@@ -355,6 +335,10 @@ function App() {
           overlayOpacity={currentLocation.type === 'fictional' ? 0.5 : 0.3}
           trivia={currentTrivia}
           location={currentLocation}
+          nextTrivia={nextTrivia}
+          nextLocation={nextLocation}
+          isImageLoading={isImageLoading}
+          onImageLoadComplete={handleImageLoadComplete}
         >
           {showWelcome ? (
             <WelcomeOverlay
@@ -390,16 +374,10 @@ function App() {
                   trivia={currentTrivia}
                   location={currentLocation}
                 />
-              ) : showChoices ? (
-                <UserChoicesWrapper
-                  choices={currentChoices}
-                  onSelect={handleUserChoice}
-                />
               ) : (
                 <TriviaCard
                   trivia={currentTrivia}
                   onComplete={handleTriviaComplete}
-                  onShowChoices={handleShowChoices}
                 />
               )}
               
@@ -420,7 +398,7 @@ function App() {
                   {showMap ? '閉じる' : '地図'}
                 </NavigationButton>
                 
-                {!showMap && !showChoices && (
+                {!showMap && (
                   <>
                     <NavigationButton
                       variant="secondary" 
@@ -500,6 +478,9 @@ function App() {
           </div>
         </div>
       )}
+      
+      {/* SerenaMCP デバッグパネル（開発時のみ） */}
+      <SerenaMCPDebugPanel />
     </AppContainer>
   );
 }

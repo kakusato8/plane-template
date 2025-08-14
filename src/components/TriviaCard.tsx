@@ -7,7 +7,6 @@ import type { TriviaItem } from '../../types/trivia';
 interface TriviaCardProps {
   trivia: TriviaItem;
   onComplete?: () => void;
-  onShowChoices?: () => void;
   className?: string;
 }
 
@@ -65,34 +64,6 @@ const DetailText = styled(motion.div)`
   margin-bottom: ${theme.spacing[6]};
 `;
 
-const TagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${theme.spacing[2]};
-  margin-bottom: ${theme.spacing[6]};
-  justify-content: center;
-`;
-
-const Tag = styled.span<{ category: 'emotion' | 'setting' | 'palette' }>`
-  padding: ${theme.spacing[1]} ${theme.spacing[3]};
-  border-radius: ${theme.borderRadius.full};
-  font-size: ${theme.typography.sizes.sm};
-  font-weight: ${theme.typography.weights.medium};
-  background: ${({ category }) => {
-    switch (category) {
-      case 'emotion':
-        return theme.colors.mystical.purple;
-      case 'setting':
-        return theme.colors.mystical.teal;
-      case 'palette':
-        return theme.colors.mystical.amber;
-      default:
-        return theme.colors.primary[500];
-    }
-  }};
-  color: white;
-  opacity: 0.9;
-`;
 
 const ActionButton = styled(motion.button)`
   background: ${theme.colors.gradients.mystical};
@@ -126,8 +97,7 @@ const ActionButton = styled(motion.button)`
 
 const TriviaCard: React.FC<TriviaCardProps> = ({ 
   trivia, 
-  onComplete, 
-  onShowChoices,
+  onComplete,
   className 
 }) => {
   const [showDetail, setShowDetail] = useState(false);
@@ -153,11 +123,7 @@ const TriviaCard: React.FC<TriviaCardProps> = ({
     }
   }, [showDetail]);
 
-  const handleShowChoices = () => {
-    if (onShowChoices) {
-      onShowChoices();
-    }
-  };
+  // handleShowChoices削除 - Serena MCP: シンプルなNextボタンのみ
 
   const handleComplete = () => {
     if (onComplete) {
@@ -191,11 +157,6 @@ const TriviaCard: React.FC<TriviaCardProps> = ({
     }
   };
 
-  const allTags = [
-    ...trivia.tags.emotion.map(tag => ({ tag, category: 'emotion' as const })),
-    ...trivia.tags.setting.map(tag => ({ tag, category: 'setting' as const })),
-    ...trivia.tags.palette.map(tag => ({ tag, category: 'palette' as const })),
-  ];
 
   return (
     <CardContainer
@@ -232,19 +193,6 @@ const TriviaCard: React.FC<TriviaCardProps> = ({
               {trivia.detail}
             </DetailText>
 
-            <TagsContainer>
-              {allTags.map(({ tag, category }, index) => (
-                <Tag 
-                  key={`${category}-${tag}`} 
-                  category={category}
-                  style={{
-                    animationDelay: `${index * 0.1}s`,
-                  }}
-                >
-                  {tag}
-                </Tag>
-              ))}
-            </TagsContainer>
 
             <AnimatePresence>
               {showChoicesButton && (
@@ -254,11 +202,11 @@ const TriviaCard: React.FC<TriviaCardProps> = ({
                   transition={{ duration: 0.3 }}
                 >
                   <ActionButton
-                    onClick={onShowChoices ? handleShowChoices : handleComplete}
+                    onClick={handleComplete}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    {onShowChoices ? '次はどちらへ？' : '次の場所へ'}
+                    Next
                   </ActionButton>
                 </motion.div>
               )}

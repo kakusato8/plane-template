@@ -3,14 +3,13 @@
  * ユーザーの選択傾向と雑学の関連性から次の画像を予測
  */
 
-import type { TriviaItem, Location, UserChoice } from '../../types/trivia';
+import type { TriviaItem, Location } from '../../types/trivia';
 
 interface PredictionContext {
   currentTrivia: TriviaItem;
   currentLocation: Location;
   visitedTriviaIds: number[];
   visitedLocationIds: string[];
-  recentChoices: UserChoice[];
   userPreferences: UserPreferenceProfile;
 }
 
@@ -139,43 +138,7 @@ export class ImagePredictionEngine {
   /**
    * ユーザーの選択から学習してプロファイルを更新
    */
-  updateUserProfile(choice: UserChoice, trivia: TriviaItem): void {
-    // 選択されたタグの重みを増加
-    choice.targetTags.forEach(tag => {
-      // 感情タグの場合
-      if (trivia.tags.emotion.includes(tag)) {
-        const currentWeight = this.userProfile.favoriteEmotions.get(tag) || 0;
-        this.userProfile.favoriteEmotions.set(tag, Math.min(1.0, currentWeight + 0.1));
-      }
-      
-      // 環境タグの場合
-      if (trivia.tags.setting.includes(tag)) {
-        const currentWeight = this.userProfile.favoriteSettings.get(tag) || 0;
-        this.userProfile.favoriteSettings.set(tag, Math.min(1.0, currentWeight + 0.1));
-      }
-      
-      // 色彩タグの場合
-      if (trivia.tags.palette.includes(tag)) {
-        const currentWeight = this.userProfile.favoritePalettes.get(tag) || 0;
-        this.userProfile.favoritePalettes.set(tag, Math.min(1.0, currentWeight + 0.1));
-      }
-    });
 
-    // 探索パターンの推定
-    this.updateExplorationPattern(choice, trivia);
-  }
-
-  /**
-   * 探索パターンを更新
-   */
-  private updateExplorationPattern(choice: UserChoice, _trivia: TriviaItem): void {
-    // 簡単な实装：重みによって判定
-    if (choice.weight > 0.8) {
-      this.userProfile.explorationPattern = 'thematic'; // テーマ重視
-    } else if (choice.weight < 0.3) {
-      this.userProfile.explorationPattern = 'random'; // ランダム探索
-    }
-  }
 
   /**
    * 次の画像を予測（優先度順）
@@ -232,7 +195,7 @@ export class ImagePredictionEngine {
     }
 
     // 4. 最近の選択傾向
-    const trendScore = this.calculateTrendScore(context.recentChoices, trivia);
+    const trendScore = 0; // Simplified since no choice system
     confidence += trendScore * 0.1;
     if (trendScore > 0.5) {
       reasons.push(`トレンド一致(${(trendScore * 100).toFixed(0)}%)`);
@@ -360,25 +323,6 @@ export class ImagePredictionEngine {
     return Math.min(1.0, score);
   }
 
-  /**
-   * 最近のトレンドスコアを計算
-   */
-  private calculateTrendScore(recentChoices: UserChoice[], trivia: TriviaItem): number {
-    if (recentChoices.length === 0) return 0;
-
-    let score = 0;
-    const recentTags = recentChoices.flatMap(choice => choice.targetTags);
-    const triviaAllTags = [
-      ...trivia.tags.emotion,
-      ...trivia.tags.setting,
-      ...trivia.tags.palette
-    ];
-
-    const commonTrendTags = triviaAllTags.filter(tag => recentTags.includes(tag));
-    score = commonTrendTags.length / Math.max(recentTags.length, triviaAllTags.length);
-
-    return score;
-  }
 
   /**
    * 2点間の距離を計算（km）

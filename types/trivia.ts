@@ -43,13 +43,6 @@ export interface TagDefinition {
   palette: string[];
 }
 
-export interface UserChoice {
-  id: string;
-  text: string;
-  description: string;
-  targetTags: string[];
-  weight: number;
-}
 
 export interface ShareContent {
   text: string;

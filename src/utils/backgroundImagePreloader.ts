@@ -6,7 +6,7 @@
 import { ImageMemoryCache } from './imageMemoryCache';
 import { ImagePredictionEngine } from './imagePredictionEngine';
 import { ImageOptimizer } from './imageOptimizer';
-import type { TriviaItem, Location, UserChoice } from '../../types/trivia';
+import type { TriviaItem, Location } from '../../types/trivia';
 
 interface PreloadRequest {
   id: string;
@@ -383,7 +383,6 @@ export class BackgroundImagePreloader {
     currentLocation: Location,
     visitedTriviaIds: number[],
     visitedLocationIds: string[],
-    recentChoices: UserChoice[],
     availableTrivia: TriviaItem[],
     availableLocations: Location[]
   ): Promise<void> {
@@ -397,7 +396,6 @@ export class BackgroundImagePreloader {
       currentLocation,
       visitedTriviaIds,
       visitedLocationIds,
-      recentChoices,
       userPreferences: this.predictionEngine.getAnalytics().userProfile
     };
 

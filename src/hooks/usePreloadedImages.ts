@@ -7,14 +7,13 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { BackgroundImagePreloader } from '../utils/backgroundImagePreloader';
 import { ImagePredictionEngine } from '../utils/imagePredictionEngine';
 import { imageMemoryCache } from '../utils/imageMemoryCache';
-import type { TriviaItem, Location, UserChoice } from '../../types/trivia';
+import type { TriviaItem, Location } from '../../types/trivia';
 
 interface UsePreloadedImagesProps {
   currentTrivia?: TriviaItem;
   currentLocation?: Location;
   visitedTriviaIds?: number[];
   visitedLocationIds?: string[];
-  recentChoices?: UserChoice[];
   availableTrivia?: TriviaItem[];
   availableLocations?: Location[];
 }
@@ -39,7 +38,6 @@ export function usePreloadedImages({
   currentLocation,
   visitedTriviaIds = [],
   visitedLocationIds = [],
-  recentChoices = [],
   availableTrivia = [],
   availableLocations = []
 }: UsePreloadedImagesProps) {
@@ -200,7 +198,6 @@ export function usePreloadedImages({
           currentLocation,
           visitedTriviaIds,
           visitedLocationIds,
-          recentChoices,
           availableTrivia,
           availableLocations
         ).catch(error => {
@@ -220,18 +217,10 @@ export function usePreloadedImages({
     currentLocation,
     visitedTriviaIds,
     visitedLocationIds,
-    recentChoices,
     availableTrivia,
     availableLocations
   ]);
 
-  // ユーザー選択の学習
-  const recordUserChoice = useCallback((choice: UserChoice, trivia: TriviaItem) => {
-    if (!predictionEngineRef.current) return;
-
-    predictionEngineRef.current.updateUserProfile(choice, trivia);
-    updateStats();
-  }, [updateStats]);
 
   // 手動プリロード
   const preloadSpecificImages = useCallback(async (
@@ -362,7 +351,6 @@ export function usePreloadedImages({
     
     // 操作関数
     loadImage,
-    recordUserChoice,
     preloadSpecificImages,
     optimizeCache,
     enableEmergencyMode,
