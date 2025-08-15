@@ -442,12 +442,59 @@ export class ProgressiveDataLoader {
   }
 
   /**
-   * 雑学に適した地点を選択
+   * 雑学に適した地点を選択（座標ベース優先）
    */
   selectLocationForTrivia(trivia: TriviaItem): Location | null {
     const locations = this.getCurrentLocationData();
     if (locations.length === 0) return null;
 
+    // 🎯 SerenaMCP: 座標ベースマッチング最優先
+    if (trivia.coords) {
+      console.log('🎯 座標ベース地点選択:', trivia.coords);
+      
+      // 完全一致を探す
+      const exactMatch = locations.find(location => 
+        location.coords && 
+        Math.abs(location.coords.lat - trivia.coords.lat) < 0.01 &&
+        Math.abs(location.coords.lng - trivia.coords.lng) < 0.01
+      );
+      
+      if (exactMatch) {
+        console.log('✅ 完全座標一致:', exactMatch.name, trivia.title);
+        return exactMatch;
+      }
+      
+      // 近接地点を探す（50km範囲）
+      const nearbyLocations = locations.filter(location => {
+        if (!location.coords) return false;
+        const distance = this.calculateDistance(
+          trivia.coords.lat, trivia.coords.lng,
+          location.coords.lat, location.coords.lng
+        );
+        return distance < 50; // 50km以内
+      });
+      
+      if (nearbyLocations.length > 0) {
+        // 最も近い地点を選択
+        const closest = nearbyLocations.reduce((closest, current) => {
+          const currentDistance = this.calculateDistance(
+            trivia.coords.lat, trivia.coords.lng,
+            current.coords!.lat, current.coords!.lng
+          );
+          const closestDistance = this.calculateDistance(
+            trivia.coords.lat, trivia.coords.lng,
+            closest.coords!.lat, closest.coords!.lng
+          );
+          return currentDistance < closestDistance ? current : closest;
+        });
+        
+        console.log('✅ 近接地点選択:', closest.name, trivia.title);
+        return closest;
+      }
+    }
+
+    // 🔄 フォールバック: 従来の雰囲気マッチング
+    console.log('🔄 雰囲気マッチングにフォールバック:', trivia.title);
     const triviaAtmosphere = [
       ...trivia.tags.emotion,
       ...trivia.tags.setting,
@@ -466,6 +513,21 @@ export class ProgressiveDataLoader {
     }
 
     return locations[0];
+  }
+
+  /**
+   * 2点間の距離を計算（ハーベルサイン公式）
+   */
+  private calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const R = 6371; // 地球の半径 (km)
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLng/2) * Math.sin(dLng/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
   }
 
   /**

@@ -6,8 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
-import { serenaMCPPreloadManager } from '../utils/serenaMCPPreloadManager';
-import { serenaMCPImageQueue } from '../utils/serenaMCPImageQueue';
+import { pexelsImageService } from '../utils/pexelsImageService';
 
 const DebugPanel = styled(motion.div)`
   position: fixed;
@@ -99,13 +98,25 @@ const SerenaMCPDebugPanel: React.FC<SerenaMCPDebugPanelProps> = ({
 
     const updateMetrics = () => {
       try {
-        const preloadMetrics = serenaMCPPreloadManager.getMetrics();
-        const preloadDebugInfo = serenaMCPPreloadManager.getDebugInfo();
-        const queueData = serenaMCPImageQueue.getMetrics();
-
-        setMetrics(preloadMetrics);
-        setDebugInfo(preloadDebugInfo);
-        setQueueMetrics(queueData);
+        // Pexels APIサービスの状態を監視
+        const pexelsAvailable = pexelsImageService.isApiKeyAvailable();
+        
+        setMetrics({
+          pexelsApiAvailable: pexelsAvailable,
+          cacheSize: 0, // キャッシュサイズは内部メソッドで取得
+          totalRequests: 0,
+          successfulRequests: 0
+        });
+        
+        setDebugInfo({
+          enabled: true,
+          pexelsConfigured: pexelsAvailable,
+          lastUpdate: new Date().toLocaleTimeString()
+        });
+        
+        setQueueMetrics({
+          status: pexelsAvailable ? 'ready' : 'api_key_missing'
+        });
       } catch (error) {
         console.warn('SerenaMCP Debug Panel: metrics error', error);
       }
@@ -134,69 +145,69 @@ const SerenaMCPDebugPanel: React.FC<SerenaMCPDebugPanelProps> = ({
             transition={{ duration: 0.3 }}
           >
             <div style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '8px' }}>
-              🎯 SerenaMCP プリロード監視
+              🧠 Pexels セマンティック検索
             </div>
             
-            {/* プリロードマネージャーメトリクス */}
+            {/* Pexels API状況 */}
             <div style={{ marginBottom: '8px' }}>
-              <div style={{ fontSize: '10px', opacity: 0.7, marginBottom: '4px' }}>プリロード状況</div>
+              <div style={{ fontSize: '10px', opacity: 0.7, marginBottom: '4px' }}>API状況</div>
               <MetricRow>
-                <span>準備済み</span>
-                <span>{metrics.readyTasks || 0}/{metrics.totalTasks || 0}</span>
+                <span>Pexels API</span>
+                <span>{metrics.pexelsApiAvailable ? '✅ 利用可能' : '❌ 未設定'}</span>
               </MetricRow>
               <MetricRow>
-                <span>成功率</span>
-                <span>{((metrics.successRate || 0) * 100).toFixed(1)}%</span>
+                <span>フォールバック</span>
+                <span>Picsum Photos</span>
               </MetricRow>
               <MetricRow>
-                <span>平均時間</span>
-                <span>{(metrics.avgPreloadTime || 0).toFixed(0)}ms</span>
+                <span>検索方式</span>
+                <span>セマンティック理解</span>
               </MetricRow>
               <MetricRow>
-                <span>並行実行</span>
-                <span>{debugInfo.currentPreloads || 0}/{debugInfo.maxConcurrent || 3}</span>
+                <span>最終更新</span>
+                <span>{debugInfo.lastUpdate || '--:--:--'}</span>
               </MetricRow>
             </div>
 
-            {/* 画像キューメトリクス */}
+            {/* セマンティック機能 */}
             <div style={{ marginBottom: '8px' }}>
-              <div style={{ fontSize: '10px', opacity: 0.7, marginBottom: '4px' }}>画像キュー</div>
+              <div style={{ fontSize: '10px', opacity: 0.7, marginBottom: '4px' }}>セマンティック機能</div>
               <MetricRow>
-                <span>成功/総数</span>
-                <span>{queueMetrics.successful || 0}/{queueMetrics.totalRequests || 0}</span>
+                <span>地域抽出</span>
+                <span>✅ 日本語→英語</span>
               </MetricRow>
               <MetricRow>
-                <span>キュー長</span>
-                <span>{queueMetrics.queueLength || 0}</span>
+                <span>感情マッピング</span>
+                <span>✅ 8種類対応</span>
               </MetricRow>
               <MetricRow>
-                <span>読み込み中</span>
-                <span>{queueMetrics.activeLoading || 0}</span>
+                <span>設定理解</span>
+                <span>✅ 13種類対応</span>
+              </MetricRow>
+              <MetricRow>
+                <span>キャッシュ</span>
+                <span>✅ 24時間</span>
               </MetricRow>
             </div>
 
-            {/* アクティブタスク */}
-            {debugInfo.tasks && debugInfo.tasks.length > 0 && (
-              <TaskList>
-                <div style={{ fontSize: '10px', opacity: 0.7, marginBottom: '4px' }}>
-                  アクティブタスク ({debugInfo.tasks.length})
+            {/* API設定ガイド */}
+            {!metrics.pexelsApiAvailable && (
+              <div style={{ 
+                marginBottom: '8px', 
+                padding: '6px', 
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                borderRadius: '4px'
+              }}>
+                <div style={{ fontSize: '10px', color: '#ef4444', marginBottom: '4px' }}>
+                  📋 Pexels API設定方法
                 </div>
-                {debugInfo.tasks.slice(0, 5).map((task: any, index: number) => (
-                  <TaskItem key={task.id} status={task.status}>
-                    <div style={{ fontSize: '9px' }}>
-                      {task.triviaTitle.substring(0, 20)}...
-                    </div>
-                    <div style={{ fontSize: '8px', opacity: 0.7 }}>
-                      {task.status} • {task.readyImagesCount}枚 • {task.duration}ms
-                    </div>
-                  </TaskItem>
-                ))}
-                {debugInfo.tasks.length > 5 && (
-                  <div style={{ fontSize: '8px', opacity: 0.5, textAlign: 'center', margin: '4px 0' }}>
-                    +{debugInfo.tasks.length - 5} more...
-                  </div>
-                )}
-              </TaskList>
+                <div style={{ fontSize: '8px', opacity: 0.8 }}>
+                  1. https://www.pexels.com/api/ でアカウント作成<br/>
+                  2. .env に VITE_PEXELS_API_KEY を設定<br/>
+                  3. 無料プラン: 月200回まで
+                </div>
+              </div>
             )}
 
             {/* 制御 */}
@@ -207,7 +218,7 @@ const SerenaMCPDebugPanel: React.FC<SerenaMCPDebugPanelProps> = ({
               fontSize: '8px',
               opacity: 0.6
             }}>
-              有効: {debugInfo.enabled ? '✅' : '❌'} | タスク: {debugInfo.tasksCount || 0}
+              状態: {queueMetrics.status} | Pexels: {debugInfo.pexelsConfigured ? '✅' : '❌'}
             </div>
           </DebugPanel>
         )}
