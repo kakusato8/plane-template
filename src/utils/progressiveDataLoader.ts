@@ -448,7 +448,19 @@ export class ProgressiveDataLoader {
     const locations = this.getCurrentLocationData();
     if (locations.length === 0) return null;
 
-    // 🎯 SerenaMCP: 座標ベースマッチング最優先
+    // 🎯 最優先: locationIdによる直接マッチング
+    if (trivia.locationId) {
+      console.log('🎯 locationId直接マッチング:', trivia.locationId, trivia.title);
+      const directMatch = locations.find(location => location.id === trivia.locationId);
+      if (directMatch) {
+        console.log('✅ locationId直接一致:', directMatch.name, trivia.title);
+        return directMatch;
+      } else {
+        console.warn('⚠️ locationIdが見つかりません:', trivia.locationId, 'for', trivia.title);
+      }
+    }
+
+    // 🎯 座標ベースマッチング（locationIdが無い場合のフォールバック）
     if (trivia.coords) {
       console.log('🎯 座標ベース地点選択:', trivia.coords);
       

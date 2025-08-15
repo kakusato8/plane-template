@@ -118,24 +118,7 @@ const CoordinatesDisplay = styled.div`
   border-radius: ${theme.borderRadius.md};
 `;
 
-const WeightIndicator = styled.div<{ weight: number }>`
-  width: 20px;
-  height: 20px;
-  border-radius: ${theme.borderRadius.full};
-  background: ${({ weight }) => {
-    if (weight >= 8) return theme.colors.mystical.amber;
-    if (weight >= 6) return theme.colors.mystical.teal;
-    if (weight >= 4) return theme.colors.primary[500];
-    return theme.colors.text.secondary;
-  }};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: ${theme.typography.sizes.xs};
-  font-weight: ${theme.typography.weights.bold};
-  color: white;
-  margin-left: ${theme.spacing[2]};
-`;
+// WeightIndicator removed - 重要度表示を削除
 
 const LocationDisplay: React.FC<LocationDisplayProps> = ({
   location,
@@ -172,9 +155,6 @@ const LocationDisplay: React.FC<LocationDisplayProps> = ({
           <LocationName compact={compact}>{location.name}</LocationName>
           <LocationNameEn compact={compact}>{location.nameEn}</LocationNameEn>
         </div>
-        <WeightIndicator weight={location.weight}>
-          {location.weight}
-        </WeightIndicator>
       </LocationHeader>
 
       <LocationDescription compact={compact}>

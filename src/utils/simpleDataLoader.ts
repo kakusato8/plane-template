@@ -267,7 +267,19 @@ export class SimpleDataLoader {
       return null;
     }
 
-    // 雑学のタグと地点の雰囲気が一致するものを探す
+    // 🎯 最優先: locationIdによる直接マッチング
+    if (trivia.locationId) {
+      console.log('🎯 locationId直接マッチング:', trivia.locationId, trivia.title);
+      const directMatch = this.locationsData.find(location => location.id === trivia.locationId);
+      if (directMatch) {
+        console.log('✅ locationId直接一致:', directMatch.name, trivia.title);
+        return directMatch;
+      } else {
+        console.warn('⚠️ locationIdが見つかりません:', trivia.locationId, 'for', trivia.title);
+      }
+    }
+
+    // 雑学のタグと地点の雰囲気が一致するものを探す（フォールバック）
     const triviaAtmosphere = [
       ...trivia.tags.emotion,
       ...trivia.tags.setting,
