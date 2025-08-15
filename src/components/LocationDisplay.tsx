@@ -39,7 +39,7 @@ const LocationContainer = styled(motion.div)<{ compact: boolean }>`
     border-radius: ${theme.borderRadius.lg};
     margin: ${theme.spacing[2]} auto;
   }
-`;;
+`
 
 const LocationHeader = styled.div`
   display: flex;
@@ -65,7 +65,7 @@ const LocationName = styled.h3<{ compact: boolean }>`
     font-size: ${theme.typography.sizes.base};
     line-height: 1.3;
   }
-`;;
+`
 
 const LocationNameEn = styled.div<{ compact: boolean }>`
   font-family: ${theme.typography.fonts.primary};
@@ -83,7 +83,7 @@ const LocationNameEn = styled.div<{ compact: boolean }>`
     font-size: ${theme.typography.sizes.xs};
     margin-top: ${theme.spacing[0.5]};
   }
-`;;
+`
 
 
 const LocationDescription = styled.p<{ compact: boolean }>`
@@ -105,7 +105,7 @@ const LocationDescription = styled.p<{ compact: boolean }>`
     line-height: 1.4;
     margin: ${theme.spacing[2]} 0;
   }
-`;;
+`
 
 const LocationDetails = styled.div`
   margin-top: ${theme.spacing[4]};
@@ -155,7 +155,7 @@ const AtmosphereTags = styled.div`
     gap: ${theme.spacing[1]};
     justify-content: flex-start;
   }
-`;;
+`
 
 const AtmosphereTag = styled.span`
   padding: ${theme.spacing[1]} ${theme.spacing[2]};

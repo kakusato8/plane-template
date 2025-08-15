@@ -195,7 +195,7 @@ const ButtonBase = styled(motion.button)<{
     min-height: 44px; /* iOS規格統一 */
     border-radius: ${theme.borderRadius.lg}; /* 小さい画面では角丸を控えめに */
   }
-`;;
+`
 
 
 const NavigationButton: React.FC<NavigationButtonProps> = ({

@@ -15,7 +15,7 @@ interface MapNavigationProps {
   className?: string;
 }
 
-const const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
+const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
   width: ${({ showMiniMap }) => showMiniMap ? '400px' : '100%'};
   height: ${({ showMiniMap }) => showMiniMap ? '300px' : '600px'};
   border-radius: ${theme.borderRadius.xl};
@@ -68,7 +68,7 @@ const const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
       background: rgba(255, 255, 255, 1);
     }
   }
-`;;
+`
 
 const StyledMapContainer = styled(MapContainer)`
   width: 100%;
@@ -76,7 +76,7 @@ const StyledMapContainer = styled(MapContainer)`
   z-index: 1;
 `;
 
-const const LocationInfo = styled(motion.div)`
+const LocationInfo = styled(motion.div)`
   position: absolute;
   top: ${theme.spacing[4]};
   left: ${theme.spacing[4]};
@@ -113,7 +113,7 @@ const const LocationInfo = styled(motion.div)`
     right: ${theme.spacing[2]};
     padding: ${theme.spacing[2]};
   }
-`;;
+`
 
 const LocationName = styled.h4`
   font-family: ${theme.typography.fonts.secondary};
@@ -172,7 +172,7 @@ const createCustomIcon = (type: 'current' | 'visited' | 'fictional', isActive: b
 };
 
 // 地図の視点を制御するコンポーネント
-const const MapController: React.FC<{ 
+const MapController: React.FC<{ 
   currentLocation: Location; 
   visitedLocations: Location[];
 }> = ({ currentLocation, visitedLocations }) => {
@@ -197,7 +197,7 @@ const const MapController: React.FC<{
   }, [currentLocation, visitedLocations, map]);
 
   return null;
-};;
+}
 
 const MapNavigation: React.FC<MapNavigationProps> = ({
   currentLocation,
