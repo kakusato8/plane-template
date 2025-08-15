@@ -81,7 +81,7 @@ const LocationNameEn = styled.div<{ compact: boolean }>`
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.typography.sizes.xs};
-    margin-top: ${theme.spacing[0.5]};
+    margin-top: ${theme.spacing[1]};
   }
 `
 

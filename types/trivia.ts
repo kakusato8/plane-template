@@ -19,6 +19,7 @@ export interface TriviaItem {
   };
   coords?: Coordinates;
   images: string[];
+  locationId?: string; // 雑学に関連する地点のID
 }
 
 export interface Location {
