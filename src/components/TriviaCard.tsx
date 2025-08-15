@@ -13,14 +13,15 @@ interface TriviaCardProps {
 const CardContainer = styled(motion.div)`
   max-width: 600px;
   width: 90%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15); /* より透明に */
+  backdrop-filter: blur(8px); /* 軽いブラー効果 */
   border-radius: ${theme.borderRadius['2xl']};
   padding: ${theme.spacing[8]};
-  box-shadow: ${theme.shadows.xl};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* 軽いシャドウ */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* より目立つボーダー */
   position: relative;
   overflow: hidden;
+  margin: 0 auto; /* 中央配置 */
 
   /* スマホ向け：タッチ操作最適化 */
   -webkit-tap-highlight-color: transparent;
@@ -28,17 +29,21 @@ const CardContainer = styled(motion.div)`
 
   @media (max-width: ${theme.breakpoints.md}) {
     padding: ${theme.spacing[6]};
-    max-width: 95%;
-    width: 95%;
+    max-width: calc(100% - 60px); /* 左右30pxずつマージン */
+    width: calc(100% - 60px);
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.2); /* タブレットで少し濃く */
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
     padding: ${theme.spacing[4]};
-    max-width: 98%;
-    width: 98%;
+    max-width: calc(100% - 40px); /* 左右20pxずつマージン */
+    width: calc(100% - 40px);
     border-radius: ${theme.borderRadius.xl};
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.25); /* スマホで一番濃く */
   }
-`;
+`;;
 
 const TitleContainer = styled.div`
   margin-bottom: ${theme.spacing[6]};
@@ -48,47 +53,98 @@ const Title = styled.h1`
   font-family: ${theme.typography.fonts.secondary};
   font-size: ${theme.typography.sizes['2xl']};
   font-weight: ${theme.typography.weights.bold};
-  color: ${theme.colors.text.primary};
+  color: #ffffff; /* 白色テキスト */
   line-height: 1.3;
   text-align: center;
   margin-bottom: ${theme.spacing[4]};
+  
+  /* 縁取り効果（複数のtext-shadowで強化） */
+  text-shadow: 
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000,
+    -2px 2px 0 #000000,
+    2px 2px 0 #000000,
+    -3px 0 0 #000000,
+    3px 0 0 #000000,
+    0 -3px 0 #000000,
+    0 3px 0 #000000,
+    0 0 8px rgba(0, 0, 0, 0.8); /* グロー効果 */
 
   @media (max-width: ${theme.breakpoints.md}) {
     font-size: ${theme.typography.sizes.xl};
+    /* モバイルでは縁取りを少し軽く */
+    text-shadow: 
+      -1px -1px 0 #000000,
+      1px -1px 0 #000000,
+      -1px 1px 0 #000000,
+      1px 1px 0 #000000,
+      0 0 6px rgba(0, 0, 0, 0.7);
   }
-`;
+`
 
 const ShortText = styled(motion.p)`
   font-family: ${theme.typography.fonts.primary};
   font-size: ${theme.typography.sizes.lg};
-  color: ${theme.colors.text.secondary};
+  color: #ffffff; /* 白色テキスト */
   text-align: center;
   line-height: 1.6;
   margin-bottom: ${theme.spacing[6]};
+  font-weight: ${theme.typography.weights.medium};
+  
+  /* 縁取り効果 */
+  text-shadow: 
+    -1px -1px 0 #000000,
+    1px -1px 0 #000000,
+    -1px 1px 0 #000000,
+    1px 1px 0 #000000,
+    0 0 6px rgba(0, 0, 0, 0.8);
 
   @media (max-width: ${theme.breakpoints.md}) {
     font-size: ${theme.typography.sizes.base};
     margin-bottom: ${theme.spacing[4]};
+    /* モバイルでは軽い縁取り */
+    text-shadow: 
+      -1px -1px 0 #000000,
+      1px -1px 0 #000000,
+      -1px 1px 0 #000000,
+      1px 1px 0 #000000,
+      0 0 4px rgba(0, 0, 0, 0.6);
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: ${theme.typography.sizes.sm};
     margin-bottom: ${theme.spacing[3]};
   }
-`;
+`
 
 const DetailText = styled(motion.div)`
   font-family: ${theme.typography.fonts.primary};
   font-size: ${theme.typography.sizes.base};
-  color: ${theme.colors.text.primary};
+  color: #ffffff; /* 白色テキスト */
   line-height: 1.8;
   text-align: left;
   margin-bottom: ${theme.spacing[6]};
+  font-weight: ${theme.typography.weights.regular};
+  
+  /* 縁取り効果 */
+  text-shadow: 
+    -1px -1px 0 #000000,
+    1px -1px 0 #000000,
+    -1px 1px 0 #000000,
+    1px 1px 0 #000000,
+    0 0 4px rgba(0, 0, 0, 0.8);
 
   @media (max-width: ${theme.breakpoints.md}) {
     font-size: ${theme.typography.sizes.sm};
     line-height: 1.7;
     margin-bottom: ${theme.spacing[4]};
+    /* モバイルでは軽い縁取り */
+    text-shadow: 
+      -1px -1px 0 #000000,
+      1px -1px 0 #000000,
+      -1px 1px 0 #000000,
+      1px 1px 0 #000000,
+      0 0 3px rgba(0, 0, 0, 0.6);
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
@@ -96,23 +152,32 @@ const DetailText = styled(motion.div)`
     line-height: 1.6;
     margin-bottom: ${theme.spacing[3]};
   }
-`;
+`
 
 
 const ActionButton = styled(motion.button)`
-  background: ${theme.colors.gradients.mystical};
-  border: none;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%); /* 半透明グラデーション */
+  border: 2px solid rgba(255, 255, 255, 0.5); /* 白い枠線 */
   border-radius: ${theme.borderRadius.xl};
   padding: ${theme.spacing[3]} ${theme.spacing[8]};
   font-family: ${theme.typography.fonts.primary};
   font-size: ${theme.typography.sizes.base};
   font-weight: ${theme.typography.weights.semibold};
-  color: white;
+  color: #ffffff; /* 白色テキスト */
   cursor: pointer;
-  box-shadow: ${theme.shadows.md};
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   transition: all ${theme.animations.durations.fast} ease;
   margin: 0 auto;
   display: block;
+  backdrop-filter: blur(4px); /* ブラー効果 */
+
+  /* 縁取り効果でボタンテキストを強調 */
+  text-shadow: 
+    -1px -1px 0 #000000,
+    1px -1px 0 #000000,
+    -1px 1px 0 #000000,
+    1px 1px 0 #000000,
+    0 0 4px rgba(0, 0, 0, 0.8);
 
   /* スマホ向け：タッチ操作最適化 */
   -webkit-tap-highlight-color: transparent;
@@ -121,7 +186,9 @@ const ActionButton = styled(motion.button)`
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${theme.shadows.lg};
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 1) 0%, rgba(118, 75, 162, 1) 100%); /* ホバー時は不透明 */
+    border-color: rgba(255, 255, 255, 0.8);
   }
 
   &:active {
@@ -141,7 +208,7 @@ const ActionButton = styled(motion.button)`
     width: 100%;
     max-width: 200px;
   }
-`;
+`
 
 const TriviaCard: React.FC<TriviaCardProps> = ({ 
   trivia, 

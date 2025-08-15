@@ -16,34 +16,35 @@ interface MapNavigationProps {
 }
 
 const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
-  width: ${({ showMiniMap }) => showMiniMap ? '400px' : '100%'};
+  width: ${({ showMiniMap }) => showMiniMap ? '400px' : 'calc(100% - 40px)'};
   height: ${({ showMiniMap }) => showMiniMap ? '300px' : '600px'};
   border-radius: ${theme.borderRadius.xl};
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: ${theme.shadows.xl};
   backdrop-filter: blur(10px);
+  margin: 0 auto; /* 中央配置 */
   
   /* PC版：より大きな地図表示 */
   @media (min-width: ${theme.breakpoints.lg}) {
-    width: ${({ showMiniMap }) => showMiniMap ? '500px' : '100%'};
+    width: ${({ showMiniMap }) => showMiniMap ? '500px' : 'calc(100% - 60px)'};
     height: ${({ showMiniMap }) => showMiniMap ? '350px' : '700px'};
   }
   
   /* タブレット版：中間サイズ */
   @media (max-width: ${theme.breakpoints.lg}) and (min-width: ${theme.breakpoints.md}) {
-    width: ${({ showMiniMap }) => showMiniMap ? '350px' : '100%'};
+    width: ${({ showMiniMap }) => showMiniMap ? '350px' : 'calc(100% - 40px)'};
     height: ${({ showMiniMap }) => showMiniMap ? '250px' : '500px'};
   }
   
   /* スマホ版：コンパクトながら十分な表示領域 */
   @media (max-width: ${theme.breakpoints.md}) {
-    width: ${({ showMiniMap }) => showMiniMap ? '280px' : '100%'};
+    width: ${({ showMiniMap }) => showMiniMap ? '280px' : 'calc(100% - 30px)'};
     height: ${({ showMiniMap }) => showMiniMap ? '200px' : '400px'};
   }
   
   @media (max-width: ${theme.breakpoints.sm}) {
-    width: ${({ showMiniMap }) => showMiniMap ? '250px' : '100%'};
+    width: ${({ showMiniMap }) => showMiniMap ? '250px' : 'calc(100% - 20px)'};
     height: ${({ showMiniMap }) => showMiniMap ? '180px' : '350px'};
   }
   
@@ -68,7 +69,7 @@ const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
       background: rgba(255, 255, 255, 1);
     }
   }
-`
+`;
 
 const StyledMapContainer = styled(MapContainer)`
   width: 100%;

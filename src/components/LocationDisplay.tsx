@@ -19,27 +19,29 @@ const LocationContainer = styled(motion.div)<{ compact: boolean }>`
   box-shadow: ${theme.shadows.lg};
   border: 1px solid rgba(255, 255, 255, 0.3);
   max-width: ${({ compact }) => compact ? '300px' : '400px'};
+  margin: 0 auto; /* 中央配置 */
   
   /* スマホ向け：タッチ操作最適化 */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   
-  /* スマホ向け：レスポンシブ調整 */
+  /* スマホ向け：レスポンシブ調整（左右マージン追加） */
   @media (max-width: ${theme.breakpoints.md}) {
-    max-width: 95%;
-    width: 95%;
+    max-width: calc(100% - 40px); /* 左右20pxずつマージン */
+    width: calc(100% - 40px);
     padding: ${({ compact }) => compact ? theme.spacing[3] : theme.spacing[4]};
     border-radius: ${theme.borderRadius.lg};
+    margin: 0 auto;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    max-width: 98%;
-    width: 98%;
+    max-width: calc(100% - 30px); /* 左右15pxずつマージン */
+    width: calc(100% - 30px);
     padding: ${theme.spacing[3]};
     border-radius: ${theme.borderRadius.lg};
-    margin: ${theme.spacing[2]} auto;
+    margin: 0 auto;
   }
-`
+`;
 
 const LocationHeader = styled.div`
   display: flex;

@@ -7,6 +7,7 @@ interface TextOverlayProps {
   title?: string;
   subtitle?: string;
   description?: string;
+  disclaimer?: string; // 免責事項を追加
   position?: 'top' | 'center' | 'bottom';
   align?: 'left' | 'center' | 'right';
   variant?: 'light' | 'dark' | 'translucent';
@@ -231,11 +232,60 @@ const Description = styled(motion.p)<{
     font-size: ${theme.typography.sizes.sm};
   }
 `;
+const Disclaimer = styled(motion.p)<{
+  variant: 'light' | 'dark' | 'translucent';
+}>`
+  font-family: ${theme.typography.fonts.primary};
+  font-size: ${theme.typography.sizes.xs};
+  font-weight: ${theme.typography.weights.regular};
+  line-height: 1.4;
+  margin-top: ${theme.spacing[4]};
+  margin-bottom: ${theme.spacing[2]};
+  opacity: 0.8;
+  text-align: center;
+  
+  color: ${({ variant }) => {
+    switch (variant) {
+      case 'light':
+        return '#4a5568'; /* グレー系 */
+      case 'dark':
+        return '#cbd5e0';
+      case 'translucent':
+      default:
+        return '#2d3748'; /* ダークグレー */
+    }
+  }};
+  
+  /* 読みやすさを向上させる軽い影 */
+  text-shadow: ${({ variant }) => {
+    switch (variant) {
+      case 'light':
+        return '0 1px 1px rgba(255, 255, 255, 0.9)';
+      case 'dark':
+        return '0 1px 1px rgba(0, 0, 0, 0.5)';
+      case 'translucent':
+      default:
+        return '0 1px 1px rgba(255, 255, 255, 0.7)';
+    }
+  }};
+  
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: ${theme.typography.sizes.xs};
+    margin-top: ${theme.spacing[3]};
+  }
+  
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: 10px;
+    line-height: 1.3;
+    margin-top: ${theme.spacing[2]};
+  }
+`;
 
 const TextOverlay: React.FC<TextOverlayProps> = ({
   title,
   subtitle,
   description,
+  disclaimer, // 追加
   position = 'center',
   align = 'center',
   variant = 'translucent',
@@ -283,19 +333,36 @@ const TextOverlay: React.FC<TextOverlayProps> = ({
         )}
         
         {subtitle && (
-          <Subtitle variant={variant} variants={itemVariants}>
+          <Subtitle 
+            variant={variant} 
+            variants={itemVariants}
+          >
             {subtitle}
           </Subtitle>
         )}
         
         {description && (
-          <Description variant={variant} variants={itemVariants}>
+          <Description 
+            variant={variant} 
+            variants={itemVariants}
+          >
             {description}
           </Description>
         )}
+
+        {disclaimer && (
+          <Disclaimer 
+            variant={variant} 
+            variants={itemVariants}
+          >
+            {disclaimer}
+          </Disclaimer>
+        )}
         
         {children && (
-          <motion.div variants={itemVariants}>
+          <motion.div 
+            variants={itemVariants}
+          >
             {children}
           </motion.div>
         )}

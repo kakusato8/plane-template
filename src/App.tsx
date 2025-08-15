@@ -361,8 +361,9 @@ function App() {
           {showWelcome ? (
             <WelcomeOverlay
               title="CurioCity"
-              subtitle="幻想的な都市を旅する雑学の世界"
+              subtitle="旅する雑学の世界"
               description="毎回異なる場所に降り立ち、その地に隠された雑学を発見しましょう。あなたの知的好奇心が新しい世界への扉を開きます。"
+              disclaimer="本コンテンツに掲載される文章は、AIによって自動生成されたものであり、その正確性・信頼性について保証するものではありません。表示される背景画像はイメージであり、掲載情報との関連性を保証するものではありません。本コンテンツの利用により生じたいかなる損害についても、当方は一切の責任を負いません。掲載内容は予告なく変更または削除されることがあります。"
               position="center"
               align="center"
             >
@@ -426,13 +427,6 @@ function App() {
                       {showLocationDetails ? '雑学' : '地点'}
                     </NavigationButton>
                     
-                    <NavigationButton
-                      variant="primary"
-                      size="small"
-                      onClick={handleShowShare}
-                    >
-                      {showShareButtons ? '閉じる' : '共有'}
-                    </NavigationButton>
                   </>
                 )}
               </div>
