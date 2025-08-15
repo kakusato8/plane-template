@@ -20,11 +20,26 @@ const LocationContainer = styled(motion.div)<{ compact: boolean }>`
   border: 1px solid rgba(255, 255, 255, 0.3);
   max-width: ${({ compact }) => compact ? '300px' : '400px'};
   
+  /* スマホ向け：タッチ操作最適化 */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  
+  /* スマホ向け：レスポンシブ調整 */
   @media (max-width: ${theme.breakpoints.md}) {
-    max-width: 90%;
-    padding: ${theme.spacing[4]};
+    max-width: 95%;
+    width: 95%;
+    padding: ${({ compact }) => compact ? theme.spacing[3] : theme.spacing[4]};
+    border-radius: ${theme.borderRadius.lg};
   }
-`;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    max-width: 98%;
+    width: 98%;
+    padding: ${theme.spacing[3]};
+    border-radius: ${theme.borderRadius.lg};
+    margin: ${theme.spacing[2]} auto;
+  }
+`;;
 
 const LocationHeader = styled.div`
   display: flex;
@@ -40,7 +55,17 @@ const LocationName = styled.h3<{ compact: boolean }>`
   color: ${theme.colors.text.primary};
   margin: 0;
   flex: 1;
-`;
+
+  /* スマホ向け：フォントサイズ調整 */
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: ${({ compact }) => compact ? theme.typography.sizes.base : theme.typography.sizes.lg};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.typography.sizes.base};
+    line-height: 1.3;
+  }
+`;;
 
 const LocationNameEn = styled.div<{ compact: boolean }>`
   font-family: ${theme.typography.fonts.primary};
@@ -48,7 +73,17 @@ const LocationNameEn = styled.div<{ compact: boolean }>`
   color: ${theme.colors.text.secondary};
   font-style: italic;
   margin-top: ${theme.spacing[1]};
-`;
+
+  /* スマホ向け：フォントサイズ調整 */
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: ${theme.typography.sizes.xs};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.typography.sizes.xs};
+    margin-top: ${theme.spacing[0.5]};
+  }
+`;;
 
 
 const LocationDescription = styled.p<{ compact: boolean }>`
@@ -57,7 +92,20 @@ const LocationDescription = styled.p<{ compact: boolean }>`
   color: ${theme.colors.text.primary};
   line-height: 1.6;
   margin: ${theme.spacing[3]} 0;
-`;
+
+  /* スマホ向け：フォントサイズとマージン調整 */
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: ${({ compact }) => compact ? theme.typography.sizes.xs : theme.typography.sizes.sm};
+    line-height: 1.5;
+    margin: ${theme.spacing[2]} 0;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.typography.sizes.xs};
+    line-height: 1.4;
+    margin: ${theme.spacing[2]} 0;
+  }
+`;;
 
 const LocationDetails = styled.div`
   margin-top: ${theme.spacing[4]};
@@ -96,7 +144,18 @@ const AtmosphereTags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: ${theme.spacing[1]};
-`;
+
+  /* スマホ向け：タグ配置最適化 */
+  @media (max-width: ${theme.breakpoints.md}) {
+    gap: ${theme.spacing[1]};
+    justify-content: flex-start;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    gap: ${theme.spacing[1]};
+    justify-content: flex-start;
+  }
+`;;
 
 const AtmosphereTag = styled.span`
   padding: ${theme.spacing[1]} ${theme.spacing[2]};

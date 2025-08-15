@@ -22,9 +22,21 @@ const CardContainer = styled(motion.div)`
   position: relative;
   overflow: hidden;
 
+  /* スマホ向け：タッチ操作最適化 */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+
   @media (max-width: ${theme.breakpoints.md}) {
     padding: ${theme.spacing[6]};
     max-width: 95%;
+    width: 95%;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: ${theme.spacing[4]};
+    max-width: 98%;
+    width: 98%;
+    border-radius: ${theme.borderRadius.xl};
   }
 `;
 
@@ -53,6 +65,16 @@ const ShortText = styled(motion.p)`
   text-align: center;
   line-height: 1.6;
   margin-bottom: ${theme.spacing[6]};
+
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: ${theme.typography.sizes.base};
+    margin-bottom: ${theme.spacing[4]};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.typography.sizes.sm};
+    margin-bottom: ${theme.spacing[3]};
+  }
 `;
 
 const DetailText = styled(motion.div)`
@@ -62,6 +84,18 @@ const DetailText = styled(motion.div)`
   line-height: 1.8;
   text-align: left;
   margin-bottom: ${theme.spacing[6]};
+
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: ${theme.typography.sizes.sm};
+    line-height: 1.7;
+    margin-bottom: ${theme.spacing[4]};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.typography.sizes.xs};
+    line-height: 1.6;
+    margin-bottom: ${theme.spacing[3]};
+  }
 `;
 
 
@@ -80,6 +114,11 @@ const ActionButton = styled(motion.button)`
   margin: 0 auto;
   display: block;
 
+  /* スマホ向け：タッチ操作最適化 */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: 44px; /* iOS推奨のタップ領域最小サイズ */
+  
   &:hover {
     transform: translateY(-2px);
     box-shadow: ${theme.shadows.lg};
@@ -90,8 +129,17 @@ const ActionButton = styled(motion.button)`
   }
 
   @media (max-width: ${theme.breakpoints.md}) {
-    padding: ${theme.spacing[2]} ${theme.spacing[6]};
+    padding: ${theme.spacing[3]} ${theme.spacing[6]};
+    font-size: ${theme.typography.sizes.base};
+    min-height: 48px;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: ${theme.spacing[2]} ${theme.spacing[4]};
     font-size: ${theme.typography.sizes.sm};
+    min-height: 44px;
+    width: 100%;
+    max-width: 200px;
   }
 `;
 

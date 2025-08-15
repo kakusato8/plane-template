@@ -25,6 +25,18 @@ const AppContainer = styled.div`
   height: 100vh;
   overflow: hidden;
   position: relative;
+
+  /* スマホ向け：ビューポート単位を安全に使用 */
+  @supports (height: 100dvh) {
+    height: 100dvh; /* Dynamic Viewport Height - モバイルブラウザのアドレスバーを考慮 */
+  }
+
+  /* スマホ向け：タッチスクロール最適化 */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+
+  /* スマホ向け：タップハイライト無効化 */
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const LoadingContainer = styled.div`
@@ -37,6 +49,22 @@ const LoadingContainer = styled.div`
   color: white;
   font-family: ${theme.typography.fonts.secondary};
   font-size: ${theme.typography.sizes['2xl']};
+
+  /* スマホ向け：動的ビューポート高さ対応 */
+  @supports (height: 100dvh) {
+    height: 100dvh;
+  }
+
+  /* スマホ向け：フォントサイズ調整 */
+  @media (max-width: ${theme.breakpoints.md}) {
+    font-size: ${theme.typography.sizes.xl};
+    padding: ${theme.spacing[4]};
+    text-align: center;
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    font-size: ${theme.typography.sizes.lg};
+  }
 `;
 
 const WelcomeOverlay = styled(TextOverlay)`

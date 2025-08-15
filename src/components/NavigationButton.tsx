@@ -94,6 +94,20 @@ const ButtonBase = styled(motion.button)<{
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   
+  /* スマホ向け：タッチ操作最適化 */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  min-height: ${({ size }) => {
+    switch (size) {
+      case 'small':
+        return '44px'; /* iOS推奨タップ領域 */
+      case 'large':
+        return '48px';
+      default:
+        return '44px';
+    }
+  }};
+  
   transition: all ${theme.animations.durations.fast} ${theme.animations.easings.easeOut};
   
   &:hover:not(:disabled) {
@@ -119,11 +133,47 @@ const ButtonBase = styled(motion.button)<{
     cursor: not-allowed;
   }
   
+  /* スマホ向け：レスポンシブ調整 */
   @media (max-width: ${theme.breakpoints.md}) {
     padding: ${({ size }) => {
       switch (size) {
         case 'small':
-          return `${theme.spacing[1]} ${theme.spacing[3]}`;
+          return `${theme.spacing[2]} ${theme.spacing[3]}`;
+        case 'large':
+          return `${theme.spacing[3]} ${theme.spacing[8]}`;
+        default:
+          return `${theme.spacing[2]} ${theme.spacing[5]}`;
+      }
+    }};
+    
+    font-size: ${({ size }) => {
+      switch (size) {
+        case 'small':
+          return theme.typography.sizes.sm;
+        case 'large':
+          return theme.typography.sizes.base;
+        default:
+          return theme.typography.sizes.sm;
+      }
+    }};
+    
+    min-height: ${({ size }) => {
+      switch (size) {
+        case 'small':
+          return '48px'; /* タブレット用に少し大きめ */
+        case 'large':
+          return '52px';
+        default:
+          return '48px';
+      }
+    }};
+  }
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    padding: ${({ size }) => {
+      switch (size) {
+        case 'small':
+          return `${theme.spacing[2]} ${theme.spacing[3]}`;
         case 'large':
           return `${theme.spacing[3]} ${theme.spacing[6]}`;
         default:
@@ -141,8 +191,11 @@ const ButtonBase = styled(motion.button)<{
           return theme.typography.sizes.sm;
       }
     }};
+    
+    min-height: 44px; /* iOS規格統一 */
+    border-radius: ${theme.borderRadius.lg}; /* 小さい画面では角丸を控えめに */
   }
-`;
+`;;
 
 
 const NavigationButton: React.FC<NavigationButtonProps> = ({

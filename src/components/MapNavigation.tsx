@@ -15,18 +15,36 @@ interface MapNavigationProps {
   className?: string;
 }
 
-const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
-  width: ${({ showMiniMap }) => showMiniMap ? '300px' : '100%'};
-  height: ${({ showMiniMap }) => showMiniMap ? '200px' : '400px'};
+const const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
+  width: ${({ showMiniMap }) => showMiniMap ? '400px' : '100%'};
+  height: ${({ showMiniMap }) => showMiniMap ? '300px' : '600px'};
   border-radius: ${theme.borderRadius.xl};
   overflow: hidden;
   border: 2px solid rgba(255, 255, 255, 0.3);
   box-shadow: ${theme.shadows.xl};
   backdrop-filter: blur(10px);
   
+  /* PC版：より大きな地図表示 */
+  @media (min-width: ${theme.breakpoints.lg}) {
+    width: ${({ showMiniMap }) => showMiniMap ? '500px' : '100%'};
+    height: ${({ showMiniMap }) => showMiniMap ? '350px' : '700px'};
+  }
+  
+  /* タブレット版：中間サイズ */
+  @media (max-width: ${theme.breakpoints.lg}) and (min-width: ${theme.breakpoints.md}) {
+    width: ${({ showMiniMap }) => showMiniMap ? '350px' : '100%'};
+    height: ${({ showMiniMap }) => showMiniMap ? '250px' : '500px'};
+  }
+  
+  /* スマホ版：コンパクトながら十分な表示領域 */
   @media (max-width: ${theme.breakpoints.md}) {
+    width: ${({ showMiniMap }) => showMiniMap ? '280px' : '100%'};
+    height: ${({ showMiniMap }) => showMiniMap ? '200px' : '400px'};
+  }
+  
+  @media (max-width: ${theme.breakpoints.sm}) {
     width: ${({ showMiniMap }) => showMiniMap ? '250px' : '100%'};
-    height: ${({ showMiniMap }) => showMiniMap ? '150px' : '300px'};
+    height: ${({ showMiniMap }) => showMiniMap ? '180px' : '350px'};
   }
   
   .leaflet-container {
@@ -50,7 +68,7 @@ const MapWrapper = styled(motion.div)<{ showMiniMap: boolean }>`
       background: rgba(255, 255, 255, 1);
     }
   }
-`;
+`;;
 
 const StyledMapContainer = styled(MapContainer)`
   width: 100%;
@@ -58,7 +76,7 @@ const StyledMapContainer = styled(MapContainer)`
   z-index: 1;
 `;
 
-const LocationInfo = styled(motion.div)`
+const const LocationInfo = styled(motion.div)`
   position: absolute;
   top: ${theme.spacing[4]};
   left: ${theme.spacing[4]};
@@ -66,17 +84,36 @@ const LocationInfo = styled(motion.div)`
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: ${theme.borderRadius.lg};
-  padding: ${theme.spacing[3]};
-  box-shadow: ${theme.shadows.md};
+  padding: ${theme.spacing[4]};
+  box-shadow: ${theme.shadows.lg};
   z-index: 1000;
   
+  /* PC版：より広い情報パネル */
+  @media (min-width: ${theme.breakpoints.lg}) {
+    padding: ${theme.spacing[5]};
+    border-radius: ${theme.borderRadius.xl};
+  }
+  
+  /* タブレット版 */
+  @media (max-width: ${theme.breakpoints.lg}) and (min-width: ${theme.breakpoints.md}) {
+    padding: ${theme.spacing[3]};
+  }
+  
+  /* スマホ版：コンパクトながら読みやすく */
   @media (max-width: ${theme.breakpoints.md}) {
+    top: ${theme.spacing[3]};
+    left: ${theme.spacing[3]};
+    right: ${theme.spacing[3]};
+    padding: ${theme.spacing[3]};
+  }
+  
+  @media (max-width: ${theme.breakpoints.sm}) {
     top: ${theme.spacing[2]};
     left: ${theme.spacing[2]};
     right: ${theme.spacing[2]};
     padding: ${theme.spacing[2]};
   }
-`;
+`;;
 
 const LocationName = styled.h4`
   font-family: ${theme.typography.fonts.secondary};
@@ -135,7 +172,7 @@ const createCustomIcon = (type: 'current' | 'visited' | 'fictional', isActive: b
 };
 
 // 地図の視点を制御するコンポーネント
-const MapController: React.FC<{ 
+const const MapController: React.FC<{ 
   currentLocation: Location; 
   visitedLocations: Location[];
 }> = ({ currentLocation, visitedLocations }) => {
@@ -143,20 +180,24 @@ const MapController: React.FC<{
 
   useEffect(() => {
     if (visitedLocations.length <= 1) {
-      // 最初の地点の場合、その地点を中心に表示
-      map.setView([currentLocation.coords.lat, currentLocation.coords.lng], 6);
+      // 最初の地点の場合、より詳細なズームレベルで表示
+      map.setView([currentLocation.coords.lat, currentLocation.coords.lng], 10);
     } else {
       // 複数の地点を訪問している場合、すべての地点が見えるように調整
       const allLocations = [...visitedLocations, currentLocation];
       const bounds = new LatLngBounds(
         allLocations.map(loc => [loc.coords.lat, loc.coords.lng])
       );
-      map.fitBounds(bounds, { padding: [20, 20] });
+      // より広いパディングで見やすく表示
+      map.fitBounds(bounds, { 
+        padding: [30, 30],
+        maxZoom: 12 // 最大ズームレベルを制限してバランスを保つ
+      });
     }
   }, [currentLocation, visitedLocations, map]);
 
   return null;
-};
+};;
 
 const MapNavigation: React.FC<MapNavigationProps> = ({
   currentLocation,
