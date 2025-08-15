@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from '@emotion/styled';
 import { theme } from '../styles/theme';
@@ -96,21 +96,21 @@ const transitionVariants = {
     initial: { opacity: 0, scale: 1.05 },
     animate: { opacity: 1, scale: 1 },
     exit: { opacity: 0, scale: 0.95 },
-    transition: { duration: 1.2, ease: "easeInOut" }
+    transition: { duration: 1.2, ease: "easeInOut" as any }
   },
   
   slide: {
     initial: { x: "100%", opacity: 0 },
     animate: { x: "0%", opacity: 1 },
     exit: { x: "-100%", opacity: 0 },
-    transition: { duration: 1.5, ease: "easeInOut" }
+    transition: { duration: 1.5, ease: "easeInOut" as any }
   },
   
   zoom: {
     initial: { scale: 1.3, opacity: 0, filter: "blur(10px)" },
     animate: { scale: 1, opacity: 1, filter: "blur(0px)" },
     exit: { scale: 0.8, opacity: 0, filter: "blur(5px)" },
-    transition: { duration: 1.8, ease: "easeOut" }
+    transition: { duration: 1.8, ease: "easeOut" as any }
   },
   
   vortex: {
@@ -132,7 +132,7 @@ const transitionVariants = {
       rotateZ: -180,
       filter: "blur(25px)" 
     },
-    transition: { duration: 2, ease: "easeInOut" }
+    transition: { duration: 2, ease: "easeInOut" as any }
   },
   
   shatter: {
@@ -151,14 +151,14 @@ const transitionVariants = {
       opacity: 0,
       filter: "brightness(0.3)"
     },
-    transition: { duration: 1.4, ease: "easeInOut" }
+    transition: { duration: 1.4, ease: "easeInOut" as any }
   }
 };
 
 const MysticalBackground: React.FC<MysticalBackgroundProps> = ({
   imageUrl,
   nextImageUrl,
-  alt,
+  alt: _alt,
   overlay = true,
   overlayOpacity = 0.4,
   children,
@@ -286,7 +286,7 @@ const MysticalBackground: React.FC<MysticalBackgroundProps> = ({
         transition={{
           duration: 10,
           repeat: Infinity,
-          ease: "linear"
+          ease: "linear" as any
         }}
       />
 

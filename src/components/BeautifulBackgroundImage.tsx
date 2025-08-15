@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { theme } from '../styles/theme';
+// import { theme } from '../styles/theme';
 import type { TriviaItem, Location } from '../../types/trivia';
 import { pexelsImageService } from '../utils/pexelsImageService';
 
@@ -14,7 +14,8 @@ interface BeautifulBackgroundImageProps {
   className?: string;
   overlay?: boolean;
   overlayOpacity?: number;
-  alt: string;
+  alt?: string;
+  _alt?: string;
   isImageLoading?: boolean; // 🎨 SerenaMCP: 画像読み込み状態（外部から制御）
   onImageLoadComplete?: () => void; // 🎨 SerenaMCP: 画像読み込み完了コールバック
 }
@@ -133,14 +134,14 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
   className,
   overlay = true,
   overlayOpacity = 0.4,
-  alt,
+  // _alt,
   isImageLoading = false, // 🎨 SerenaMCP: 外部画像読み込み状態
   onImageLoadComplete    // 🎨 SerenaMCP: 読み込み完了コールバック
 }) => {
   // ⚡ 即座に美しいCSS背景を生成（ネットワーク不要、0ms表示）
-  const getInstantBeautifulBackground = (trivia: TriviaItem, location: Location): string => {
+  const getInstantBeautifulBackground = (trivia: TriviaItem, _location: Location): string => {
     const emotion = trivia.tags.emotion[0] || 'ミステリアス';
-    const setting = trivia.tags.setting[0] || '空';
+    // const _setting = trivia.tags.setting[0] || '空';
     
     // 感情とセッティングに基づく美しいグラデーション
     const gradients: Record<string, string> = {
@@ -159,8 +160,8 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
 
   const [currentImageUrl, setCurrentImageUrl] = useState<string>('linear-gradient(135deg, #667eea 0%, #764ba2 100%)');
   const [preloadedImageUrl, setPreloadedImageUrl] = useState<string>(''); // 🎯 事前読み込み済み画像
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [isPreloading, setIsPreloading] = useState(false);
+  const [_isTransitioning, _setIsTransitioning] = useState(false);
+  const [_isPreloading, _setIsPreloading] = useState(false);
   // 🎨 SerenaMCP: フラッシュ状態は外部から制御（isImageLoading）
 
   // 🔒 SerenaMCPプリロード：完全オフライン（外部API不使用）
@@ -182,15 +183,15 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
   };
 
   // 🎯 瞬間切り替え：プリロード済み画像を即座表示
-  const switchToPreloadedImage = () => {
-    if (preloadedImageUrl) {
-      console.log('⚡ 瞬間切り替え：プリロード画像を即座表示');
-      setCurrentImageUrl(preloadedImageUrl);
-      setPreloadedImageUrl(''); // 使用済みクリア
-      return true; // 成功
-    }
-    return false; // プリロード未完了
-  };
+  // const _switchToPreloadedImage = () => {
+  //   if (preloadedImageUrl) {
+  //     console.log('⚡ 瞬間切り替え：プリロード画像を即座表示');
+  //     setCurrentImageUrl(preloadedImageUrl);
+  //     setPreloadedImageUrl(''); // 使用済みクリア
+  //     return true; // 成功
+  //   }
+  //   return false; // プリロード未完了
+  // };
 
   // 🎨 SerenaMCP: Pexels API優先の美しい画像表示システム
   const generateAndSetImage = async () => {
@@ -201,7 +202,7 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
     }
 
     console.log('🎨 SerenaMCP: Pexels API優先画像生成開始');
-    setIsTransitioning(true);
+    _setIsTransitioning(true);
 
     try {
       // 1. Pexels APIでセマンティック検索を試行
@@ -251,7 +252,7 @@ const BeautifulBackgroundImage: React.FC<BeautifulBackgroundImageProps> = ({
         onImageLoadComplete();
       }
     } finally {
-      setIsTransitioning(false);
+      _setIsTransitioning(false);
       
       // 🛡️ フラッシュ無限ループ防止：万が一の保険（強化版）
       if (onImageLoadComplete) {

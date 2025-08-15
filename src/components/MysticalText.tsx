@@ -34,12 +34,12 @@ const animationVariants = {
   stagger: {
     initial: { opacity: 0, y: 20, rotateX: -90 },
     animate: { opacity: 1, y: 0, rotateX: 0 },
-    transition: { duration: 0.5, type: "spring", bounce: 0.4 }
+    transition: { duration: 0.5, type: "spring" as any, bounce: 0.4 }
   },
   flow: {
     initial: { opacity: 0, x: -30, scale: 0.8 },
     animate: { opacity: 1, x: 0, scale: 1 },
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { duration: 0.6, ease: "easeOut" as any }
   },
   ghostly: {
     initial: { opacity: 0, y: 30, filter: "blur(10px)" },
@@ -48,7 +48,7 @@ const animationVariants = {
       y: [30, -5, 0], 
       filter: ["blur(10px)", "blur(2px)", "blur(0px)"] 
     },
-    transition: { duration: 1.2, ease: "easeOut" }
+    transition: { duration: 1.2, ease: "easeOut" as any }
   },
   sparkle: {
     initial: { opacity: 0, scale: 0, rotate: -180 },
@@ -57,7 +57,7 @@ const animationVariants = {
       scale: [0, 1.3, 1], 
       rotate: [-180, 10, 0] 
     },
-    transition: { duration: 0.8, ease: "backOut" }
+    transition: { duration: 0.8, ease: "backOut" as any }
   }
 };
 
@@ -69,7 +69,7 @@ const floatingAnimation = {
     transition: {
       duration: 3,
       repeat: Infinity,
-      ease: "easeInOut"
+      ease: "easeInOut" as any
     }
   }
 };
@@ -84,7 +84,7 @@ const MysticalText: React.FC<MysticalTextProps> = ({
 }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
+  const [_isComplete, setIsComplete] = useState(false);
   const [randomAnimationType, setRandomAnimationType] = useState(animationType);
 
   // ランダムアニメーション選択

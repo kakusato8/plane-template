@@ -50,20 +50,6 @@ const LocationNameEn = styled.div<{ compact: boolean }>`
   margin-top: ${theme.spacing[1]};
 `;
 
-const TypeBadge = styled.span<{ type: 'real' | 'fictional' }>`
-  padding: ${theme.spacing[1]} ${theme.spacing[2]};
-  border-radius: ${theme.borderRadius.full};
-  font-size: ${theme.typography.sizes.xs};
-  font-weight: ${theme.typography.weights.semibold};
-  text-transform: uppercase;
-  
-  background: ${({ type }) => 
-    type === 'real' 
-      ? theme.colors.mystical.teal 
-      : theme.colors.mystical.purple
-  };
-  color: white;
-`;
 
 const LocationDescription = styled.p<{ compact: boolean }>`
   font-family: ${theme.typography.fonts.primary};
@@ -186,9 +172,6 @@ const LocationDisplay: React.FC<LocationDisplayProps> = ({
           <LocationName compact={compact}>{location.name}</LocationName>
           <LocationNameEn compact={compact}>{location.nameEn}</LocationNameEn>
         </div>
-        <TypeBadge type={location.type}>
-          {location.type === 'real' ? 'REAL' : 'FANTASY'}
-        </TypeBadge>
         <WeightIndicator weight={location.weight}>
           {location.weight}
         </WeightIndicator>

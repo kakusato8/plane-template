@@ -371,7 +371,7 @@ export class PexelsImageService {
    */
   private generateFallbackQuery(trivia: TriviaItem): string {
     const emotion = trivia.tags.emotion[0] || 'ミステリアス';
-    const setting = trivia.tags.setting[0] || '空';
+    // const _setting = trivia.tags.setting[0] || '空';
     
     const fallbackQueries: Record<string, string> = {
       'ミステリアス': 'mysterious landscape',

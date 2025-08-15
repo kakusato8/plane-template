@@ -156,7 +156,7 @@ export function usePreloadedImages({
         // 現在表示すべき画像URLを生成
         const { TriviaDisplaySystem } = await import('../utils/triviaDisplaySystem');
         const displaySystem = TriviaDisplaySystem.getInstance();
-        const imageUrl = displaySystem.generateBackgroundImageUrl(currentTrivia, currentLocation);
+        const imageUrl = await displaySystem.generateBackgroundImageUrl(currentTrivia, currentLocation);
 
         loadImage(imageUrl, currentTrivia, currentLocation, 'critical');
       } catch (error) {
@@ -312,7 +312,7 @@ export function usePreloadedImages({
     // 高品質バージョンをプリロード
     const { ImageOptimizer } = await import('../utils/imageOptimizer');
     const size = ImageOptimizer.getOptimalImageSize();
-    const highQualityUrl = ImageOptimizer.generateResponsiveImageUrl(baseImageUrl, size.width, 95);
+    const highQualityUrl = await ImageOptimizer.generateResponsiveImageUrl(await baseImageUrl, size.width, 95);
     
     if (preloaderRef.current) {
       try {

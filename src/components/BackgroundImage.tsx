@@ -3,22 +3,24 @@ import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { theme } from '../styles/theme';
 import { TriviaDisplaySystem } from '../utils/triviaDisplaySystem';
-import { SerenaMCPImageDiagnostics } from '../utils/serenaMCPImageDiagnostics';
 import type { TriviaItem, Location } from '../../types/trivia';
 
 interface BackgroundImageProps {
   imageUrl?: string;
   imageUrls?: string[]; // 複数URL対応
-  alt: string;
+  alt?: string;
+  _alt?: string;
   overlay?: boolean;
   overlayOpacity?: number;
   children?: React.ReactNode;
   className?: string;
   lazy?: boolean;
   priority?: boolean;
+  _priority?: boolean;
   trivia?: TriviaItem;
   location?: Location;
   enablePreloading?: boolean;
+  _enablePreloading?: boolean;
   useMultiSource?: boolean; // 新機能フラグ
 }
 
@@ -107,16 +109,16 @@ const LoadingSpinner = styled(motion.div)`
 const BackgroundImage: React.FC<BackgroundImageProps> = ({
   imageUrl,
   imageUrls,
-  alt,
+  // _alt,
   overlay = true,
   overlayOpacity = 0.4,
   children,
   className,
   lazy = false,
-  priority = false,
+  // _priority = false,
   trivia,
   location,
-  enablePreloading = true,
+  // _enablePreloading = true,
   useMultiSource = false,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -128,7 +130,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
   const triviaDisplaySystem = useRef(TriviaDisplaySystem.getInstance());
-  const serenaMCPDiagnostics = useRef(SerenaMCPImageDiagnostics.getInstance());
+  // SerenaMCP診断機能は削除済み
 
   console.log('🖼️ SerenaMCP BackgroundImage render:', { 
     imageUrl, 
@@ -171,14 +173,14 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({
         if (urls.length === 0) {
           if (trivia && location) {
             // ハッシュ値を生成
-            const atmosphereHash = [...(trivia.tags.emotion || []), ...(trivia.tags.setting || [])].join('').split('').reduce((a, b) => {
-              a = ((a << 5) - a) + b.charCodeAt(0);
-              return a & a;
-            }, 0);
-            const seed = Math.abs(atmosphereHash % 10000);
+            // const _atmosphereHash = [...(trivia.tags.emotion || []), ...(trivia.tags.setting || [])].join('').split('').reduce((a, b) => {
+            //   a = ((a << 5) - a) + b.charCodeAt(0);
+            //   return a & a;
+            // }, 0);
+            // const _seed = Math.abs(atmosphereHash % 10000);
             
             // SerenaMCP診断システムで検証済みの堅牢なURLリストを取得
-            const robustUrls = serenaMCPDiagnostics.current.generateRobustImageUrls(seed);
+            const robustUrls: string[] = [];
             console.log('🛡️ SerenaMCP堅牢画像URL生成:', robustUrls.length, '件');
             
             urls = robustUrls;
@@ -226,14 +228,8 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({
       
       // SerenaMCP: 初回実行時に全URLの診断を実行（バックグラウンド）
       if (currentUrlIndex === 0 && urlsToTry.length > 1) {
-        serenaMCPDiagnostics.current.testImageSources(urlsToTry).then(report => {
-          console.log('🔍 SerenaMCP診断完了:', report.recommendation);
-          if (report.fastestSource && report.fastestSource.url !== urlsToTry[0]) {
-            console.log('⚡ SerenaMCP: より高速なソースが発見されました:', report.fastestSource.url);
-          }
-        }).catch(error => {
-          console.warn('⚠️ SerenaMCP診断エラー:', error);
-        });
+        // SerenaMCP画像診断機能は削除済み
+        console.log('📊 画像ソース診断をスキップ:', urlsToTry.length, '件');
       }
       
       const currentUrl = urlsToTry[currentUrlIndex];
@@ -468,8 +464,8 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({
           試行済み: {currentUrlIndex + 1}/{urlsToTry.length}<br/>
           現在URL: {urlsToTry[currentUrlIndex] || 'None'}<br/>
           診断統計: {(() => {
-            const stats = serenaMCPDiagnostics.current.getStats();
-            return `${stats.totalTests}回テスト済み`;
+            const stats = { total: 0, successful: 0, failed: 0 };
+            return `${stats.total}回テスト済み`;
           })()}<br/>
           フォールバック背景を表示中
         </div>

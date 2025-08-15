@@ -1,4 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component } from 'react';
+import type { ErrorInfo, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { theme } from '../styles/theme';

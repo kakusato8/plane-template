@@ -514,7 +514,7 @@ function MysticalApp() {
                       text="次はどんな場所を訪れますか？"
                       fontSize="2rem"
                       color="#ffd700"
-                      animationType="ethereal"
+                      animationType="ghostly"
                     />
                   </div>
                   <ChoicesGrid>

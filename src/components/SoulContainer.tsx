@@ -70,7 +70,7 @@ const soulAnimations = {
       transition: {
         duration: 6,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as any
       }
     }
   },
@@ -105,7 +105,7 @@ const soulAnimations = {
       transition: {
         duration: 8,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as any
       }
     }
   },
@@ -139,7 +139,7 @@ const soulAnimations = {
       transition: {
         duration: 4,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as any
       }
     }
   },
@@ -170,7 +170,7 @@ const soulAnimations = {
       transition: {
         duration: 5,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as any
       }
     }
   },
@@ -200,7 +200,7 @@ const soulAnimations = {
       transition: {
         duration: 7,
         repeat: Infinity,
-        ease: "easeInOut"
+        ease: "easeInOut" as any
       }
     }
   }
@@ -253,7 +253,7 @@ const SoulContainer: React.FC<SoulContainerProps> = ({
           exit={animation.exit}
           transition={{
             duration: 1.5,
-            ease: "easeOut"
+            ease: "easeOut" as any
           }}
           style={style}
         >

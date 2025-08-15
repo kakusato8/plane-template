@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { theme } from '../styles/theme';
+// import { theme } from '../styles/theme';
 import type { TriviaItem, Location } from '../../types/trivia';
 
 interface SimpleBackgroundImageProps {
@@ -65,7 +65,7 @@ const SimpleBackgroundImage: React.FC<SimpleBackgroundImageProps> = ({
   className,
   overlay = true,
   overlayOpacity = 0.4,
-  alt
+  alt: _alt
 }) => {
   // 感情タグに基づく美しいグラデーション選択
   const getGradient = (): string => {

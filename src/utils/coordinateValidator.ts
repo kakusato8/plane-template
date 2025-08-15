@@ -153,7 +153,7 @@ export class CoordinateValidator {
   /**
    * 地名と座標の不整合をチェック
    */
-  private checkLocationMismatch(hints: string[], region: string, lat: number, lng: number): string | null {
+  private checkLocationMismatch(hints: string[], region: string, _lat: number, _lng: number): string | null {
     for (const hint of hints) {
       // 明確な不整合パターン
       if (hint.includes('日本') && !region.includes('日本')) {

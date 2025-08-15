@@ -66,7 +66,7 @@ const ContentContainer = styled.div`
 const SimpleMysticalBackground: React.FC<SimpleMysticalBackgroundProps> = ({
   imageUrl,
   nextImageUrl,
-  alt,
+  alt: _alt,
   overlay = true,
   overlayOpacity = 0.4,
   children,

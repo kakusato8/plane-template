@@ -455,8 +455,8 @@ export class ProgressiveDataLoader {
       // 完全一致を探す
       const exactMatch = locations.find(location => 
         location.coords && 
-        Math.abs(location.coords.lat - trivia.coords.lat) < 0.01 &&
-        Math.abs(location.coords.lng - trivia.coords.lng) < 0.01
+        Math.abs(location.coords.lat - trivia.coords!.lat) < 0.01 &&
+        Math.abs(location.coords.lng - trivia.coords!.lng) < 0.01
       );
       
       if (exactMatch) {
@@ -468,7 +468,7 @@ export class ProgressiveDataLoader {
       const nearbyLocations = locations.filter(location => {
         if (!location.coords) return false;
         const distance = this.calculateDistance(
-          trivia.coords.lat, trivia.coords.lng,
+          trivia.coords!.lat, trivia.coords!.lng,
           location.coords.lat, location.coords.lng
         );
         return distance < 50; // 50km以内
@@ -478,11 +478,11 @@ export class ProgressiveDataLoader {
         // 最も近い地点を選択
         const closest = nearbyLocations.reduce((closest, current) => {
           const currentDistance = this.calculateDistance(
-            trivia.coords.lat, trivia.coords.lng,
+            trivia.coords!.lat, trivia.coords!.lng,
             current.coords!.lat, current.coords!.lng
           );
           const closestDistance = this.calculateDistance(
-            trivia.coords.lat, trivia.coords.lng,
+            trivia.coords!.lat, trivia.coords!.lng,
             closest.coords!.lat, closest.coords!.lng
           );
           return currentDistance < closestDistance ? current : closest;

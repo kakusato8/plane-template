@@ -90,96 +90,6 @@
     "culturalSignificance": "古代エジプト文明の最高傑作"
   },
   {
-    "id": "neotokyo",
-    "name": "ネオ東京",
-    "nameEn": "Neo Tokyo",
-    "coords": {
-      "lat": 35.6762,
-      "lng": 139.6503
-    },
-    "type": "fictional",
-    "weight": 5,
-    "atmosphere": ["近未来都市", "ネオン", "ダーク", "ビビッド"],
-    "description": "2050年の東京、AIと人間が共存する未来都市",
-    "country": "未来日本",
-    "region": "サイバー空間",
-    "timeZone": "Future/Tokyo",
-    "bestVisitTime": ["常時"],
-    "culturalSignificance": "テクノロジーと伝統文化の融合実験地"
-  },
-  {
-    "id": "floating-gardens",
-    "name": "浮遊庭園都市エアリア",
-    "nameEn": "Floating Gardens of Aeria",
-    "coords": {
-      "lat": 0.0,
-      "lng": 0.0
-    },
-    "type": "fictional",
-    "weight": 4,
-    "atmosphere": ["セレーン", "空", "架空都市", "パステル", "ジョイフル"],
-    "description": "雲海に浮かぶ幻想的な空中庭園都市",
-    "country": "エアリア王国",
-    "region": "天空界",
-    "timeZone": "Sky/Eternal",
-    "bestVisitTime": ["永遠の春"],
-    "culturalSignificance": "自然と調和した理想郷"
-  },
-  {
-    "id": "crystal-caves",
-    "name": "クリスタル洞窟都市ルミナ",
-    "nameEn": "Crystal Cave City of Lumina",
-    "coords": {
-      "lat": -45.0,
-      "lng": 170.0
-    },
-    "type": "fictional",
-    "weight": 3,
-    "atmosphere": ["ミステリアス", "洞窟", "ビビッド", "メランコリック"],
-    "description": "地底深くに眠る水晶で築かれた光の都市",
-    "country": "地底王国",
-    "region": "アンダーワールド",
-    "timeZone": "Underground/Lumina",
-    "bestVisitTime": ["光の祭りの時"],
-    "culturalSignificance": "古代の叡智を守る賢者たちの住処"
-  },
-  {
-    "id": "steam-harbor",
-    "name": "スチームパンク港町コギトエルゴ",
-    "nameEn": "Steampunk Harbor of Cogito Ergo",
-    "coords": {
-      "lat": 51.5074,
-      "lng": -0.1278
-    },
-    "type": "fictional",
-    "weight": 6,
-    "atmosphere": ["ノスタルジック", "路地裏", "セピア", "メランコリック"],
-    "description": "蒸気機関が支配するビクトリア朝風の工業港町",
-    "country": "スチーム帝国",
-    "region": "オルタナティブ・ヨーロッパ",
-    "timeZone": "Steam/London",
-    "bestVisitTime": ["霧の季節"],
-    "culturalSignificance": "産業革命の別世界的進化"
-  },
-  {
-    "id": "aurora-village",
-    "name": "オーロラの村トゥンドラ",
-    "nameEn": "Aurora Village of Tundra",
-    "coords": {
-      "lat": 69.2391,
-      "lng": -106.0471
-    },
-    "type": "fictional",
-    "weight": 5,
-    "atmosphere": ["セレーン", "氷原", "空", "オーロラ", "ブルートーン"],
-    "description": "永遠のオーロラが踊る極北の幻想村落",
-    "country": "極北連邦",
-    "region": "永久凍土圏",
-    "timeZone": "Arctic/Aurora",
-    "bestVisitTime": ["極夜の季節"],
-    "culturalSignificance": "自然現象と共生する神秘の民族"
-  },
-  {
     "id": "venice",
     "name": "ヴェネツィア",
     "nameEn": "Venice",
@@ -520,5 +430,1373 @@
     "timeZone": "America/Cancun",
     "bestVisitTime": ["11月-4月"],
     "culturalSignificance": "古代マヤの宗教的聖地"
+  },
+  {
+    "id": "london-big-ben",
+    "name": "ビッグベン",
+    "nameEn": "Big Ben",
+    "coords": {
+      "lat": 51.5007,
+      "lng": -0.1246
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["ノスタルジック", "都市夜景", "古代遺跡", "エピック"],
+    "description": "ロンドンのシンボル、壮大な時計塔",
+    "country": "イギリス",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/London",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "英国議会政治の象徴"
+  },
+  {
+    "id": "rome-trevi",
+    "name": "トレビの泉",
+    "nameEn": "Trevi Fountain",
+    "coords": {
+      "lat": 41.9009,
+      "lng": 12.4833
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ロマンチック", "古代遺跡", "都市夜景", "ゴールド"],
+    "description": "ローマで最も美しいバロック様式の噴水",
+    "country": "イタリア",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Rome",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "ローマ帝国の栄光とバロック芸術の融合"
+  },
+  {
+    "id": "berlin-gate",
+    "name": "ブランデンブルク門",
+    "nameEn": "Brandenburg Gate",
+    "coords": {
+      "lat": 52.5163,
+      "lng": 13.3777
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "古代遺跡", "都市夜景", "ノスタルジック"],
+    "description": "ドイツ統一の象徴的な古典主義建築",
+    "country": "ドイツ",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Berlin",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "分断と統一の歴史を刻む平和のシンボル"
+  },
+  {
+    "id": "amsterdam",
+    "name": "アムステルダム運河",
+    "nameEn": "Amsterdam Canals",
+    "coords": {
+      "lat": 52.3676,
+      "lng": 4.9041
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ロマンチック", "都市夜景", "海辺", "ノスタルジック"],
+    "description": "17世紀黄金時代の美しい運河都市",
+    "country": "オランダ",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Amsterdam",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "海洋貿易帝国の遺産"
+  },
+  {
+    "id": "prague",
+    "name": "プラハ城",
+    "nameEn": "Prague Castle",
+    "coords": {
+      "lat": 50.0910,
+      "lng": 14.4016
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ミステリアス", "古代遺跡", "都市夜景", "ゴールド"],
+    "description": "中欧で最も美しい古城",
+    "country": "チェコ",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Prague",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "神聖ローマ帝国の中心地"
+  },
+  {
+    "id": "vienna",
+    "name": "シェーンブルン宮殿",
+    "nameEn": "Schönbrunn Palace",
+    "coords": {
+      "lat": 48.1847,
+      "lng": 16.3127
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ロマンチック", "古代遺跡", "ゴールド", "エピック"],
+    "description": "ハプスブルク家の壮麗な夏の離宮",
+    "country": "オーストリア",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Vienna",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "オーストリア帝国の栄華"
+  },
+  {
+    "id": "stockholm",
+    "name": "ストックホルム旧市街",
+    "nameEn": "Stockholm Old Town",
+    "coords": {
+      "lat": 59.3251,
+      "lng": 18.0711
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ノスタルジック", "都市夜景", "セレーン", "パステル"],
+    "description": "北欧の美しい中世都市",
+    "country": "スウェーデン",
+    "region": "北欧",
+    "timeZone": "Europe/Stockholm",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "バイキング時代から続く北欧文化の中心"
+  },
+  {
+    "id": "helsinki",
+    "name": "ヘルシンキ大聖堂",
+    "nameEn": "Helsinki Cathedral",
+    "coords": {
+      "lat": 60.1699,
+      "lng": 24.9384
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["セレーン", "都市夜景", "古代遺跡", "ブルートーン"],
+    "description": "フィンランドの白い大聖堂",
+    "country": "フィンランド",
+    "region": "北欧",
+    "timeZone": "Europe/Helsinki",
+    "bestVisitTime": ["6月-8月"],
+    "culturalSignificance": "ロシア帝国時代の建築遺産"
+  },
+  {
+    "id": "dublin",
+    "name": "ダブリン城",
+    "nameEn": "Dublin Castle",
+    "coords": {
+      "lat": 53.3428,
+      "lng": -6.2674
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ノスタルジック", "ミステリアス", "古代遺跡", "グリーントーン"],
+    "description": "アイルランドの政治的中心地",
+    "country": "アイルランド",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Dublin",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "ケルト文化と英国統治の歴史"
+  },
+  {
+    "id": "edinburgh",
+    "name": "エディンバラ城",
+    "nameEn": "Edinburgh Castle",
+    "coords": {
+      "lat": 55.9486,
+      "lng": -3.1999
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "ミステリアス", "古代遺跡", "ダーク"],
+    "description": "スコットランドの古い要塞",
+    "country": "イギリス",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/London",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "スコットランド王国の象徴"
+  },
+  {
+    "id": "moscow-red-square",
+    "name": "赤の広場",
+    "nameEn": "Red Square",
+    "coords": {
+      "lat": 55.7539,
+      "lng": 37.6208
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "古代遺跡", "レッドトーン", "ミステリアス"],
+    "description": "ロシアの心臓部、クレムリンの前の広場",
+    "country": "ロシア",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Moscow",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "ロシア帝国とソビエト連邦の権力の象徴"
+  },
+  {
+    "id": "st-petersburg",
+    "name": "エルミタージュ美術館",
+    "nameEn": "Hermitage Museum",
+    "coords": {
+      "lat": 59.9398,
+      "lng": 30.3146
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["ロマンチック", "古代遺跡", "ゴールド", "エピック"],
+    "description": "世界最大級の美術館の一つ",
+    "country": "ロシア",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Moscow",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "ロシア帝室文化の最高峰"
+  },
+  {
+    "id": "athens-parthenon",
+    "name": "パルテノン神殿",
+    "nameEn": "Parthenon",
+    "coords": {
+      "lat": 37.9715,
+      "lng": 23.7267
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["エピック", "古代遺跡", "ゴールド", "セレーン"],
+    "description": "古代ギリシャ文明の最高傑作",
+    "country": "ギリシャ",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Athens",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "西洋文明の発祥地"
+  },
+  {
+    "id": "istanbul",
+    "name": "ハギア・ソフィア",
+    "nameEn": "Hagia Sophia",
+    "coords": {
+      "lat": 41.0086,
+      "lng": 28.9802
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["ミステリアス", "古代遺跡", "ゴールド", "エピック"],
+    "description": "東西文明が交差する聖なる建築",
+    "country": "トルコ",
+    "region": "中東・ヨーロッパ",
+    "timeZone": "Europe/Istanbul",
+    "bestVisitTime": ["4月-6月", "9月-11月"],
+    "culturalSignificance": "ビザンティンとオスマン帝国の遺産"
+  },
+  {
+    "id": "barcelona-park-guell",
+    "name": "パルク・グエル",
+    "nameEn": "Park Güell",
+    "coords": {
+      "lat": 41.4145,
+      "lng": 2.1527
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ジョイフル", "ビビッド", "都市夜景", "パステル"],
+    "description": "ガウディの色彩豊かな公園",
+    "country": "スペイン",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Madrid",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "カタルーニャ・モダニズムの傑作"
+  },
+  {
+    "id": "lisbon",
+    "name": "ジェロニモス修道院",
+    "nameEn": "Jerónimos Monastery",
+    "coords": {
+      "lat": 38.6979,
+      "lng": -9.2065
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ロマンチック", "古代遺跡", "ゴールド", "セレーン"],
+    "description": "ポルトガル大航海時代の栄光",
+    "country": "ポルトガル",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Lisbon",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "海洋帝国の黄金時代"
+  },
+  {
+    "id": "copenhagen",
+    "name": "人魚姫の像",
+    "nameEn": "The Little Mermaid",
+    "coords": {
+      "lat": 55.6928,
+      "lng": 12.5991
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ロマンチック", "海辺", "セレーン", "パステル"],
+    "description": "アンデルセン童話を記念した銅像",
+    "country": "デンマーク",
+    "region": "北欧",
+    "timeZone": "Europe/Copenhagen",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "デンマーク文学と童話の象徴"
+  },
+  {
+    "id": "zurich",
+    "name": "チューリッヒ湖",
+    "nameEn": "Lake Zurich",
+    "coords": {
+      "lat": 47.3667,
+      "lng": 8.5500
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["セレーン", "湖", "山岳", "ブルートーン"],
+    "description": "アルプスの美しい湖水地帯",
+    "country": "スイス",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Zurich",
+    "bestVisitTime": ["5月-10月"],
+    "culturalSignificance": "アルプス文化の中心地"
+  },
+  {
+    "id": "budapest",
+    "name": "国会議事堂",
+    "nameEn": "Hungarian Parliament Building",
+    "coords": {
+      "lat": 47.5070,
+      "lng": 19.0458
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "都市夜景", "古代遺跡", "ゴールド"],
+    "description": "ドナウ川沿いの壮麗な議事堂",
+    "country": "ハンガリー",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Budapest",
+    "bestVisitTime": ["4月-6月", "9月-10月"],
+    "culturalSignificance": "オーストリア・ハンガリー帝国の遺産"
+  },
+  {
+    "id": "warsaw",
+    "name": "ワルシャワ歴史地区",
+    "nameEn": "Warsaw Old Town",
+    "coords": {
+      "lat": 52.2297,
+      "lng": 21.0122
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ノスタルジック", "古代遺跡", "パステル", "セレーン"],
+    "description": "戦後復興された美しい旧市街",
+    "country": "ポーランド",
+    "region": "ヨーロッパ",
+    "timeZone": "Europe/Warsaw",
+    "bestVisitTime": ["5月-9月"],
+    "culturalSignificance": "復活と再生の象徴"
+  },
+  {
+    "id": "tokyo-asakusa",
+    "name": "浅草寺",
+    "nameEn": "Senso-ji Temple",
+    "coords": {
+      "lat": 35.7148,
+      "lng": 139.7967
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ノスタルジック", "古代遺跡", "レッドトーン", "ミステリアス"],
+    "description": "東京最古の仏教寺院",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["3月-5月", "10月-11月"],
+    "culturalSignificance": "江戸文化の中心地"
+  },
+  {
+    "id": "kyoto-kinkaku",
+    "name": "金閣寺",
+    "nameEn": "Kinkaku-ji",
+    "coords": {
+      "lat": 35.0394,
+      "lng": 135.7292
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["セレーン", "古代遺跡", "ゴールド", "森林"],
+    "description": "金色に輝く室町時代の名建築",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["3月-5月", "11月"],
+    "culturalSignificance": "日本美学の極致"
+  },
+  {
+    "id": "osaka-castle",
+    "name": "大阪城",
+    "nameEn": "Osaka Castle",
+    "coords": {
+      "lat": 34.6873,
+      "lng": 135.5262
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "古代遺跡", "ゴールド", "都市夜景"],
+    "description": "豊臣秀吉が築いた天下統一の城",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["3月-5月", "10月-11月"],
+    "culturalSignificance": "戦国時代統一の象徴"
+  },
+  {
+    "id": "nara-todai",
+    "name": "東大寺",
+    "nameEn": "Todai-ji Temple",
+    "coords": {
+      "lat": 34.6890,
+      "lng": 135.8398
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "古代遺跡", "セレーン", "森林"],
+    "description": "世界最大級の木造建築と大仏",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["3月-5月", "10月-11月"],
+    "culturalSignificance": "奈良時代仏教文化の頂点"
+  },
+  {
+    "id": "hiroshima-dome",
+    "name": "原爆ドーム",
+    "nameEn": "Atomic Bomb Dome",
+    "coords": {
+      "lat": 34.3955,
+      "lng": 132.4536
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["メランコリック", "ダーク", "古代遺跡", "セレーン"],
+    "description": "平和への祈りを込めた遺跡",
+    "country": "日本",
+    "region": "東アジア",
+    "timeZone": "Asia/Tokyo",
+    "bestVisitTime": ["3月-5月", "10月-11月"],
+    "culturalSignificance": "平和と核廃絶の象徴"
+  },
+  {
+    "id": "beijing-forbidden",
+    "name": "紫禁城",
+    "nameEn": "Forbidden City",
+    "coords": {
+      "lat": 39.9163,
+      "lng": 116.3972
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["エピック", "古代遺跡", "レッドトーン", "ゴールド"],
+    "description": "明・清朝皇帝の宮殿",
+    "country": "中国",
+    "region": "東アジア",
+    "timeZone": "Asia/Shanghai",
+    "bestVisitTime": ["4月-5月", "9月-10月"],
+    "culturalSignificance": "中華帝国の権威の象徴"
+  },
+  {
+    "id": "shanghai-bund",
+    "name": "外灘",
+    "nameEn": "The Bund",
+    "coords": {
+      "lat": 31.2397,
+      "lng": 121.4907
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ノスタルジック", "都市夜景", "海辺", "ゴールド"],
+    "description": "上海の歴史的建築群",
+    "country": "中国",
+    "region": "東アジア",
+    "timeZone": "Asia/Shanghai",
+    "bestVisitTime": ["4月-5月", "10月-11月"],
+    "culturalSignificance": "東西文化交流の象徴"
+  },
+  {
+    "id": "hong-kong-peak",
+    "name": "ビクトリアピーク",
+    "nameEn": "Victoria Peak",
+    "coords": {
+      "lat": 22.2711,
+      "lng": 114.1489
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "都市夜景", "山岳", "ネオン"],
+    "description": "香港の夜景を一望する山頂",
+    "country": "中国（香港）",
+    "region": "東アジア",
+    "timeZone": "Asia/Hong_Kong",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "東西貿易の要衝"
+  },
+  {
+    "id": "singapore",
+    "name": "マーライオン",
+    "nameEn": "Merlion",
+    "coords": {
+      "lat": 1.2966,
+      "lng": 103.8547
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ロマンチック", "都市夜景", "海辺", "ビビッド"],
+    "description": "シンガポールのシンボル像",
+    "country": "シンガポール",
+    "region": "東南アジア",
+    "timeZone": "Asia/Singapore",
+    "bestVisitTime": ["年中"],
+    "culturalSignificance": "多文化共生の都市国家"
+  },
+  {
+    "id": "bangkok-wat-po",
+    "name": "ワット・ポー",
+    "nameEn": "Wat Pho",
+    "coords": {
+      "lat": 13.7465,
+      "lng": 100.4925
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ミステリアス", "古代遺跡", "ゴールド", "ビビッド"],
+    "description": "巨大な涅槃仏で有名な寺院",
+    "country": "タイ",
+    "region": "東南アジア",
+    "timeZone": "Asia/Bangkok",
+    "bestVisitTime": ["11月-3月"],
+    "culturalSignificance": "タイ仏教文化の中心"
+  },
+  {
+    "id": "angkor-wat",
+    "name": "アンコールワット",
+    "nameEn": "Angkor Wat",
+    "coords": {
+      "lat": 13.4125,
+      "lng": 103.8670
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["エピック", "古代遺跡", "ミステリアス", "森林"],
+    "description": "世界最大の宗教建築群",
+    "country": "カンボジア",
+    "region": "東南アジア",
+    "timeZone": "Asia/Phnom_Penh",
+    "bestVisitTime": ["11月-3月"],
+    "culturalSignificance": "クメール文明の最高傑作"
+  },
+  {
+    "id": "bali",
+    "name": "ウルワツ寺院",
+    "nameEn": "Uluwatu Temple",
+    "coords": {
+      "lat": -8.8290,
+      "lng": 115.0850
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["セレーン", "古代遺跡", "海辺", "ロマンチック"],
+    "description": "断崖絶壁に建つヒンドゥー寺院",
+    "country": "インドネシア",
+    "region": "東南アジア",
+    "timeZone": "Asia/Makassar",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "バリ・ヒンドゥー教の聖地"
+  },
+  {
+    "id": "borobudur",
+    "name": "ボロブドゥール",
+    "nameEn": "Borobudur",
+    "coords": {
+      "lat": -7.6079,
+      "lng": 110.2038
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "古代遺跡", "ミステリアス", "セレーン"],
+    "description": "世界最大級の仏教遺跡",
+    "country": "インドネシア",
+    "region": "東南アジア",
+    "timeZone": "Asia/Jakarta",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "ジャワ仏教文明の頂点"
+  },
+  {
+    "id": "delhi-india-gate",
+    "name": "インド門",
+    "nameEn": "India Gate",
+    "coords": {
+      "lat": 28.6129,
+      "lng": 77.2295
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["エピック", "古代遺跡", "アースカラー", "セレーン"],
+    "description": "第一次大戦戦没者慰霊碑",
+    "country": "インド",
+    "region": "南アジア",
+    "timeZone": "Asia/Kolkata",
+    "bestVisitTime": ["10月-3月"],
+    "culturalSignificance": "英国統治時代の遺産"
+  },
+  {
+    "id": "mumbai",
+    "name": "ゲートウェイ・オブ・インディア",
+    "nameEn": "Gateway of India",
+    "coords": {
+      "lat": 18.9220,
+      "lng": 72.8347
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["エピック", "古代遺跡", "海辺", "アースカラー"],
+    "description": "ボンベイの玄関口となった凱旋門",
+    "country": "インド",
+    "region": "南アジア",
+    "timeZone": "Asia/Kolkata",
+    "bestVisitTime": ["10月-3月"],
+    "culturalSignificance": "英国統治終了の象徴"
+  },
+  {
+    "id": "bangalore",
+    "name": "バンガロール宮殿",
+    "nameEn": "Bangalore Palace",
+    "coords": {
+      "lat": 12.9984,
+      "lng": 77.5916
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ロマンチック", "古代遺跡", "ゴールド", "森林"],
+    "description": "マイソール王国の宮殿",
+    "country": "インド",
+    "region": "南アジア",
+    "timeZone": "Asia/Kolkata",
+    "bestVisitTime": ["10月-3月"],
+    "culturalSignificance": "南インド王朝文化"
+  },
+  {
+    "id": "kathmandu",
+    "name": "ダルバール広場",
+    "nameEn": "Durbar Square",
+    "coords": {
+      "lat": 27.7044,
+      "lng": 85.3206
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ミステリアス", "古代遺跡", "アースカラー", "エピック"],
+    "description": "ネパール王宮前の古い広場",
+    "country": "ネパール",
+    "region": "南アジア",
+    "timeZone": "Asia/Kathmandu",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "ネワール文化の中心地"
+  },
+  {
+    "id": "ulaanbaatar",
+    "name": "ガンダン寺",
+    "nameEn": "Gandan Monastery",
+    "coords": {
+      "lat": 47.9184,
+      "lng": 106.8958
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ミステリアス", "古代遺跡", "ゴールド", "山岳"],
+    "description": "モンゴル最大のチベット仏教寺院",
+    "country": "モンゴル",
+    "region": "東アジア",
+    "timeZone": "Asia/Ulaanbaatar",
+    "bestVisitTime": ["6月-9月"],
+    "culturalSignificance": "遊牧民とチベット仏教の融合"
+  },
+  {
+    "id": "seoul-gyeongbok",
+    "name": "景福宮",
+    "nameEn": "Gyeongbokgung Palace",
+    "coords": {
+      "lat": 37.5796,
+      "lng": 126.9770
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "古代遺跡", "ビビッド", "ノスタルジック"],
+    "description": "朝鮮王朝の正宮",
+    "country": "韓国",
+    "region": "東アジア",
+    "timeZone": "Asia/Seoul",
+    "bestVisitTime": ["4月-6月", "9月-11月"],
+    "culturalSignificance": "朝鮮王朝500年の歴史"
+  },
+  {
+    "id": "jeju-island",
+    "name": "済州島",
+    "nameEn": "Jeju Island",
+    "coords": {
+      "lat": 33.3617,
+      "lng": 126.5292
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["セレーン", "海辺", "山岳", "ブルートーン"],
+    "description": "韓国最大の火山島",
+    "country": "韓国",
+    "region": "東アジア",
+    "timeZone": "Asia/Seoul",
+    "bestVisitTime": ["4月-6月", "9月-11月"],
+    "culturalSignificance": "朝鮮半島の自然遺産"
+  },
+  {
+    "id": "taipei",
+    "name": "台北101",
+    "nameEn": "Taipei 101",
+    "coords": {
+      "lat": 25.0340,
+      "lng": 121.5645
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["エピック", "都市夜景", "近未来都市", "ネオン"],
+    "description": "かつて世界一高かった超高層ビル",
+    "country": "台湾",
+    "region": "東アジア",
+    "timeZone": "Asia/Taipei",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "現代台湾の象徴"
+  },
+  {
+    "id": "manila",
+    "name": "イントラムロス",
+    "nameEn": "Intramuros",
+    "coords": {
+      "lat": 14.5906,
+      "lng": 120.9740
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ノスタルジック", "古代遺跡", "アースカラー", "セレーン"],
+    "description": "スペイン統治時代の城壁都市",
+    "country": "フィリピン",
+    "region": "東南アジア",
+    "timeZone": "Asia/Manila",
+    "bestVisitTime": ["12月-5月"],
+    "culturalSignificance": "スペイン植民地文化の遺産"
+  },
+  {
+    "id": "hanoi",
+    "name": "ホアンキエム湖",
+    "nameEn": "Hoan Kiem Lake",
+    "coords": {
+      "lat": 21.0285,
+      "lng": 105.8542
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["セレーン", "湖", "ノスタルジック", "グリーントーン"],
+    "description": "ハノイ旧市街の中心的湖",
+    "country": "ベトナム",
+    "region": "東南アジア",
+    "timeZone": "Asia/Ho_Chi_Minh",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "ベトナム独立の象徴"
+  },
+  {
+    "id": "ho-chi-minh",
+    "name": "統一会堂",
+    "nameEn": "Independence Palace",
+    "coords": {
+      "lat": 10.7797,
+      "lng": 106.6956
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ノスタルジック", "古代遺跡", "グリーントーン", "セレーン"],
+    "description": "ベトナム戦争終結の舞台",
+    "country": "ベトナム",
+    "region": "東南アジア",
+    "timeZone": "Asia/Ho_Chi_Minh",
+    "bestVisitTime": ["12月-4月"],
+    "culturalSignificance": "ベトナム統一の象徴"
+  },
+  {
+    "id": "kuala-lumpur",
+    "name": "ペトロナスツインタワー",
+    "nameEn": "Petronas Twin Towers",
+    "coords": {
+      "lat": 3.1579,
+      "lng": 101.7116
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["エピック", "都市夜景", "近未来都市", "ゴールド"],
+    "description": "マレーシアの象徴的超高層ビル",
+    "country": "マレーシア",
+    "region": "東南アジア",
+    "timeZone": "Asia/Kuala_Lumpur",
+    "bestVisitTime": ["年中"],
+    "culturalSignificance": "現代東南アジアの発展"
+  },
+  {
+    "id": "new-york-liberty",
+    "name": "自由の女神",
+    "nameEn": "Statue of Liberty",
+    "coords": {
+      "lat": 40.6892,
+      "lng": -74.0445
+    },
+    "type": "real",
+    "weight": 10,
+    "atmosphere": ["エピック", "海辺", "ブルートーン", "セレーン"],
+    "description": "自由と民主主義の象徴",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/New_York",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "アメリカ建国の理念"
+  },
+  {
+    "id": "washington-dc",
+    "name": "リンカーン記念堂",
+    "nameEn": "Lincoln Memorial",
+    "coords": {
+      "lat": 38.8893,
+      "lng": -77.0502
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "古代遺跡", "セレーン", "アースカラー"],
+    "description": "第16代大統領リンカーンの記念堂",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/New_York",
+    "bestVisitTime": ["3月-5月", "9月-11月"],
+    "culturalSignificance": "アメリカ民主主義の象徴"
+  },
+  {
+    "id": "los-angeles-hollywood",
+    "name": "ハリウッドサイン",
+    "nameEn": "Hollywood Sign",
+    "coords": {
+      "lat": 34.1341,
+      "lng": -118.3215
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ジョイフル", "都市夜景", "山岳", "ビビッド"],
+    "description": "映画産業の聖地",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/Los_Angeles",
+    "bestVisitTime": ["年中"],
+    "culturalSignificance": "世界映画産業の中心"
+  },
+  {
+    "id": "san-francisco-golden-gate",
+    "name": "ゴールデンゲートブリッジ",
+    "nameEn": "Golden Gate Bridge",
+    "coords": {
+      "lat": 37.8199,
+      "lng": -122.4783
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "海辺", "レッドトーン", "セレーン"],
+    "description": "サンフランシスコのシンボル的吊り橋",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/Los_Angeles",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "アメリカ工学技術の傑作"
+  },
+  {
+    "id": "chicago",
+    "name": "クラウドゲート",
+    "nameEn": "Cloud Gate",
+    "coords": {
+      "lat": 41.8827,
+      "lng": -87.6233
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ジョイフル", "都市夜景", "ビビッド", "近未来都市"],
+    "description": "シカゴの現代アート作品",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/Chicago",
+    "bestVisitTime": ["5月-10月"],
+    "culturalSignificance": "現代アメリカ都市文化"
+  },
+  {
+    "id": "boston",
+    "name": "ボストン茶会事件の地",
+    "nameEn": "Boston Tea Party Ships",
+    "coords": {
+      "lat": 42.3520,
+      "lng": -71.0522
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ノスタルジック", "海辺", "古代遺跡", "アースカラー"],
+    "description": "アメリカ独立戦争の発端地",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/New_York",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "アメリカ独立の原点"
+  },
+  {
+    "id": "miami",
+    "name": "アールデコ地区",
+    "nameEn": "Art Deco District",
+    "coords": {
+      "lat": 25.7809,
+      "lng": -80.1300
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ジョイフル", "海辺", "ビビッド", "パステル"],
+    "description": "1930年代アールデコ建築群",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/New_York",
+    "bestVisitTime": ["12月-4月"],
+    "culturalSignificance": "アメリカン・リゾート文化"
+  },
+  {
+    "id": "las-vegas",
+    "name": "ラスベガス・ストリップ",
+    "nameEn": "Las Vegas Strip",
+    "coords": {
+      "lat": 36.1147,
+      "lng": -115.1728
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ジョイフル", "都市夜景", "ネオン", "ビビッド"],
+    "description": "砂漠に築かれたエンターテインメント都市",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/Los_Angeles",
+    "bestVisitTime": ["3月-5月", "9月-11月"],
+    "culturalSignificance": "アメリカン・ドリームの象徴"
+  },
+  {
+    "id": "seattle",
+    "name": "スペースニードル",
+    "nameEn": "Space Needle",
+    "coords": {
+      "lat": 47.6205,
+      "lng": -122.3493
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["エピック", "都市夜景", "近未来都市", "ブルートーン"],
+    "description": "1962年万博のシンボルタワー",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/Los_Angeles",
+    "bestVisitTime": ["6月-9月"],
+    "culturalSignificance": "1960年代未来への憧憬"
+  },
+  {
+    "id": "denver",
+    "name": "ロッキーマウンテン国立公園",
+    "nameEn": "Rocky Mountain National Park",
+    "coords": {
+      "lat": 40.3428,
+      "lng": -105.6836
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["エピック", "山岳", "セレーン", "ブルートーン"],
+    "description": "ロッキー山脈の壮大な自然",
+    "country": "アメリカ",
+    "region": "北米",
+    "timeZone": "America/Denver",
+    "bestVisitTime": ["6月-10月"],
+    "culturalSignificance": "アメリカ西部開拓の象徴"
+  },
+  {
+    "id": "toronto",
+    "name": "CNタワー",
+    "nameEn": "CN Tower",
+    "coords": {
+      "lat": 43.6426,
+      "lng": -79.3871
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["エピック", "都市夜景", "近未来都市", "ブルートーン"],
+    "description": "トロントのランドマークタワー",
+    "country": "カナダ",
+    "region": "北米",
+    "timeZone": "America/Toronto",
+    "bestVisitTime": ["5月-10月"],
+    "culturalSignificance": "現代カナダの象徴"
+  },
+  {
+    "id": "vancouver",
+    "name": "スタンレーパーク",
+    "nameEn": "Stanley Park",
+    "coords": {
+      "lat": 49.3017,
+      "lng": -123.1404
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["セレーン", "森林", "海辺", "グリーントーン"],
+    "description": "都市と自然が調和した巨大公園",
+    "country": "カナダ",
+    "region": "北米",
+    "timeZone": "America/Vancouver",
+    "bestVisitTime": ["5月-10月"],
+    "culturalSignificance": "カナダの自然保護精神"
+  },
+  {
+    "id": "mexico-city",
+    "name": "テンプロ・マヨール",
+    "nameEn": "Templo Mayor",
+    "coords": {
+      "lat": 19.4342,
+      "lng": -99.1332
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ミステリアス", "古代遺跡", "アースカラー", "エピック"],
+    "description": "アステカ帝国の主神殿遺跡",
+    "country": "メキシコ",
+    "region": "中米",
+    "timeZone": "America/Mexico_City",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "アステカ文明の中心"
+  },
+  {
+    "id": "rio-de-janeiro",
+    "name": "コルコバードのキリスト像",
+    "nameEn": "Christ the Redeemer",
+    "coords": {
+      "lat": -22.9519,
+      "lng": -43.2105
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "山岳", "セレーン", "ブルートーン"],
+    "description": "リオを見守る巨大キリスト像",
+    "country": "ブラジル",
+    "region": "南米",
+    "timeZone": "America/Sao_Paulo",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "ブラジル・カトリック文化の象徴"
+  },
+  {
+    "id": "buenos-aires",
+    "name": "カミニート",
+    "nameEn": "Caminito",
+    "coords": {
+      "lat": -34.6390,
+      "lng": -58.3614
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ジョイフル", "ビビッド", "都市夜景", "ノスタルジック"],
+    "description": "カラフルな建物が並ぶ街角",
+    "country": "アルゼンチン",
+    "region": "南米",
+    "timeZone": "America/Argentina/Buenos_Aires",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "タンゴ発祥の地"
+  },
+  {
+    "id": "lima",
+    "name": "リマ歴史地区",
+    "nameEn": "Historic Centre of Lima",
+    "coords": {
+      "lat": -12.0464,
+      "lng": -77.0428
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ノスタルジック", "古代遺跡", "アースカラー", "ゴールド"],
+    "description": "スペイン植民地時代の美しい街並み",
+    "country": "ペルー",
+    "region": "南米",
+    "timeZone": "America/Lima",
+    "bestVisitTime": ["5月-10月"],
+    "culturalSignificance": "南米スペイン植民地の中心"
+  },
+  {
+    "id": "santiago",
+    "name": "サン・クリストバルの丘",
+    "nameEn": "Cerro San Cristóbal",
+    "coords": {
+      "lat": -33.4269,
+      "lng": -70.6344
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["セレーン", "山岳", "都市夜景", "ブルートーン"],
+    "description": "サンティアゴを一望する丘",
+    "country": "チリ",
+    "region": "南米",
+    "timeZone": "America/Santiago",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "アンデス山脈の麓の首都"
+  },
+  {
+    "id": "bogota",
+    "name": "ラ・カンデラリア",
+    "nameEn": "La Candelaria",
+    "coords": {
+      "lat": 4.5981,
+      "lng": -74.0758
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["ノスタルジック", "古代遺跡", "ビビッド", "アースカラー"],
+    "description": "ボゴタの歴史的旧市街",
+    "country": "コロンビア",
+    "region": "南米",
+    "timeZone": "America/Bogota",
+    "bestVisitTime": ["12月-3月", "6月-9月"],
+    "culturalSignificance": "南米解放運動の中心地"
+  },
+  {
+    "id": "caracas",
+    "name": "国立パンテオン",
+    "nameEn": "National Pantheon",
+    "coords": {
+      "lat": 10.5061,
+      "lng": -66.9146
+    },
+    "type": "real",
+    "weight": 5,
+    "atmosphere": ["エピック", "古代遺跡", "ゴールド", "セレーン"],
+    "description": "ベネズエラ英雄たちの霊廟",
+    "country": "ベネズエラ",
+    "region": "南米",
+    "timeZone": "America/Caracas",
+    "bestVisitTime": ["12月-4月"],
+    "culturalSignificance": "南米独立の英雄シモン・ボリバルの墓"
+  },
+  {
+    "id": "havana",
+    "name": "ハバナ旧市街",
+    "nameEn": "Old Havana",
+    "coords": {
+      "lat": 23.1365,
+      "lng": -82.3596
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ノスタルジック", "ビビッド", "海辺", "セピア"],
+    "description": "植民地時代の建築が残る旧市街",
+    "country": "キューバ",
+    "region": "カリブ海",
+    "timeZone": "America/Havana",
+    "bestVisitTime": ["11月-4月"],
+    "culturalSignificance": "カリブ海植民地文化の宝庫"
+  },
+  {
+    "id": "cairo",
+    "name": "カイロ・イスラム地区",
+    "nameEn": "Islamic Cairo",
+    "coords": {
+      "lat": 30.0444,
+      "lng": 31.2357
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["ミステリアス", "古代遺跡", "アースカラー", "ゴールド"],
+    "description": "世界最大のイスラム建築群",
+    "country": "エジプト",
+    "region": "アフリカ・中東",
+    "timeZone": "Africa/Cairo",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "イスラム文明の中心都市"
+  },
+  {
+    "id": "marrakech",
+    "name": "ジャマ・エル・フナ広場",
+    "nameEn": "Jemaa el-Fnaa",
+    "coords": {
+      "lat": 31.6259,
+      "lng": -7.9891
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["ジョイフル", "ビビッド", "古代遺跡", "レッドトーン"],
+    "description": "マラケシュの活気ある中央広場",
+    "country": "モロッコ",
+    "region": "アフリカ",
+    "timeZone": "Africa/Casablanca",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "北アフリカ・ベルベル文化の中心"
+  },
+  {
+    "id": "casablanca",
+    "name": "ハッサン2世モスク",
+    "nameEn": "Hassan II Mosque",
+    "coords": {
+      "lat": 33.6080,
+      "lng": -7.6327
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["エピック", "古代遺跡", "海辺", "ブルートーン"],
+    "description": "世界最大級のモスクの一つ",
+    "country": "モロッコ",
+    "region": "アフリカ",
+    "timeZone": "Africa/Casablanca",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "現代イスラム建築の傑作"
+  },
+  {
+    "id": "cape-town",
+    "name": "テーブルマウンテン",
+    "nameEn": "Table Mountain",
+    "coords": {
+      "lat": -33.9626,
+      "lng": 18.4098
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "山岳", "海辺", "ブルートーン"],
+    "description": "ケープタウンを見守る特徴的な山",
+    "country": "南アフリカ",
+    "region": "アフリカ",
+    "timeZone": "Africa/Johannesburg",
+    "bestVisitTime": ["10月-4月"],
+    "culturalSignificance": "アフリカ大陸最南端の象徴"
+  },
+  {
+    "id": "nairobi",
+    "name": "ナイロビ国立公園",
+    "nameEn": "Nairobi National Park",
+    "coords": {
+      "lat": -1.3733,
+      "lng": 36.8581
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["セレーン", "森林", "ジョイフル", "グリーントーン"],
+    "description": "都市に隣接するサファリパーク",
+    "country": "ケニア",
+    "region": "アフリカ",
+    "timeZone": "Africa/Nairobi",
+    "bestVisitTime": ["年中"],
+    "culturalSignificance": "アフリカ野生動物保護の象徴"
+  },
+  {
+    "id": "sydney-opera",
+    "name": "シドニー・オペラハウス",
+    "nameEn": "Sydney Opera House",
+    "coords": {
+      "lat": -33.8568,
+      "lng": 151.2153
+    },
+    "type": "real",
+    "weight": 9,
+    "atmosphere": ["エピック", "海辺", "都市夜景", "ブルートーン"],
+    "description": "20世紀建築の傑作",
+    "country": "オーストラリア",
+    "region": "オセアニア",
+    "timeZone": "Australia/Sydney",
+    "bestVisitTime": ["9月-11月", "3月-5月"],
+    "culturalSignificance": "現代オーストラリア文化の象徴"
+  },
+  {
+    "id": "melbourne",
+    "name": "ロイヤル・ボタニック・ガーデンズ",
+    "nameEn": "Royal Botanic Gardens",
+    "coords": {
+      "lat": -37.8304,
+      "lng": 144.9803
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["セレーン", "森林", "グリーントーン", "ジョイフル"],
+    "description": "南半球最高の植物園",
+    "country": "オーストラリア",
+    "region": "オセアニア",
+    "timeZone": "Australia/Melbourne",
+    "bestVisitTime": ["9月-11月", "3月-5月"],
+    "culturalSignificance": "オーストラリア植物学研究の中心"
+  },
+  {
+    "id": "perth",
+    "name": "キングスパーク",
+    "nameEn": "Kings Park",
+    "coords": {
+      "lat": -31.9581,
+      "lng": 115.8661
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["セレーン", "森林", "都市夜景", "グリーントーン"],
+    "description": "世界最大の都市公園の一つ",
+    "country": "オーストラリア",
+    "region": "オセアニア",
+    "timeZone": "Australia/Perth",
+    "bestVisitTime": ["9月-11月", "3月-5月"],
+    "culturalSignificance": "オーストラリア西部開拓の記念"
+  },
+  {
+    "id": "auckland",
+    "name": "スカイタワー",
+    "nameEn": "Sky Tower",
+    "coords": {
+      "lat": -36.8485,
+      "lng": 174.7633
+    },
+    "type": "real",
+    "weight": 6,
+    "atmosphere": ["エピック", "都市夜景", "海辺", "ブルートーン"],
+    "description": "オークランドのランドマークタワー",
+    "country": "ニュージーランド",
+    "region": "オセアニア",
+    "timeZone": "Pacific/Auckland",
+    "bestVisitTime": ["12月-2月"],
+    "culturalSignificance": "現代ニュージーランドの象徴"
+  },
+  {
+    "id": "queenstown",
+    "name": "ミルフォードサウンド",
+    "nameEn": "Milford Sound",
+    "coords": {
+      "lat": -44.6775,
+      "lng": 167.9264
+    },
+    "type": "real",
+    "weight": 8,
+    "atmosphere": ["エピック", "山岳", "湖", "セレーン"],
+    "description": "世界一美しいフィヨルド",
+    "country": "ニュージーランド",
+    "region": "オセアニア",
+    "timeZone": "Pacific/Auckland",
+    "bestVisitTime": ["12月-4月"],
+    "culturalSignificance": "マオリ族の聖地とヨーロッパ探険の交差点"
+  },
+  {
+    "id": "tahiti",
+    "name": "ボラボラ島",
+    "nameEn": "Bora Bora",
+    "coords": {
+      "lat": -16.5004,
+      "lng": -151.7415
+    },
+    "type": "real",
+    "weight": 7,
+    "atmosphere": ["セレーン", "海辺", "ロマンチック", "ブルートーン"],
+    "description": "南太平洋の楽園",
+    "country": "フランス領ポリネシア",
+    "region": "オセアニア",
+    "timeZone": "Pacific/Tahiti",
+    "bestVisitTime": ["4月-10月"],
+    "culturalSignificance": "ポリネシア文化の中心地"
   }
 ]

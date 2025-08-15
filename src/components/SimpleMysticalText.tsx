@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import styled from '@emotion/styled';
 
 interface SimpleMysticalTextProps {
@@ -9,6 +8,7 @@ interface SimpleMysticalTextProps {
   delay?: number;
   fontSize?: string;
   color?: string;
+  style?: React.CSSProperties;
 }
 
 const TextContainer = styled.div`
@@ -19,17 +19,13 @@ const TextContainer = styled.div`
   line-height: 1.6;
 `;
 
-const CharacterWrapper = styled(motion.span)`
-  display: inline-block;
-  white-space: pre;
-`;
-
 const SimpleMysticalText: React.FC<SimpleMysticalTextProps> = ({ 
   text, 
   onComplete,
   delay = 0,
   fontSize = '1rem',
-  color = '#ffffff'
+  color = '#ffffff',
+  style = {}
 }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -90,30 +86,10 @@ const SimpleMysticalText: React.FC<SimpleMysticalTextProps> = ({
       // SerenaMCP強化: 色別最適化された最大視認性確保
       textShadow: getOptimizedTextShadow(color),
       fontWeight: '600',
-      filter: getOptimizedFilter(color)
+      filter: getOptimizedFilter(color),
+      ...style
     }}>
-      {text.split('').map((char, index) => {
-        const isVisible = index < displayedText.length;
-        
-        return (
-          <CharacterWrapper
-            key={`${text}-${index}`}
-            initial={{ opacity: 0 }}
-            animate={isVisible ? { 
-              opacity: 1
-            } : { 
-              opacity: 0
-            }}
-            transition={{
-              duration: 0.05, // 極速アニメーション
-              delay: index * 0.002 + delay / 1000, // 超高速間隔（2ms）
-              ease: "linear"
-            }}
-          >
-            {char}
-          </CharacterWrapper>
-        );
-      })}
+      {displayedText}
     </TextContainer>
   );
 };

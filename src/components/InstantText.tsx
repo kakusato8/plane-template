@@ -9,6 +9,7 @@ interface InstantTextProps {
   fontSize?: string;
   color?: string;
   speed?: number;
+  _speed?: number;
   style?: React.CSSProperties;
 }
 
@@ -26,7 +27,7 @@ const InstantText: React.FC<InstantTextProps> = ({
   delay = 0,
   fontSize = '1rem',
   color = '#ffffff',
-  speed = 50,
+  // _speed = 50,
   style = {}
 }) => {
   const [isVisible, setIsVisible] = useState(false);
