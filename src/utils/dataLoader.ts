@@ -99,7 +99,7 @@ export class DataLoader {
       // 全データを読み込み
       const fullData = await this.loadTriviaData();
       
-      // 重要度に基づいて上位データを選択
+      // ランダムに初期データを選択
       const initialData = this.selectInitialData(fullData, limit);
       
       // 初期データをキャッシュ
@@ -312,48 +312,11 @@ export class DataLoader {
    * 初期表示用のデータを重要度に基づいて選択
    */
   private selectInitialData(fullData: TriviaData, limit: number): TriviaData {
-    // データに優先度スコアを付与
-    const scoredData = fullData.map(item => ({
-      ...item,
-      priority: this.calculatePriority(item)
-    }));
-
-    // 優先度でソートして上位を選択
-    return scoredData
-      .sort((a, b) => b.priority - a.priority)
-      .slice(0, limit)
-      .map(({ priority, ...item }) => item); // priorityプロパティを除去
+    // ランダムにシャッフルして指定数を選択
+    const shuffled = [...fullData].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, limit);
   }
 
-  /**
-   * 雑学データの優先度を計算
-   */
-  private calculatePriority(item: TriviaData[0]): number {
-    let score = 0;
-
-    // 座標がある場合の優先度アップ
-    if (item.coords) score += 10;
-
-    // 画像がある場合の優先度アップ
-    score += Math.min(item.images.length * 2, 6);
-
-    // 詳細が適度な長さの場合の優先度アップ
-    const detailLength = item.detail.length;
-    if (detailLength >= 200 && detailLength <= 500) {
-      score += 8;
-    } else if (detailLength > 500) {
-      score += 4;
-    }
-
-    // 複数のタグを持つ場合の優先度アップ
-    const totalTags = item.tags.emotion.length + item.tags.setting.length + item.tags.palette.length;
-    score += Math.min(totalTags, 10);
-
-    // ランダム要素を追加（完全に固定化させない）
-    score += Math.random() * 3;
-
-    return score;
-  }
 
   /**
    * 追加データを段階的に読み込み
@@ -462,9 +425,7 @@ export class DataLoader {
         this.triviaData.reduce((sum, item) => sum + item.detail.length, 0) / this.triviaData.length
       ),
       totalImages: this.triviaData.reduce((sum, item) => sum + item.images.length, 0),
-      // 新しい統計情報
-      tagStats: this.getTagStats(),
-      priorityDistribution: this.getPriorityDistribution()
+      tagStats: this.getTagStats()
     };
   }
 
@@ -499,22 +460,4 @@ export class DataLoader {
     };
   }
 
-  /**
-   * 優先度分布の統計
-   */
-  private getPriorityDistribution() {
-    if (!this.triviaData) return null;
-
-    const priorities = this.triviaData.map(item => this.calculatePriority(item));
-    const distribution = {
-      high: priorities.filter(p => p >= 20).length,
-      medium: priorities.filter(p => p >= 10 && p < 20).length,
-      low: priorities.filter(p => p < 10).length
-    };
-
-    return {
-      ...distribution,
-      average: priorities.reduce((sum, p) => sum + p, 0) / priorities.length
-    };
-  }
 }
