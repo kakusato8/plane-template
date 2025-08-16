@@ -3,85 +3,60 @@
  * 複数の画像ソースを優先度順で管理し、堅牢な画像読み込みを提供
  */
 
-interface ImageSourceConfig {
-  name: string;
-  priority: number;
-  generator: (tags: string[], size: { width: number; height: number }) => string;
-  timeout: number;
-  description: string;
-}
-
-interface AvailabilityCache {
-  [key: string]: {
-    available: boolean;
-    lastChecked: number;
-    cacheValidFor: number;
-  };
-}
+// 使用されていないインターフェースを削除
 
 export class ImageSourceManager {
-  private static instance: ImageSourceManager;
-  private availabilityCache: AvailabilityCache = {};
-  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5分間キャッシュ
-
-  private imageConfig: ImageSourceConfig[] = [
-    {
-      name: 'unsplash-source',
-      priority: 1,
-      generator: (tags, size) => {
-        // 雰囲気タグを英語キーワードに変換
-        const keywords = this.translateTagsToEnglish(tags);
-        const searchTerm = keywords.slice(0, 3).join(',') || 'nature,landscape';
-        return `https://source.unsplash.com/${size.width}x${size.height}/?${searchTerm}`;
-      },
-      timeout: 8000,
-      description: '高品質写真（Unsplash）'
-    },
-    {
-      name: 'via-placeholder',
-      priority: 2,
-      generator: (tags, size) => {
-        const bgColor = this.getColorFromTags(tags);
-        const textColor = this.getContrastColor(bgColor);
-        return `https://via.placeholder.com/${size.width}x${size.height}/${bgColor}/${textColor}.png?text=CurioCity`;
-      },
-      timeout: 6000,
-      description: '安定プレースホルダー'
-    },
-    {
-      name: 'dummyimage',
-      priority: 3,
-      generator: (tags, size) => {
-        const bgColor = this.getColorFromTags(tags);
-        const label = this.getAtmosphereLabel(tags);
-        return `https://dummyimage.com/${size.width}x${size.height}/${bgColor}/ffffff.png&text=${encodeURIComponent(label)}`;
-      },
-      timeout: 5000,
-      description: 'カスタムプレースホルダー'
-    },
-    {
-      name: 'gradient-svg',
-      priority: 4,
-      generator: (tags, size) => {
-        const gradient = this.generateGradientFromTags(tags);
-        const svg = this.createGradientSVG(gradient, size);
-        return `data:image/svg+xml;base64,${btoa(svg)}`;
-      },
-      timeout: 1000,
-      description: '動的グラデーション（常に成功）'
-    },
+  private sources = [
     {
       name: 'picsum-photos',
-      priority: 5,
-      generator: (tags, size) => {
-        const imageId = this.generateImageIdFromTags(tags);
+      weight: 0.4,
+      generator: (_tags: string[], size: { width: number; height: number }) => {
+        // Picsum Photosのランダム画像
+        const imageId = Math.floor(Math.random() * 1000) + 1;
         return `https://picsum.photos/id/${imageId}/${size.width}/${size.height}`;
       },
-      timeout: 10000,
-      description: '従来システム（Picsum）'
+      description: 'ランダム写真（Picsum Photos）'
+    },
+    {
+      name: 'placeholder-com',
+      weight: 0.3,
+      generator: (_tags: string[], size: { width: number; height: number }) => {
+        const colors = ['4A90E2', '7ED321', 'F5A623', 'D0021B', '9013FE', '50E3C2'];
+        const bgColor = colors[Math.floor(Math.random() * colors.length)];
+        const textColor = 'ffffff';
+        return `https://via.placeholder.com/${size.width}x${size.height}/${bgColor}/${textColor}.png?text=CurioCity`;
+      },
+      description: 'プレースホルダー画像'
+    },
+    {
+      name: 'dummyimage-com',
+      weight: 0.3,
+      generator: (tags: string[], size: { width: number; height: number }) => {
+        const emotionColors: Record<string, string> = {
+          'ミステリアス': '2c3e50',
+          'ロマンチック': 'e74c3c',
+          'エピック': '9b59b6',
+          'ノスタルジック': 'f39c12',
+          'セレーン': '3498db',
+          'ダーク': '34495e',
+          'ジョイフル': 'f1c40f',
+          'メランコリック': '95a5a6'
+        };
+        
+        const emotion = tags.find((tag: string) => emotionColors[tag]);
+        const bgColor = emotion ? emotionColors[emotion] : '95a5a6';
+        const label = emotion || 'CurioCity';
+        
+        return `https://dummyimage.com/${size.width}x${size.height}/${bgColor}/ffffff.png&text=${encodeURIComponent(label)}`;
+      },
+      description: 'カラー画像（DummyImage）'
     }
   ];
+  private static instance: ImageSourceManager | null = null;
 
+  /**
+   * シングルトンインスタンスを取得
+   */
   static getInstance(): ImageSourceManager {
     if (!this.instance) {
       this.instance = new ImageSourceManager();
@@ -90,231 +65,149 @@ export class ImageSourceManager {
   }
 
   /**
-   * 雰囲気タグに基づいて複数の画像URLを優先度順で生成
+   * 画像URLを生成（外部から呼び出し用）
    */
-  async generateImageUrls(
+  generateImageUrls(tags: string[], size: { width: number; height: number } = { width: 1920, height: 1080 }): string[] {
+    return this.generateMultiSourceUrls(tags, size);
+  }
+
+  private fallbackSources = [
+    {
+      name: 'picsum-fallback',
+      generator: (_tags: string[], size: { width: number; height: number }) => {
+        const imageId = Math.floor(Math.random() * 500) + 500; // 異なる範囲
+        return `https://picsum.photos/id/${imageId}/${size.width}/${size.height}`;
+      }
+    }
+  ];
+
+  private availabilityCache = new Map<string, { available: boolean; timestamp: number }>();
+  private cacheTimeout = 5 * 60 * 1000; // 5分
+
+  /**
+   * 複数のソースから画像URLを生成
+   */
+  generateMultiSourceUrls(
     tags: string[], 
     size: { width: number; height: number } = { width: 1920, height: 1080 }
-  ): Promise<string[]> {
+  ): string[] {
     console.log('🖼️ 多層画像URL生成開始:', { tags, size });
-
-    // 利用可能なソースをチェックして優先度順にソート
-    const availableSources = await this.getAvailableSources();
-    const sortedSources = availableSources.sort((a, b) => a.priority - b.priority);
-
-    const urls = sortedSources.map(source => {
+    
+    const urls: string[] = [];
+    
+    // メインソースから生成
+    for (const source of this.sources) {
       try {
         const url = source.generator(tags, size);
         console.log(`✅ ${source.name}: ${url}`);
-        return url;
+        urls.push(url);
       } catch (error) {
         console.warn(`❌ ${source.name} URL生成エラー:`, error);
-        return null;
       }
-    }).filter(Boolean) as string[];
-
-    // 少なくとも1つのURLが生成されることを保証（グラデーション）
-    if (urls.length === 0) {
-      const fallbackUrl = this.createEmergencyFallback(tags, size);
-      urls.push(fallbackUrl);
-      console.log('🚨 緊急フォールバック使用:', fallbackUrl);
     }
 
+    // フォールバック追加
+    const fallbackUrl = this.generateFallbackUrl(tags, size);
+    if (fallbackUrl) {
+      console.log('🚨 緊急フォールバック使用:', fallbackUrl);
+      urls.push(fallbackUrl);
+    }
+    
     console.log('📊 生成されたURL数:', urls.length);
     return urls;
   }
 
   /**
-   * 利用可能な画像ソースを取得（キャッシュ機能付き）
+   * 堅牢な画像URL生成（エラー耐性強化）
    */
-  private async getAvailableSources(): Promise<ImageSourceConfig[]> {
-    const availableSources = [];
-
-    for (const source of this.imageConfig) {
-      const availability = await this.checkSourceAvailability(source);
-      if (availability) {
-        availableSources.push(source);
+  generateRobustUrls(
+    tags: string[], 
+    size: { width: number; height: number } = { width: 1920, height: 1080 }
+  ): string[] {
+    try {
+      const urls = this.generateMultiSourceUrls(tags, size);
+      
+      // フォールバックソースも追加
+      for (const fallback of this.fallbackSources) {
+        try {
+          const url = fallback.generator(tags, size);
+          urls.push(url);
+        } catch (error) {
+          console.warn('フォールバック生成エラー:', error);
+        }
       }
+      
+      return urls;
+    } catch (error) {
+      console.error('堅牢URL生成エラー:', error);
+      // 最終フォールバック
+      return [this.generateEmergencyFallback(tags, size)];
     }
-
-    // グラデーションソースは常に利用可能
-    const gradientSource = this.imageConfig.find(s => s.name === 'gradient-svg');
-    if (gradientSource && !availableSources.find(s => s.name === 'gradient-svg')) {
-      availableSources.push(gradientSource);
-    }
-
-    return availableSources;
   }
 
   /**
-   * 画像ソースの可用性をチェック（キャッシュ付き）
+   * ソースの可用性をチェック
    */
-  private async checkSourceAvailability(source: ImageSourceConfig): Promise<boolean> {
-    const cached = this.availabilityCache[source.name];
-    const now = Date.now();
-
-    // キャッシュが有効な場合は使用
-    if (cached && (now - cached.lastChecked) < cached.cacheValidFor) {
+  async checkSourceAvailability(sourceName: string): Promise<boolean> {
+    const cacheKey = sourceName;
+    const cached = this.availabilityCache.get(cacheKey);
+    
+    if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
       return cached.available;
     }
 
-    // グラデーションは常に利用可能
-    if (source.name === 'gradient-svg') {
-      this.availabilityCache[source.name] = {
-        available: true,
-        lastChecked: now,
-        cacheValidFor: this.CACHE_DURATION
-      };
-      return true;
-    }
-
-    // 実際の可用性チェック
     try {
+      const source = this.sources.find(s => s.name === sourceName);
+      if (!source) return false;
+
       const testUrl = source.generator(['test'], { width: 100, height: 100 });
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
-
-      const response = await fetch(testUrl, {
+      
+      const response = await fetch(testUrl, { 
         method: 'HEAD',
-        signal: controller.signal
+        signal: AbortSignal.timeout(5000)
       });
-
-      clearTimeout(timeoutId);
+      
       const available = response.ok;
-
-      this.availabilityCache[source.name] = {
-        available,
-        lastChecked: now,
-        cacheValidFor: this.CACHE_DURATION
-      };
-
+      this.availabilityCache.set(cacheKey, { available, timestamp: Date.now() });
+      
       return available;
     } catch (error) {
-      console.warn(`⚠️ ${source.name} 可用性チェック失敗:`, error);
-      this.availabilityCache[source.name] = {
-        available: false,
-        lastChecked: now,
-        cacheValidFor: this.CACHE_DURATION
-      };
+      console.warn(`⚠️ ${sourceName} 可用性チェック失敗:`, error);
+      this.availabilityCache.set(cacheKey, { available: false, timestamp: Date.now() });
       return false;
     }
   }
 
   /**
-   * 雰囲気タグを英語キーワードに変換
+   * フォールバック画像URL生成
    */
-  private translateTagsToEnglish(tags: string[]): string[] {
-    const tagMap: { [key: string]: string } = {
-      'ミステリアス': 'mysterious,dark,moody',
-      'ロマンチック': 'romantic,sunset,pink',
-      'エピック': 'epic,dramatic,mountain',
-      'ノスタルジック': 'nostalgic,vintage,sepia',
-      'セレーン': 'serene,calm,peaceful',
-      'ダーク': 'dark,gothic,night',
-      'ジョイフル': 'joyful,bright,colorful',
-      'メランコリック': 'melancholic,rain,blue',
-      '都市夜景': 'city,night,urban',
-      '古代遺跡': 'ancient,ruins,historical',
-      '近未来都市': 'futuristic,neon,cyberpunk',
-      '森林': 'forest,trees,green',
-      '砂漠': 'desert,sand,golden',
-      '海辺': 'ocean,beach,waves',
-      '山岳': 'mountain,peaks,landscape',
-      '氷原': 'ice,snow,arctic',
-      '湖': 'lake,water,reflection'
-    };
-
-    const keywords = tags.flatMap(tag => 
-      tagMap[tag] ? tagMap[tag].split(',') : [tag.toLowerCase()]
-    );
-
-    return [...new Set(keywords)]; // 重複除去
-  }
-
-  /**
-   * 雰囲気タグから色を生成
-   */
-  private getColorFromTags(tags: string[]): string {
-    const colorMap: { [key: string]: string } = {
-      'ミステリアス': '4a5568',
-      'ロマンチック': 'ed64a6',
-      'エピック': '3182ce',
-      'ノスタルジック': 'd69e2e',
-      'セレーン': '38b2ac',
-      'ダーク': '2d3748',
-      'ジョイフル': 'f56565',
-      'メランコリック': '667eea'
-    };
-
-    for (const tag of tags) {
-      if (colorMap[tag]) {
-        return colorMap[tag];
-      }
-    }
-
-    return '667eea'; // デフォルト
-  }
-
-  /**
-   * 背景色に対するコントラスト色を取得
-   */
-  private getContrastColor(bgColor: string): string {
-    // 簡単な明度判定
-    const r = parseInt(bgColor.substr(0, 2), 16);
-    const g = parseInt(bgColor.substr(2, 2), 16);
-    const b = parseInt(bgColor.substr(4, 2), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+  private generateFallbackUrl(_tags: string[], size: { width: number; height: number }): string {
+    // グラデーション背景を生成
+    const gradients = [
+      { start: '#667eea', end: '#764ba2' },
+      { start: '#f093fb', end: '#f5576c' },
+      { start: '#4facfe', end: '#00f2fe' },
+      { start: '#43e97b', end: '#38f9d7' },
+      { start: '#fa709a', end: '#fee140' },
+      { start: '#a8edea', end: '#fed6e3' },
+      { start: '#ff9a9e', end: '#fecfef' },
+      { start: '#a18cd1', end: '#fbc2eb' }
+    ];
     
-    return brightness > 125 ? '000000' : 'ffffff';
+    const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+    return this.createGradientSVG(randomGradient, size);
   }
 
   /**
-   * 雰囲気に基づくラベル生成
+   * 緊急時フォールバック
    */
-  private getAtmosphereLabel(tags: string[]): string {
-    if (tags.length === 0) return 'CurioCity';
-    
-    const primaryTag = tags[0];
-    const labelMap: { [key: string]: string } = {
-      'ミステリアス': '🌙 Mysterious',
-      'ロマンチック': '💕 Romantic',
-      'エピック': '⚡ Epic',
-      'ノスタルジック': '📸 Nostalgic',
-      'セレーン': '🌿 Serene',
-      'ダーク': '🌑 Dark',
-      'ジョイフル': '🌈 Joyful',
-      'メランコリック': '💙 Melancholic'
-    };
-
-    return labelMap[primaryTag] || `✨ ${primaryTag}`;
+  private generateEmergencyFallback(_tags: string[], size: { width: number; height: number }): string {
+    const defaultGradient = { start: '#667eea', end: '#764ba2' };
+    return this.createGradientSVG(defaultGradient, size);
   }
 
   /**
-   * 雰囲気タグからグラデーションを生成
-   */
-  private generateGradientFromTags(tags: string[]): { start: string; end: string } {
-    const gradientMap: { [key: string]: { start: string; end: string } } = {
-      'ミステリアス': { start: '#667eea', end: '#764ba2' },
-      'ロマンチック': { start: '#f093fb', end: '#f5576c' },
-      'エピック': { start: '#4facfe', end: '#00f2fe' },
-      'ノスタルジック': { start: '#ffecd2', end: '#fcb69f' },
-      'セレーン': { start: '#a8edea', end: '#fed6e3' },
-      'ダーク': { start: '#232526', end: '#414345' },
-      'ジョイフル': { start: '#ff9a9e', end: '#fecfef' },
-      'メランコリック': { start: '#667db6', end: '#0082c8' }
-    };
-
-    for (const tag of tags) {
-      if (gradientMap[tag]) {
-        return gradientMap[tag];
-      }
-    }
-
-    return { start: '#667eea', end: '#764ba2' }; // デフォルト
-  }
-
-  /**
-   * SVGグラデーションを作成
+   * SVGグラデーション生成
    */
   private createGradientSVG(gradient: { start: string; end: string }, size: { width: number; height: number }): string {
     return `<svg width="${size.width}" height="${size.height}" xmlns="http://www.w3.org/2000/svg">
@@ -329,52 +222,22 @@ export class ImageSourceManager {
   }
 
   /**
-   * タグからPicsum用の画像IDを生成
+   * キャッシュクリア
    */
-  private generateImageIdFromTags(tags: string[]): number {
-    const combinedString = tags.join('');
-    let hash = 0;
-    for (let i = 0; i < combinedString.length; i++) {
-      const char = combinedString.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash;
-    }
-    return Math.abs(hash % 1000) + 1;
-  }
-
-  /**
-   * 緊急フォールバック用の確実なURL生成
-   */
-  private createEmergencyFallback(tags: string[], size: { width: number; height: number }): string {
-    const gradient = this.generateGradientFromTags(tags);
-    const svg = this.createGradientSVG(gradient, size);
-    return `data:image/svg+xml;base64,${btoa(svg)}`;
-  }
-
-  /**
-   * 可用性キャッシュをクリア（テスト用）
-   */
-  clearAvailabilityCache(): void {
-    this.availabilityCache = {};
+  clearCache(): void {
+    this.availabilityCache.clear();
     console.log('🗑️ 可用性キャッシュをクリア');
   }
 
   /**
-   * デバッグ情報を取得
+   * 統計情報取得
    */
-  getDebugInfo(): {
-    configuredSources: number;
-    cachedAvailability: AvailabilityCache;
-    sourcePriorities: { name: string; priority: number; description: string }[];
-  } {
+  getStats() {
     return {
-      configuredSources: this.imageConfig.length,
-      cachedAvailability: this.availabilityCache,
-      sourcePriorities: this.imageConfig.map(s => ({
-        name: s.name,
-        priority: s.priority,
-        description: s.description
-      }))
+      totalSources: this.sources.length,
+      fallbackSources: this.fallbackSources.length,
+      cacheSize: this.availabilityCache.size,
+      sourceNames: this.sources.map(s => s.name)
     };
   }
 }

@@ -160,7 +160,7 @@ function SimpleApp() {
       // 外部画像は後で試行
       `https://picsum.photos/id/${imageId}/1920/1080`,
       `https://picsum.photos/1920/1080?random=${imageId}`,
-      `https://source.unsplash.com/1920x1080/?nature,${imageId}`
+      `https://via.placeholder.com/1920x1080/${Math.floor(Math.random() * 16777215).toString(16)}/ffffff?text=CurioCity`
     ];
     
     console.log('🌐 生成されたURL一覧:', urls);

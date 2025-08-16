@@ -64,19 +64,11 @@ export class ImageOptimizer {
   static generateResponsiveImageUrl(
     baseUrl: string, 
     width: number, 
-    quality: number = 80, 
-    format?: 'avif' | 'webp' | 'jpg'
+    _quality: number = 80, 
+    _format?: 'avif' | 'webp' | 'jpg'
   ): string {
-    const targetFormat = format || this.getBestImageFormat();
+    // const targetFormat = format || this.getBestImageFormat();
     
-    // Unsplash APIの場合の最適化
-    if (baseUrl.includes('unsplash.com')) {
-      const url = new URL(baseUrl);
-      url.searchParams.set('w', width.toString());
-      url.searchParams.set('q', quality.toString());
-      url.searchParams.set('fm', targetFormat);
-      return url.toString();
-    }
 
     // Pexels APIの場合の最適化
     if (baseUrl.includes('pexels.com')) {

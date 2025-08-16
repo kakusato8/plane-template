@@ -154,8 +154,8 @@ function isImageRequest(request) {
   const url = new URL(request.url);
   return request.destination === 'image' ||
          url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i) ||
-         url.hostname.includes('unsplash.com') ||
-         url.hostname.includes('images.unsplash.com');
+         url.hostname.includes('picsum.photos') ||
+         url.hostname.includes('via.placeholder.com');
 }
 
 /**

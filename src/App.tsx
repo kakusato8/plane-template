@@ -320,11 +320,6 @@ function App() {
     if (showShareButtons) setShowShareButtons(false);
   };
 
-  const handleShowShare = () => {
-    setShowShareButtons(!showShareButtons);
-    if (showLocationDetails) setShowLocationDetails(false);
-    if (showMap) setShowMap(false);
-  };
 
 
   if (isLoading) {
